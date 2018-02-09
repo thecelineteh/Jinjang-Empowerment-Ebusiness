@@ -1,1 +1,1 @@
-# Web-Application-for-Jinjang-Utara-Community-Project
+# Jinjang-Project-Web-Application
