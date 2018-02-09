@@ -1,1 +1,1 @@
-# Jinjang-Ebusiness-Empowerment (JEE)
+# Jinjang-Empowerment-Ebusiness (JEE)
