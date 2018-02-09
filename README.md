@@ -1,1 +1,1 @@
-# Jinjang-Project-Web-Application
+# Jinjang-Ebusiness-Empowerment (JEE)
