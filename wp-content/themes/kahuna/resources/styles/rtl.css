@@ -1,0 +1,835 @@
+/*
+ * RTL CSS
+ *
+ * @package Kahuna
+ */
+
+/*--------------------------------------------------------------
+	# THEME SPECIFIC DEFAULTS
+--------------------------------------------------------------*/
+
+.main li li {
+	margin-right: 1em;
+	margin-left: 0;
+}
+
+/* Text meant only for screen readers */
+.screen-reader-text {
+	position: absolute;
+	left: 9000px;
+}
+
+/*--------------------------------------------------------------
+	# LAYOUT
+--------------------------------------------------------------*/
+
+.sidey {
+	float: right;
+}
+
+#primary {
+	padding-right: 0;
+	padding-left: 3%;
+}
+
+#secondary {
+	padding-left: 0;
+	padding-right: 3%;
+}
+
+/*--------------------------------------------------------------
+	# HEADER
+--------------------------------------------------------------*/
+
+#branding {
+	float: right;
+}
+
+#branding .identity {
+	float: right;
+}
+
+#site-title {
+	float: right;
+}
+
+#branding .identity + #site-title {
+	margin-right: 1em;
+}
+
+#site-title span a span:first-child {
+	margin-left: .1em;
+}
+
+/* Header widget area */
+#header-widget-area {
+	float: left;
+}
+
+/*--------------------------------------------------------------
+	## MAIN MENU
+--------------------------------------------------------------*/
+
+#access {
+	float: left;
+}
+
+.kahuna-menu-left #access {
+	float: right;
+	margin-left: 0;
+	margin-right: 2em;
+}
+
+#access::after {
+	left: auto;
+	right: 0;
+}
+
+#access > div > ul li > a:not(:only-child) span {
+	padding-right: 0;
+	padding-left: .5em;
+}
+
+#access > div > ul li > a:not(:only-child) > span::after {
+	left: -0.6em;
+	right: auto;
+}
+
+#access > div > ul ul > li a:not(:only-child) > span::after {
+	-webkit-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	transform: rotate(90deg);
+	right: auto;
+	left: 1em;
+}
+
+#access > div > ul ul > li:hover > a:not(:only-child) > span::after {
+	left: -0.5em;
+	right: auto;
+}
+
+#access ul li {
+	float: right;
+}
+
+#access ul ul {
+	margin-right: 0;
+}
+
+#access ul ul li { /* level 2 */
+	float: right;
+}
+
+#access ul ul ul {
+	left: auto;
+	right: 100%;
+}
+
+#mobile-menu .mobile-arrow::after {
+	right: auto;
+	left: 0;
+}
+
+.dropdown-toggle {
+	float: left;
+}
+
+/*--------------------------------------------------------------
+	## MOBILE MENU
+--------------------------------------------------------------*/
+
+#nav-toggle { /* Mobile nav toggle will only be visible on mobile */
+	float: left;
+	left: 0;
+	right: auto;
+}
+
+nav#mobile-menu #nav-cancel {
+	left: 0;
+	right: auto;
+}
+
+nav#mobile-menu .sub-menu,
+nav#mobile-menu .children {
+	padding-right: 10px;
+	padding-left: 0;
+}
+
+/*--------------------------------------------------------------
+	# FOOTER
+--------------------------------------------------------------*/
+
+#site-copyright {
+	float: right;
+	clear: right;
+}
+
+#site-copyright + div {
+	float: left !important;
+	clear: left !important;
+}
+
+.footer-inside > div:last-child {
+	float: left !important;
+	clear: left !important;
+}
+
+/*--------------------------------------------------------------
+	## FOOTER MENU
+--------------------------------------------------------------*/
+.footermenu {
+	float: right;
+}
+
+.footermenu ul li {
+	float: right;
+}
+
+/*--------------------------------------------------------------
+	## FOOTER WIDGET AREA
+--------------------------------------------------------------*/
+
+#colophon .widget-container {
+	float: right;
+}
+
+#colophon .widget-container:after {
+	left: 0;
+	right: auto;
+}
+
+/*--------------------------------------------------------------
+	# CONTENT
+--------------------------------------------------------------*/
+
+.entry-content blockquote.left {
+	float: right;
+	margin-right: 0;
+	margin-left: 2em;
+	text-align: left;
+}
+
+.entry-content blockquote.right {
+	float: left;
+	margin-right: 2em;
+	margin-left: 0;
+	text-align: right;
+}
+
+.main .entry-title {
+	margin: 0 0 0 1.5em;
+}
+
+/*--------------------------------------------------------------
+	## POST METAS
+--------------------------------------------------------------*/
+
+.entry-meta > span {
+	margin-right: 0;
+	margin-left: 1em;
+}
+
+.entry-meta .avatar {
+	margin-right: 0;
+	margin-left: .3em;
+}
+
+.comments-link a {
+	margin-left: 0;
+	margin-right: 5px;
+}
+
+.tag-links {
+	margin-left: 0;
+	margin-right: 2em;
+}
+
+span.edit-link {
+    right: auto;
+    left: 0.25em;
+}
+
+.post-thumbnail-container .featured-image-overlay {
+	left: auto;
+	right: 0;
+}
+
+.post-thumbnail-container .featured-image-meta {
+	float: right;
+	left: auto;
+	right: -33%;
+}
+
+.post-thumbnail-container:hover .featured-image-meta {
+	left: auto;
+	right: 0;
+}
+
+.post-thumbnail-container .entry-meta > span {
+	margin-left: 0;
+}
+
+.post-thumbnail-container .entry-meta .icon-metas {
+	float: right;
+	margin-right: 0;
+	margin-left: .5em;
+}
+
+.post-thumbnail-container .comments-link a {
+	margin-right: 0;
+}
+
+#container.two-columns-right .main,
+.two-columns-right #breadcrumbs {
+	float: right;
+}
+
+#header-page-title .entry-title {
+	float: right;
+}
+
+#header-page-title #breadcrumbs-container {
+	right: auto;
+	left: 2em;
+	float: left;
+}
+
+#header-page-title .icon-bread-home::before {
+	margin-left: 0;
+	margin-right: 0.3em;
+}
+
+#header-page-title #breadcrumbs-nav a,
+#header-page-title .icon-bread-arrow {
+	float: right;
+}
+
+#breadcrumbs-nav .icon-bread-arrow {
+	top: 0;
+}
+
+.icon-bread-arrow::before {
+	position: relative;
+	top: 1px;
+	-webkit-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+
+/*--------------------------------------------------------------
+	## AUTHOR INFO
+--------------------------------------------------------------*/
+
+#author-info #author-avatar {
+	float: right;
+	margin-right: 0;
+	margin-left: 2em;
+}
+
+/*--------------------------------------------------------------
+	## ARTICLES
+--------------------------------------------------------------*/
+
+article.sticky:after {
+	right: 0;
+	left: auto;
+}
+
+.kahuna-magazine-two #content-masonry article.hentry {
+	float: right;
+}
+
+.kahuna-magazine-three #content-masonry article.hentry {
+	float: right;
+}
+
+/*--------------------------------------------------------------
+	## PAGE NAVIGATION
+--------------------------------------------------------------*/
+
+/* Multiple page navigation */
+
+.page-link a,
+.page-link > span > em {
+	margin-right: 0;
+	margin-left: 1px;
+}
+
+/* Single Previous/Next Post Navigation */
+#nav-below .nav-previous,
+#nav-below .nav-next {
+	float: right;
+}
+
+#nav-below .nav-next {
+	text-align: left;
+}
+
+/* Single Fixed Previous/Next Post Navigation */
+#nav-fixed.nav-fixed-show .nav-previous i {
+	left: auto;
+	right: 0;
+}
+
+#nav-fixed.nav-fixed-show .nav-next i {
+	right: auto;
+	left: 0;
+}
+
+#nav-fixed .nav-previous a + a {
+	margin-left: 0;
+	margin-right: 70px;
+}
+
+#nav-fixed .nav-next a + a {
+	margin-right: 0;
+	margin-left: 70px;
+}
+
+#nav-fixed .nav-previous a:hover + a,
+#nav-fixed .nav-previous a + a:hover {
+	margin-left: 0;
+	margin-right: 56px;
+}
+
+#nav-fixed .nav-next a:hover + a,
+#nav-fixed .nav-next a + a:hover {
+	margin-right: 0;
+	margin-left: 56px;
+}
+
+#nav-fixed .nav-previous i {
+	left: auto;
+	right: -60px;
+}
+
+#nav-fixed .nav-next i {
+	right: auto;
+	left: -60px;
+}
+
+#nav-fixed .nav-next i::before {
+	-webkit-transform: translateY(-50%) rotate(180deg);
+	-ms-transform: translateY(-50%) rotate(180deg);
+	transform: translateY(-50%) rotate(180deg);
+}
+
+#nav-fixed .nav-previous {
+	left: auto;
+	right: -10px;
+}
+
+#nav-fixed .nav-next {
+	right: auto;
+	left: -10px;
+}
+
+#nav-fixed .nav-previous i::before {
+	left: auto;
+	right: 10px;
+	-ms-transform: translateY(-50%) rotate(0);
+	transform: translateY(-50%) rotate(0);
+}
+
+#nav-fixed .nav-next i::before {
+	right: auto;
+	left: 10px;
+}
+
+/* Blog, Archive Pages Previous/Next Posts Pagination */
+#nav-old-below .nav-previous{
+	float: right;
+}
+
+#nav-old-below .nav-next {
+	float: left;
+}
+
+/*--------------------------------------------------------------
+	# POST FORMATS
+--------------------------------------------------------------*/
+
+span.entry-format {
+	left: .5em;
+	right: auto;
+}
+
+.format-status .avatar {
+	float: right;
+}
+/*--------------------------------------------------------------
+	# COMMENTS
+--------------------------------------------------------------*/
+
+#nav-comments .nav-next,
+#nav-comments .nav-previous {
+	float: right;
+	margin-left: 1em;
+	margin-right: 0;
+}
+
+.main .commentlist img.avatar {
+	float: right;
+}
+
+.comment-author {
+	float: right;
+}
+
+.comment-meta {
+	float: right;
+}
+
+.comment-await {
+	margin-right: 2em;
+	margin-left: 0;
+}
+
+.comment .reply {
+	float: left;
+}
+
+.comment .reply i {
+	margin-left: .4em;
+	margin-right: 0;
+	-webkit-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+
+.commentlist .children {
+	margin-left: 0;
+	margin-right: 1.5em;
+}
+
+/*--------------------------------------------------------------
+	## COMMENT FORM
+--------------------------------------------------------------*/
+
+.comment-form-author,
+.comment-form-email,
+.comment-form-url {
+	float: right;
+	margin-right: 0;
+	margin-left: 5%;
+}
+
+.comment-form-url {
+	margin-left: 0;
+}
+
+/*--------------------------------------------------------------
+	# WIDGET AREAS
+--------------------------------------------------------------*/
+
+.widget-container ul ul {
+	margin-left: 0;
+	margin-right: 1em;
+}
+
+.widget-title {
+	text-align: right;
+}
+
+#wp-calendar caption,
+#wp-calendar th,
+#wp-calendar td {
+		text-align: right;
+}
+
+#wp-calendar tfoot #next {
+	text-align: left;
+}
+
+/*--------------------------------------------------------------
+	# SEARCHFORM
+--------------------------------------------------------------*/
+
+/* ## SIDEBAR SEARCH */
+.searchform input[type="search"]  {
+	float: right;
+}
+
+.menu-main-search .icon-cancel {
+	left: 2em;
+	right: auto;
+}
+
+#access > .menu > ul ul > li a:not(:only-child) span::after {
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+/*--------------------------------------------------------------
+	# SOCIALS
+--------------------------------------------------------------*/
+
+.socials a {
+	float: right;
+}
+
+#sheader-container {
+	float: left;
+	margin-right: .5em;
+}
+
+#sfooter {
+	display: block;
+	float: left;
+	clear: left;
+}
+
+/*--------------------------------------------------------------
+	# LANDING PAGE
+--------------------------------------------------------------*/
+
+.lp-staticslider .staticslider-caption-title,
+.seriousslider.seriousslider-theme .seriousslider-caption-title {
+	float: right;
+}
+
+.lp-staticslider .staticslider-caption-text,
+.seriousslider.seriousslider-theme .seriousslider-caption-text {
+	float: right;
+}
+
+.staticslider-caption-buttons {
+	float: right;
+}
+
+/* LP Slider */
+a.staticslider-button-2 {
+	margin-left: 0;
+	margin-right: 1em;
+}
+
+/* LP Blocks */
+
+.lp-block {
+	float: right;
+	margin-right: 0;
+	margin-left: 6%;
+}
+
+.lp-blocks.lp-blocks-rows-1 .lp-block {
+	margin-left: 0;
+}
+
+.lp-blocks.lp-blocks-rows-4 .lp-block:nth-child(4n),
+.lp-blocks.lp-blocks-rows-3 .lp-block:nth-child(3n),
+.lp-blocks.lp-blocks-rows-2 .lp-block:nth-child(2n) {
+	margin-left: 0;
+}
+
+/* LP Boxes */
+
+.lp-box {
+	float: right;
+}
+
+.lp-boxes.lp-boxes-rows-4 .lp-boxes-margins .lp-box {
+	margin-right: 0;
+	margin-left: 4%;
+}
+
+.lp-boxes.lp-boxes-rows-4 .lp-boxes-margins .lp-box {
+	margin-right: 0;
+	margin-left: 3%;
+}
+
+.lp-boxes.lp-boxes-rows-3 .lp-boxes-margins .lp-box {
+	margin-right: 0;
+	margin-left: 4%;
+}
+
+.lp-boxes.lp-boxes-rows-3 .lp-boxes-margins.lp-boxes-outside .lp-box {
+	margin-right: 0;
+	margin-left: 3%;
+}
+
+.lp-boxes.lp-boxes-rows-2 .lp-boxes-margins .lp-box {
+	margin-right: 0;
+	margin-left: 4%;
+}
+
+.lp-boxes.lp-boxes-rows-2 .lp-boxes-margins.lp-boxes-outside .lp-box {
+	margin-right: 0;
+	margin-left: 3%;
+}
+
+.lp-boxes.lp-boxes-rows-4 .lp-boxes-margins .lp-box:nth-child(4n),
+.lp-boxes.lp-boxes-rows-3 .lp-boxes-margins .lp-box:nth-child(3n),
+.lp-boxes.lp-boxes-rows-2 .lp-boxes-margins .lp-box:nth-child(2n) {
+	margin-left: 0;
+}
+
+.lp-boxes .lp-box-link:hover i::before {
+	padding-left: 0;
+	padding-right: .2em;
+}
+
+/* Static boxes */
+.lp-boxes-static .lp-box-image::after,
+.lp-boxes-static .lp-box-image .box-overlay {
+    left: auto;
+    right: 0;
+}
+
+/* LP Text */
+.lp-text-image::before {
+	right: auto;
+	left: 0;
+}
+
+.lp-text-image > img {
+	float: left;
+}
+
+.lp-text-image + .lp-text-inside {
+	float: right;
+}
+
+/* AJAX LOAD MORE POSTS BUTTON */
+#cryout_ajax_more_trigger::before {
+	left: auto;
+	right: 0;
+}
+
+#cryout_ajax_more_trigger::after {
+	left: auto;
+	right: 0;
+}
+
+/*--------------------------------------------------------------
+	# MISCELLANEOUS
+--------------------------------------------------------------*/
+
+/* ## BACK TO TOP */
+
+#toTop {
+	right: auto;
+	left: -100px;
+}
+
+#toTop.toTop-show {
+	right: auto;
+	left: 1em;
+}
+
+.pagination span,
+.pagination a {
+	float: right;
+	margin-left: 5px;
+	margin-right: 0;
+}
+
+/* ## CONTINUE READING */
+a.continue-reading-link {
+	float: right;
+}
+
+.continue-reading-link::before {
+	left: auto;
+	right: 0;
+}
+
+i.icon-continue-reading {
+	margin-left: 0;
+	margin-right: .35em;
+}
+
+/* ## BLOCKQUOTES */
+.entry-content blockquote {
+	padding: 2em 5em 2em 2em;
+}
+
+.entry-content blockquote::before {
+	left: auto;
+	right: .5em;
+}
+
+/*--------------------------------------------------------------
+	# RESPONSIVENESS
+-------------------------------------------------------------- */
+
+@media (max-width: 1152px) {
+
+	.cryout #container[class*="three-"] .sidey .widget-container {
+		float: right;
+	}
+
+	.cryout #primary + #secondary {
+		padding-right: 2em;
+		padding-left: 0;
+	}
+
+}
+
+@media (max-width: 1024px) {
+
+	.cryout #container[class*="two-"] .sidey .widget-container,
+	.cryout #colophon .widget-container	{
+		float: right;
+	}
+
+}
+
+@media (max-width: 800px) {
+
+	.cryout #site-title a span {
+		padding-left: 0;
+	}
+
+	.cryout #sheader-container {
+		margin-right: 0;
+		margin-left: 3em;
+	}
+
+}
+
+
+/* ## LP Responisieness */
+@media (max-width: 960px) {
+
+	.lp-blocks.lp-blocks-rows-4 .lp-block,
+	.lp-blocks.lp-blocks-rows-3 .lp-block {
+		width: 48%;
+	    margin-left: 4%;
+	    margin-right: 0;
+	}
+
+	.lp-blocks.lp-blocks-rows-4 .lp-block:nth-child(2n),
+	.lp-blocks.lp-blocks-rows-3 .lp-block:nth-child(2n) {
+		margin-left: 0;
+	}
+
+	.lp-boxes.lp-boxes-rows-4 .lp-boxes-margins .lp-box,
+	.lp-boxes.lp-boxes-rows-3 .lp-boxes-margins .lp-box {
+		margin-left: 2%;
+		margin-right: 0;
+	}
+
+	.lp-boxes.lp-boxes-rows-4 .lp-boxes-margins .lp-box:nth-child(2n),
+	.lp-boxes.lp-boxes-rows-3 .lp-boxes-margins .lp-box:nth-child(2n) {
+		margin-left: 0;
+	}
+
+}
+
+@media (max-width: 480px) {
+
+	.lp-boxes.lp-boxes-rows-4 .lp-boxes-margins .lp-box,
+	.lp-boxes.lp-boxes-rows-3 .lp-boxes-margins .lp-box,
+	.lp-boxes.lp-boxes-rows-2 .lp-boxes-margins .lp-box {
+		margin-left: 0;
+	}
+
+	.lp-blocks.lp-blocks-rows-4 .lp-block,
+	.lp-blocks.lp-blocks-rows-3 .lp-block,
+	.lp-blocks.lp-blocks-rows-2 .lp-block {
+		width: 100%;
+		margin-bottom: 3em;
+
+}
+
+/* FIN! */

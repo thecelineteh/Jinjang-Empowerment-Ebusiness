@@ -1,0 +1,21 @@
+<wpml-config> 
+    <admin-texts>
+        <key name="kahuna_settings">
+			<key name="kahuna_lpposts_more" />
+			<key name="kahuna_lpslidershortcode" /> 
+			<key name="kahuna_lpslidertitle" />
+			<key name="kahuna_lpslidertext" />
+			<key name="kahuna_lpblockmaintitle" />
+			<key name="kahuna_lpblockmaindesc" />
+			<key name="kahuna_lpboxmaintitle1" />
+			<key name="kahuna_lpboxmaindesc1" />
+			<key name="kahuna_lpboxreadmore1" />
+			<key name="kahuna_lpboxmaintitle2" />
+			<key name="kahuna_lpboxmaindesc2" />
+			<key name="kahuna_lpboxreadmore2" />			
+			<key name="kahuna_copyright" />
+			<key name="kahuna_excerptdots" />
+			<key name="kahuna_excerptcont" />
+        </key>
+    </admin-texts>  
+</wpml-config>

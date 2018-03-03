@@ -1,0 +1,42 @@
+/**
+ * Styling for the page templates meta
+ *
+ * @package Kahuna
+ */
+
+#kahuna_layout input[type="radio"] {
+    display: none;
+}
+
+#kahuna_layout label span {
+    box-sizing: border-box;
+    display: inline-block;
+    margin-bottom: 7px; margin-right: 7px;
+    line-height: 0;
+    border: 5px solid transparent;
+    transition: .5s all ease-in-out;
+}
+
+#kahuna_layout label span:hover {
+    border-color: #EEE;
+}
+
+label#kahuna_layout_default span {
+    display: block;
+}
+
+label#kahuna_layout_default em {
+    display: block;
+    padding: 1.7em 1em;
+    border: 1px solid #DDD;
+    font-weight: bold;
+    color: #AAA;
+    text-transform: uppercase;
+    font-style: normal;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+#kahuna_layout label input[type="radio"]:checked + span {
+    border-color: #00a0d2;
+}

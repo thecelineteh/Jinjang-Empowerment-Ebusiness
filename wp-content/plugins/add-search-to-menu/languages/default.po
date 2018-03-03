@@ -1,0 +1,194 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Add Search To Menu\n"
+"POT-Creation-Date: 2017-08-12 00:41+0530\n"
+"PO-Revision-Date: 2017-08-12 00:41+0530\n"
+"Last-Translator: \n"
+"Language-Team: Free WP TP <freewptp@gmail.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;esc_html_e;esc_html__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../admin/class-astm-admin.php:62
+msgid "Get Support"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:63
+msgid "Settings"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:82
+#, php-format
+msgid ""
+"To configure <em>Add Search To Menu plugin</em> please visit its <a href="
+"\"%1$s\">configuration page</a> and to get plugin support contact us on <a "
+"href=\"%2$s\" target=\"_blank\">plugin support forum</a> or <a href=\"%3$s\" "
+"target=\"_blank\">contact us page</a>."
+msgstr ""
+
+#: ../admin/class-astm-admin.php:103 ../admin/class-astm-admin.php:138
+msgid "Add Search To Menu Settings"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:103
+msgid "Add Search To Menu"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:119
+msgid "Like Add Search To Menu?"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:119
+msgid "Give us a rating"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:122
+msgid "Need Help or Have Suggestions?"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:122
+msgid "contact us on"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:122
+msgid "Plugin support forum"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:122
+msgid "or"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:122
+msgid "Contact us page"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:125
+msgid "Access Plugin Documentation on"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:140
+msgid "Add Search to Menu : "
+msgstr ""
+
+#: ../admin/class-astm-admin.php:141
+msgid "Search Post Types : "
+msgstr ""
+
+#: ../admin/class-astm-admin.php:142
+msgid "Search Form Style : "
+msgstr ""
+
+#: ../admin/class-astm-admin.php:143
+msgid "Search Menu Title : "
+msgstr ""
+
+#: ../admin/class-astm-admin.php:144
+msgid "Search Menu Classes : "
+msgstr ""
+
+#: ../admin/class-astm-admin.php:145
+msgid "Google CSE : "
+msgstr ""
+
+#: ../admin/class-astm-admin.php:146
+msgid "Mobile Display : "
+msgstr ""
+
+#: ../admin/class-astm-admin.php:147
+msgid "Close Icon: "
+msgstr ""
+
+#: ../admin/class-astm-admin.php:148
+msgid "Custom CSS : "
+msgstr ""
+
+#: ../admin/class-astm-admin.php:149
+msgid "Do not load plugin files : "
+msgstr ""
+
+#: ../admin/class-astm-admin.php:159
+msgid "Configure the Add Search To Menu plugin settings here."
+msgstr ""
+
+#: ../admin/class-astm-admin.php:180
+msgid "No navigation menu registered on your site."
+msgstr ""
+
+#: ../admin/class-astm-admin.php:205
+msgid "No post types registered on your site."
+msgstr ""
+
+#: ../admin/class-astm-admin.php:218
+msgid "Default"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:219
+msgid "Dropdown"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:220
+msgid "Sliding"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:221
+msgid "Full Width"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:248
+msgid ""
+"If title field is not set then instead of title the search icon displays in "
+"navigation menu."
+msgstr ""
+
+#: ../admin/class-astm-admin.php:260
+msgid "Add classes seperated by space."
+msgstr ""
+
+#: ../admin/class-astm-admin.php:272
+msgid ""
+"Add only Google CSE search form code in the above text box that will replace "
+"default search form."
+msgstr ""
+
+#: ../admin/class-astm-admin.php:284
+msgid "Display Search Form in Header on Mobile Devices"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:285
+msgid ""
+"It doesn not work with caching as this functionality uses WordPress "
+"wp_is_mobile function."
+msgstr ""
+
+#: ../admin/class-astm-admin.php:297
+msgid "Display Search Form Close Icon"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:309
+msgid "Add custom css code if any to style search form."
+msgstr ""
+
+#: ../admin/class-astm-admin.php:320
+msgid "Plugin CSS File"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:321
+msgid "Plugin JavaScript File"
+msgstr ""
+
+#: ../admin/class-astm-admin.php:334
+msgid ""
+"If checked, you have to add following plugin file code into your theme CSS "
+"file."
+msgstr ""
+
+#: ../admin/class-astm-admin.php:338
+msgid ""
+"If checked, you have to add following plugin file code into your theme "
+"JavaScript file."
+msgstr ""
