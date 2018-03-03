@@ -14,22 +14,19 @@
  * @modified 1.1.30
  */
 
-$hestia_alternative_blog_layout = get_theme_mod( 'hestia_alternative_blog_layout', 'blog_normal_layout' );
-$hestia_remove_sidebar_on_index = get_theme_mod( 'hestia_sidebar_on_index', false );
 
 $default_blog_layout        = hestia_sidebar_on_single_post_get_default();
 $hestia_blog_sidebar_layout = get_theme_mod( 'hestia_blog_sidebar_layout', $default_blog_layout );
-
-$args = array(
+$args                       = array(
 	'sidebar-right' => 'col-md-8 blog-posts-wrap',
 	'sidebar-left'  => 'col-md-8 blog-posts-wrap',
 	'full-width'    => 'col-md-10 col-md-offset-1 blog-posts-wrap',
 );
-
-$hestia_sidebar_width = get_theme_mod( 'hestia_sidebar_width', 25 );
+$hestia_sidebar_width       = get_theme_mod( 'hestia_sidebar_width', 25 );
 if ( $hestia_sidebar_width > 3 && $hestia_sidebar_width < 80 ) {
 	$args['sidebar-left'] .= ' col-md-offset-1';
 }
+
 $class_to_add = hestia_get_content_classes( $hestia_blog_sidebar_layout, 'sidebar-1', $args );
 
 get_header();
@@ -39,12 +36,15 @@ get_header();
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1 text-center">
 					<h1 class="hestia-title">
-						<?php is_front_page() ? bloginfo( 'description' ) : single_post_title(); ?>
-					</h1>
+						<?php
+						/* translators: %s is Search query */
+						printf( esc_html__( 'Search Results for: %s', 'hestia' ), get_search_query() );
+						?>
+						</h1>
 				</div>
 			</div>
 		</div>
-		<?php hestia_output_wrapper_header_background( false ); ?>
+		<?php hestia_output_wrapper_header_background(); ?>
 	</div>
 </header>
 <div class="<?php echo hestia_layout(); ?>">
@@ -58,17 +58,10 @@ get_header();
 				?>
 				<div class="<?php echo esc_attr( $class_to_add ); ?>">
 					<?php
-
 					if ( have_posts() ) :
-
 						while ( have_posts() ) :
 							the_post();
-							if ( ( $hestia_alternative_blog_layout === 'blog_alternative_layout' ) && ( $wp_query->current_post % 2 == 0 ) ) {
-								get_template_part( 'template-parts/content', 'alternative' );
-							} else {
-								get_template_part( 'template-parts/content' );
-							}
-
+							get_template_part( 'template-parts/content' );
 						endwhile;
 						the_posts_pagination();
 					else :
@@ -84,6 +77,4 @@ get_header();
 			</div>
 		</div>
 	</div>
-	<?php do_action( 'hestia_after_archive_content' ); ?>
-
 	<?php get_footer(); ?>

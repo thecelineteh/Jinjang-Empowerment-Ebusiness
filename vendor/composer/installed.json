@@ -1,0 +1,44 @@
+[
+    {
+        "name": "codeinwp/themeisle-sdk",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "git@github.com:Codeinwp/themeisle-sdk.git",
+            "reference": "9d866559c6090f0e7e70fe3e5a4be8672461a11a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Codeinwp/themeisle-sdk/zipball/9d866559c6090f0e7e70fe3e5a4be8672461a11a",
+            "reference": "9d866559c6090f0e7e70fe3e5a4be8672461a11a",
+            "shasum": ""
+        },
+        "time": "2018-02-16 16:31:29",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "load.php"
+            ]
+        },
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "ThemeIsle team",
+                "email": "friends@themeisle.com",
+                "homepage": "https://themeisle.com"
+            }
+        ],
+        "description": "ThemeIsle SDK ",
+        "homepage": "https://github.com/Codeinwp/themeisle-sdk",
+        "keywords": [
+            "wordpress"
+        ],
+        "support": {
+            "issues": "https://github.com/Codeinwp/themeisle-sdk/issues"
+        }
+    }
+]
