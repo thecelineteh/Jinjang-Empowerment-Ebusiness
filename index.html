@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>HTML Template</title>
+	<title>JinJang E-Business</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -34,6 +34,26 @@
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	<style>
+		.modal {
+	text-align: center;
+	}
+
+	@media screen and (min-width: 768px) {
+	.modal:before {
+		display: inline-block;
+		vertical-align: middle;
+		content: " ";
+		height: 100%;
+	}
+	}
+
+	.modal-dialog {
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+	}
+	</style>
 </head>
 
 <body>
@@ -69,16 +89,12 @@
 				<!--  Main navigation  -->
 				<ul class="main-nav nav navbar-nav navbar-right">
 					<li><a href="#home">Home</a></li>
-					<li><a href="#about">About</a></li>
-					<li><a href="#portfolio">Portfolio</a></li>
-					<li><a href="#service">Services</a></li>
-					<li><a href="#pricing">Prices</a></li>
+					<li><a href="#about">About Us</a></li>
 					<li><a href="#team">Team</a></li>
-					<li class="has-dropdown"><a href="#blog">Blog</a>
-						<ul class="dropdown">
-							<li><a href="blog-single.html">blog post</a></li>
-						</ul>
-					</li>
+					<li><a href="#service">How You Can Help</a></li>
+					<li><a href="#pricing">Sponsor</a></li>
+					<li><a href="#portfolio">Gallery</a></li>
+					<li><a href="#blog">News</a></li>
 					<li><a href="#contact">Contact</a></li>
 				</ul>
 				<!-- /Main navigation -->
@@ -95,11 +111,16 @@
 					<!-- home content -->
 					<div class="col-md-10 col-md-offset-1">
 						<div class="home-content">
-							<h1 class="white-text">We Are Creative Agency</h1>
-							<p class="white-text">Morbi mattis felis at nunc. Duis viverra diam non justo. In nisl. Nullam sit amet magna in magna gravida vehicula. Mauris tincidunt sem sed arcu. Nunc posuere.
+							<h1 class="white-text">JinJang Empowerment E-Business</h1>
+							<p class="white-text">
+								Giving a voice to the faces of poverty
 							</p>
-							<button class="white-btn">Get Started!</button>
-							<button class="main-btn">Learn more</button>
+							<button class="white-btn" data-toggle="modal" data-target="#myModal">
+								Log In
+							</button>
+							<button class="main-btn" data-toggle="modal" data-target="#myModal2">
+								Sign Up
+							</button>
 						</div>
 					</div>
 					<!-- /home content -->
@@ -112,6 +133,159 @@
 	</header>
 	<!-- /Header -->
 
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header" style="text-align: center;">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Log In</h4>
+	      </div>
+	      <div class="modal-body">
+					<br /><br />
+					<form action="/action_page.php">
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-offset-1 col-sm-4">
+									<div class="form-group">
+								    <label for="email">Email address:</label>
+								    <input type="email" class="form-control" id="username"
+										name="username" required>
+								  </div>
+								  <div class="form-group">
+								    <label for="pwd">Password:</label>
+								    <input type="password" class="form-control" id="pwd"
+										name="password" required>
+								  </div>
+								  <div class="checkbox">
+								    <label><input type="checkbox"> Remember me</label>
+								  </div>
+								</div>
+							</div>
+						</div><br /><br>
+						<div class="modal-footer">
+							<div style='text-align: center;'>
+								<button type="submit" class="btn btn-default">Log In</button>
+							</div>
+						</div>
+					</form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+  <!-- End of Model -->
+
+	<!-- Modal -->
+	<div id="myModal2" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header" style="text-align: center;">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Sign Up</h4>
+	      </div>
+				<div class="modal-body">
+        <div class="container">
+            <div class = "row">
+              <div class = "col-xs-12 col-sm-6">
+                <br />
+                <ul class="nav nav-tabs nav-justified">
+                  <li class="active"><a data-toggle="tab" href="#member">Job Seeker</a></li>
+                  <li><a data-toggle="tab" href="#trainer">Company</a></li>
+                </ul>
+                <div class="tab-content">
+                  <div id="member" class="tab-pane fade in active">
+                    <form name="SsignUpForm" onsubmit="return validateMemberForm()">
+                      <div class="row" style="margin-top: 50px;">
+                        <div class="col-sm-offset-2 col-sm-8">
+                          <div class="form-group">
+                            <label>Full Name: </label>
+                            <input type="text" name="Sfullname" class="form-control">
+                            <div id="Mfullname_error" style="color:red;"></div>
+                          </div>
+                          <div class="form-group">
+                            <label>User Name: </label>
+                              <input type="text" name="Susername" class="form-control">
+                            <div id="Musername_error" style="color:red;"></div>
+                          </div>
+                          <div class="form-group">
+                            <label>Password: </label>
+                              <input type="password" name="Spassword" class="form-control">
+                            <div id="Mpassword_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Email: </label>
+                              <input type="email" name="Semail"
+                              pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" class="form-control">
+                            <div id="Memail_error" style="color:red;"></div>
+                          </div>
+													<br />
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <div style="text-align: center;">
+                          <br />
+                          <input type="submit" value="Get Started" name="register" id="membersubmit" class="btn btn-default">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div id="trainer" class="tab-pane fade">
+                    <form name="CsignUpForm" onsubmit="return validateTrainerForm()">
+                      <div class="row" style="margin-top:50px;">
+                        <div class="col-sm-offset-2 col-sm-8">
+                          <div class="form-group">
+                            <label>Company Name: </label>
+                              <input type="text" name="Cfullname" class="form-control">
+                            <div id="Tfullname_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>User Name: </label>
+                              <input type="text" name="Cusername" class="form-control">
+                            <div id="Tusername_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Password:</label>
+                              <input type="password" name="Cpassword" class="form-control">
+                            <div id="Tpassword_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Email: </label>
+                            <input type="email" name="Cemail" pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" class="form-control">
+                            <div id="Temail_error" style="color:red;" ></div>
+                          </div>
+
+													<div class="form-group">
+                            <label>Phone No: </label>
+                            <input type="text" name="Cphone" class="form-control">
+                            <div id="Temail_error" style="color:red;" ></div>
+                          </div>
+                          <br />
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <div style="text-align: center;">
+                          <br />
+                          <input type="submit" value="Get Started" name="register" id="trainersubmit" class="btn btn-default">
+                        </div>
+                      </div>
+                    </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+	    </div>
+	  </div>
+	</div>
+  <!-- End of Model -->
+
 	<!-- About -->
 	<div id="about" class="section md-padding">
 
@@ -123,11 +297,22 @@
 
 				<!-- Section header -->
 				<div class="section-header text-center">
-					<h2 class="title">Welcome to Website</h2>
+					<h2 class="title">About Us</h2>
+					<br /><br /><br />
+					<p style="font-size: x-large; text-align: justify">
+						ACTS Global Networking (AGN) is a non-profit organisation mainly
+						focusing on education and social concern activities.AGN has many
+						success stories of these children having progressed to secondary
+						education and a few are even completing their university education
+						through the sponsorship of kind benefactors like HELP Education
+						Group. AGN has been extending support, counseling and meeting the
+						material needs of this needful community for over 15 years.
+					</p>
 				</div>
 				<!-- /Section header -->
 
-				<!-- about -->
+
+				<!--
 				<div class="col-md-4">
 					<div class="about">
 						<i class="fa fa-cogs"></i>
@@ -136,9 +321,7 @@
 						<a href="#">Read more</a>
 					</div>
 				</div>
-				<!-- /about -->
 
-				<!-- about -->
 				<div class="col-md-4">
 					<div class="about">
 						<i class="fa fa-magic"></i>
@@ -147,9 +330,7 @@
 						<a href="#">Read more</a>
 					</div>
 				</div>
-				<!-- /about -->
-
-				<!-- about -->
+>
 				<div class="col-md-4">
 					<div class="about">
 						<i class="fa fa-mobile"></i>
@@ -158,7 +339,8 @@
 						<a href="#">Read more</a>
 					</div>
 				</div>
-				<!-- /about -->
+				-->
+
 
 			</div>
 			<!-- /Row -->
@@ -169,123 +351,8 @@
 	</div>
 	<!-- /About -->
 
-
-	<!-- Portfolio -->
-	<div id="portfolio" class="section md-padding bg-grey">
-
-		<!-- Container -->
-		<div class="container">
-
-			<!-- Row -->
-			<div class="row">
-
-				<!-- Section header -->
-				<div class="section-header text-center">
-					<h2 class="title">Featured Works</h2>
-				</div>
-				<!-- /Section header -->
-
-				<!-- Work -->
-				<div class="col-md-4 col-xs-6 work">
-					<img class="img-responsive" src="./img/work1.jpg" alt="">
-					<div class="overlay"></div>
-					<div class="work-content">
-						<span>Category</span>
-						<h3>Lorem ipsum dolor</h3>
-						<div class="work-link">
-							<a href="#"><i class="fa fa-external-link"></i></a>
-							<a class="lightbox" href="./img/work1.jpg"><i class="fa fa-search"></i></a>
-						</div>
-					</div>
-				</div>
-				<!-- /Work -->
-
-				<!-- Work -->
-				<div class="col-md-4 col-xs-6 work">
-					<img class="img-responsive" src="./img/work2.jpg" alt="">
-					<div class="overlay"></div>
-					<div class="work-content">
-						<span>Category</span>
-						<h3>Lorem ipsum dolor</h3>
-						<div class="work-link">
-							<a href="#"><i class="fa fa-external-link"></i></a>
-							<a class="lightbox" href="./img/work2.jpg"><i class="fa fa-search"></i></a>
-						</div>
-					</div>
-				</div>
-				<!-- /Work -->
-
-				<!-- Work -->
-				<div class="col-md-4 col-xs-6 work">
-					<img class="img-responsive" src="./img/work3.jpg" alt="">
-					<div class="overlay"></div>
-					<div class="work-content">
-						<span>Category</span>
-						<h3>Lorem ipsum dolor</h3>
-						<div class="work-link">
-							<a href="#"><i class="fa fa-external-link"></i></a>
-							<a class="lightbox" href="./img/work3.jpg"><i class="fa fa-search"></i></a>
-						</div>
-					</div>
-				</div>
-				<!-- /Work -->
-
-				<!-- Work -->
-				<div class="col-md-4 col-xs-6 work">
-					<img class="img-responsive" src="./img/work4.jpg" alt="">
-					<div class="overlay"></div>
-					<div class="work-content">
-						<span>Category</span>
-						<h3>Lorem ipsum dolor</h3>
-						<div class="work-link">
-							<a href="#"><i class="fa fa-external-link"></i></a>
-							<a class="lightbox" href="./img/work4.jpg"><i class="fa fa-search"></i></a>
-						</div>
-					</div>
-				</div>
-				<!-- /Work -->
-
-				<!-- Work -->
-				<div class="col-md-4 col-xs-6 work">
-					<img class="img-responsive" src="./img/work5.jpg" alt="">
-					<div class="overlay"></div>
-					<div class="work-content">
-						<span>Category</span>
-						<h3>Lorem ipsum dolor</h3>
-						<div class="work-link">
-							<a href="#"><i class="fa fa-external-link"></i></a>
-							<a class="lightbox" href="./img/work5.jpg"><i class="fa fa-search"></i></a>
-						</div>
-					</div>
-				</div>
-				<!-- /Work -->
-
-				<!-- Work -->
-				<div class="col-md-4 col-xs-6 work">
-					<img class="img-responsive" src="./img/work6.jpg" alt="">
-					<div class="overlay"></div>
-					<div class="work-content">
-						<span>Category</span>
-						<h3>Lorem ipsum dolor</h3>
-						<div class="work-link">
-							<a href="#"><i class="fa fa-external-link"></i></a>
-							<a class="lightbox" href="./img/work6.jpg"><i class="fa fa-search"></i></a>
-						</div>
-					</div>
-				</div>
-				<!-- /Work -->
-
-			</div>
-			<!-- /Row -->
-
-		</div>
-		<!-- /Container -->
-
-	</div>
-	<!-- /Portfolio -->
-
-	<!-- Service -->
-	<div id="service" class="section md-padding">
+	<!-- Team -->
+	<div id="team" class="section md-padding bg-grey">
 
 		<!-- Container -->
 		<div class="container">
@@ -295,69 +362,72 @@
 
 				<!-- Section header -->
 				<div class="section-header text-center">
-					<h2 class="title">What we offer</h2>
+					<h2 class="title">Our Team</h2>
 				</div>
 				<!-- /Section header -->
 
-				<!-- service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<i class="fa fa-diamond"></i>
-						<h3>App Development</h3>
-						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
+				<!-- team -->
+				<div class="col-sm-4">
+					<div class="team">
+						<div class="team-img">
+							<img class="img-responsive" src="./img/team1.jpg" alt="">
+							<div class="overlay">
+								<div class="team-social">
+									<a href="#"><i class="fa fa-facebook"></i></a>
+									<a href="#"><i class="fa fa-google-plus"></i></a>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="team-content">
+							<h3>Elon Musk</h3>
+							<span>HR MANAGER</span>
+						</div>
 					</div>
 				</div>
-				<!-- /service -->
+				<!-- /team -->
 
-				<!-- service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<i class="fa fa-rocket"></i>
-						<h3>Graphic Design</h3>
-						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
+				<!-- team -->
+				<div class="col-sm-4">
+					<div class="team">
+						<div class="team-img">
+							<img class="img-responsive" src="./img/team2.jpg" alt="">
+							<div class="overlay">
+								<div class="team-social">
+									<a href="#"><i class="fa fa-facebook"></i></a>
+									<a href="#"><i class="fa fa-google-plus"></i></a>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="team-content">
+							<h3>John Doe</h3>
+							<span>CEO</span>
+						</div>
 					</div>
 				</div>
-				<!-- /service -->
+				<!-- /team -->
 
-				<!-- service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<i class="fa fa-cogs"></i>
-						<h3>Creative Idea</h3>
-						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
+				<!-- team -->
+				<div class="col-sm-4">
+					<div class="team">
+						<div class="team-img">
+							<img class="img-responsive" src="./img/team3.jpg" alt="">
+							<div class="overlay">
+								<div class="team-social">
+									<a href="#"><i class="fa fa-facebook"></i></a>
+									<a href="#"><i class="fa fa-google-plus"></i></a>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="team-content">
+							<h3>Mark Zuckerburg</h3>
+							<span>EVENT COORDINATOR</span>
+						</div>
 					</div>
 				</div>
-				<!-- /service -->
-
-				<!-- service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<i class="fa fa-diamond"></i>
-						<h3>Marketing</h3>
-						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
-					</div>
-				</div>
-				<!-- /service -->
-
-				<!-- service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<i class="fa fa-pencil"></i>
-						<h3>Awesome Support</h3>
-						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
-					</div>
-				</div>
-				<!-- /service -->
-
-				<!-- service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<i class="fa fa-flask"></i>
-						<h3>Brand Design</h3>
-						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
-					</div>
-				</div>
-				<!-- /service -->
+				<!-- /team -->
 
 			</div>
 			<!-- /Row -->
@@ -366,63 +436,7 @@
 		<!-- /Container -->
 
 	</div>
-	<!-- /Service -->
-
-
-	<!-- Why Choose Us -->
-	<div id="features" class="section md-padding bg-grey">
-
-		<!-- Container -->
-		<div class="container">
-
-			<!-- Row -->
-			<div class="row">
-
-				<!-- why choose us content -->
-				<div class="col-md-6">
-					<div class="section-header">
-						<h2 class="title">Why Choose Us</h2>
-					</div>
-					<p>Molestie at elementum eu facilisis sed odio. Scelerisque in dictum non consectetur a erat. Aliquam id diam maecenas ultricies mi eget mauris. Ultrices sagittis orci a scelerisque purus.</p>
-					<div class="feature">
-						<i class="fa fa-check"></i>
-						<p>Quis varius quam quisque id diam vel quam elementum.</p>
-					</div>
-					<div class="feature">
-						<i class="fa fa-check"></i>
-						<p>Mauris augue neque gravida in fermentum.</p>
-					</div>
-					<div class="feature">
-						<i class="fa fa-check"></i>
-						<p>Orci phasellus egestas tellus rutrum.</p>
-					</div>
-					<div class="feature">
-						<i class="fa fa-check"></i>
-						<p>Nec feugiat nisl pretium fusce id velit ut tortor pretium.</p>
-					</div>
-				</div>
-				<!-- /why choose us content -->
-
-				<!-- About slider -->
-				<div class="col-md-6">
-					<div id="about-slider" class="owl-carousel owl-theme">
-						<img class="img-responsive" src="./img/about1.jpg" alt="">
-						<img class="img-responsive" src="./img/about2.jpg" alt="">
-						<img class="img-responsive" src="./img/about1.jpg" alt="">
-						<img class="img-responsive" src="./img/about2.jpg" alt="">
-					</div>
-				</div>
-				<!-- /About slider -->
-
-			</div>
-			<!-- /Row -->
-
-		</div>
-		<!-- /Container -->
-
-	</div>
-	<!-- /Why Choose Us -->
-
+	<!-- /Team -->
 
 	<!-- Numbers -->
 	<div id="numbers" class="section sm-padding">
@@ -444,7 +458,7 @@
 					<div class="number">
 						<i class="fa fa-users"></i>
 						<h3 class="white-text"><span class="counter">451</span></h3>
-						<span class="white-text">Happy clients</span>
+						<span class="white-text">Volunteers</span>
 					</div>
 				</div>
 				<!-- /number -->
@@ -454,7 +468,7 @@
 					<div class="number">
 						<i class="fa fa-trophy"></i>
 						<h3 class="white-text"><span class="counter">12</span></h3>
-						<span class="white-text">Awards won</span>
+						<span class="white-text">Events</span>
 					</div>
 				</div>
 				<!-- /number -->
@@ -463,8 +477,8 @@
 				<div class="col-sm-3 col-xs-6">
 					<div class="number">
 						<i class="fa fa-coffee"></i>
-						<h3 class="white-text"><span class="counter">154</span>K</h3>
-						<span class="white-text">Cups of Coffee</span>
+						<h3 class="white-text"><span class="counter">5234.32</span></h3>
+						<span class="white-text">Donation</span>
 					</div>
 				</div>
 				<!-- /number -->
@@ -488,8 +502,127 @@
 	</div>
 	<!-- /Numbers -->
 
-	<!-- Pricing -->
-	<div id="pricing" class="section md-padding">
+	<!-- Literacy and Numeracy Programme -->
+	<div id="features" class="section md-padding bg-grey">
+
+		<!-- Container -->
+		<div class="container">
+
+			<!-- Row -->
+			<div class="row">
+
+				<!-- why choose us content -->
+				<div class="col-md-6">
+					<div class="section-header">
+						<h2 class="title">Jin Jang Community</h2>
+					</div>
+					<p style='text-align: justify'>
+							Jinjang Utara is littered with dilapidated rumah transit
+							(supposed to be temporary housing). Currently, housing more than
+							2000 people. These are forgotten people who became disillusioned
+							and embittered. The inhabitants waited for 40 years to date, to
+							be relocated to their new residence under Projek Perumahan (PPR)
+							which has yet to happen. This is 38 years later than the promised
+							duration by the government. Even if they are offered low cost
+							housing tomorrow, they will not be able to afford it as they can
+							hardly afford the RM40 per month rent even now. The average
+							combined income per month for each family is less than RM1000.
+
+					</p>
+					<!--
+					<div class="feature">
+						<i class="fa fa-check"></i>
+						<p>Quis varius quam quisque id diam vel quam elementum.</p>
+					</div>
+					<div class="feature">
+						<i class="fa fa-check"></i>
+						<p>Mauris augue neque gravida in fermentum.</p>
+					</div>
+					<div class="feature">
+						<i class="fa fa-check"></i>
+						<p>Orci phasellus egestas tellus rutrum.</p>
+					</div>
+					<div class="feature">
+						<i class="fa fa-check"></i>
+						<p>Nec feugiat nisl pretium fusce id velit ut tortor pretium.</p>
+					</div>
+				-->
+				</div>
+				<!-- /why choose us content -->
+
+
+
+				<!-- About slider -->
+				<div class="col-md-6">
+					<div id="about-slider" class="owl-carousel owl-theme">
+						<img class="img-responsive" src="./img/about_3.jpg" alt="">
+						<img class="img-responsive" src="./img/about_4.jpg" alt="">
+						<img class="img-responsive" src="./img/about_5.jpg" alt="">
+						<img class="img-responsive" src="./img/about_6.jpg" alt="">
+					</div>
+				</div>
+				<!-- /About slider -->
+
+			</div>
+			<!-- /Row -->
+
+		</div>
+		<!-- /Container -->
+
+	</div>
+	<!-- /Literacy and Numeracy Programme -->
+
+	<!-- JinJang Community -->
+	<div id="features" class="section md-padding bg-grey">
+
+		<!-- Container -->
+		<div class="container">
+
+			<!-- Row -->
+			<div class="row">
+				<!-- About slider -->
+				<div class="col-md-6">
+					<div id="about-slider2" class="owl-carousel owl-theme">
+						<img class="img-responsive" src="./img/about_1.jpg" alt="">
+						<img class="img-responsive" src="./img/about_2.jpg" alt="">
+						<img class="img-responsive" src="./img/about_1.jpg" alt="">
+						<img class="img-responsive" src="./img/about_2.jpg" alt="">
+					</div>
+				</div>
+				<!-- /About slider -->
+
+				<!-- why choose us content -->
+				<div class="col-md-6">
+					<div class="section-header">
+						<h2 class="title">Literacy and Numeracy Programme</h2>
+					</div>
+					<p style='text-align: justify'>
+							Jinjang Numeracy Project is a project by the students and
+							lecturers within Department of Management Studies. It is
+							part of their community service.
+							The students from HELP are preparing the curriculum to help
+							teach basic mathematics to the children from Jinjang Utara
+							Rumah Panjang. <br /> <br />
+					</p>
+
+				</div>
+				<!-- /why choose us content -->
+
+
+			</div>
+			<!-- /Row -->
+
+		</div>
+		<!-- /Container -->
+
+	</div>
+	<!-- /JinJang Community -->
+
+
+
+
+	<!-- Service -->
+	<div id="service" class="section md-padding">
 
 		<!-- Container -->
 		<div class="container">
@@ -499,7 +632,108 @@
 
 				<!-- Section header -->
 				<div class="section-header text-center">
-					<h2 class="title">Pricing Table</h2>
+					<h2 class="title">How you can help</h2>
+				</div>
+				<!-- /Section header -->
+
+				<!-- service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<i class="fa fa-diamond"></i>
+						<h3>Volunteers</h3>
+						<p>
+							"Volunteer in helping the poor families send their children to
+							school, helping the poor children in their studies and helping
+							children learn new skills."
+						</p><br />
+					</div>
+				</div>
+				<!-- /service -->
+
+				<!-- service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<i class="fa fa-rocket"></i>
+						<h3>Learning Materials</h3>
+						<p>
+								"Helping in curriculum design/development, materials that we
+								can use to teach these children. We need materials that can be
+								used by teachers as well as workbooks for the children"
+						</p>
+					</div>
+				</div>
+				<!-- /service -->
+
+				<!-- service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<i class="fa fa-cogs"></i>
+						<h3>Sponsor a Child</h3>
+						<p>"Sponsor at least RM150 per month which will cover the cost of
+							school bus, daily lunch allowance and compulsory school fees"</p>
+							<br /><br />
+					</div>
+				</div>
+				<!-- /service -->
+
+				<!-- service -->
+				<div class="col-md-4 col-sm-6 col-md-offset-2">
+					<div class="service">
+						<i class="fa fa-diamond"></i>
+						<h3>Empowering Mothers</h3>
+						<p>"Empower mothers with the resources to work and earn a living
+							without sacrificing their time with the family."</p>
+							<br />
+					</div>
+				</div>
+				<!-- /service -->
+
+				<!-- service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<i class="fa fa-pencil"></i>
+						<h3>Children School Supplies</h3>
+						<p>"Donate school supplies such as beg, pencil case, water bottle
+							to us."
+						</p>
+						<br />
+					</div>
+				</div>
+				<!-- /service -->
+
+				<!-- service -->
+				<!--
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<i class="fa fa-flask"></i>
+						<h3>Brand Design</h3>
+						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
+					</div>
+				</div>
+				-->
+				<!-- /service -->
+
+			</div>
+			<!-- /Row -->
+
+		</div>
+		<!-- /Container -->
+
+	</div>
+	<!-- /Service -->
+
+	<!-- Sponsor -->
+	<div id="pricing" class="section md-padding bg-grey">
+
+		<!-- Container -->
+		<div class="container">
+
+			<!-- Row -->
+			<div class="row">
+
+				<!-- Section header -->
+				<div class="section-header text-center">
+					<h2 class="title">Sponsor a Child</h2>
 				</div>
 				<!-- /Section header -->
 
@@ -509,7 +743,7 @@
 						<div class="price-head">
 							<span class="price-title">Basic plan</span>
 							<div class="price">
-								<h3>$9<span class="duration">/ month</span></h3>
+								<h3>$100<span class="duration">/ month</span></h3>
 							</div>
 						</div>
 						<ul class="price-content">
@@ -524,7 +758,7 @@
 							</li>
 						</ul>
 						<div class="price-btn">
-							<button class="outline-btn">Purchase now</button>
+							<button class="outline-btn">Sponsor now</button>
 						</div>
 					</div>
 				</div>
@@ -536,7 +770,7 @@
 						<div class="price-head">
 							<span class="price-title">Silver plan</span>
 							<div class="price">
-								<h3>$19<span class="duration">/ month</span></h3>
+								<h3>$300<span class="duration">/ month</span></h3>
 							</div>
 						</div>
 						<ul class="price-content">
@@ -551,7 +785,7 @@
 							</li>
 						</ul>
 						<div class="price-btn">
-							<button class="outline-btn">Purchase now</button>
+							<button class="outline-btn">Sponsor now</button>
 						</div>
 					</div>
 				</div>
@@ -563,7 +797,7 @@
 						<div class="price-head">
 							<span class="price-title">Gold plan</span>
 							<div class="price">
-								<h3>$39<span class="duration">/ month</span></h3>
+								<h3>$1000<span class="duration">/ month</span></h3>
 							</div>
 						</div>
 						<ul class="price-content">
@@ -578,7 +812,7 @@
 							</li>
 						</ul>
 						<div class="price-btn">
-							<button class="outline-btn">Purchase now</button>
+							<button class="outline-btn">Sponsor now</button>
 						</div>
 					</div>
 				</div>
@@ -648,8 +882,10 @@
 	</div>
 	<!-- /Testimonial -->
 
-	<!-- Team -->
-	<div id="team" class="section md-padding">
+	>
+
+	<!-- Gallery -->
+	<div id="portfolio" class="section md-padding bg-grey">
 
 		<!-- Container -->
 		<div class="container">
@@ -659,72 +895,99 @@
 
 				<!-- Section header -->
 				<div class="section-header text-center">
-					<h2 class="title">Our Team</h2>
+					<h2 class="title">Gallery</h2>
 				</div>
 				<!-- /Section header -->
 
-				<!-- team -->
-				<div class="col-sm-4">
-					<div class="team">
-						<div class="team-img">
-							<img class="img-responsive" src="./img/team1.jpg" alt="">
-							<div class="overlay">
-								<div class="team-social">
-									<a href="#"><i class="fa fa-facebook"></i></a>
-									<a href="#"><i class="fa fa-google-plus"></i></a>
-									<a href="#"><i class="fa fa-twitter"></i></a>
-								</div>
-							</div>
-						</div>
-						<div class="team-content">
-							<h3>John Doe</h3>
-							<span>Web Designer</span>
+				<!-- Work -->
+				<div class="col-md-4 col-xs-6 work">
+					<img class="img-responsive" src="./img/work_1.jpg" alt="">
+					<div class="overlay"></div>
+					<div class="work-content">
+						<span>Category</span>
+						<h3>Lorem ipsum dolor</h3>
+						<div class="work-link">
+							<a href="#"><i class="fa fa-external-link"></i></a>
+							<a class="lightbox" href="./img/work_1.jpg"><i class="fa fa-search"></i></a>
 						</div>
 					</div>
 				</div>
-				<!-- /team -->
+				<!-- /Work -->
 
-				<!-- team -->
-				<div class="col-sm-4">
-					<div class="team">
-						<div class="team-img">
-							<img class="img-responsive" src="./img/team2.jpg" alt="">
-							<div class="overlay">
-								<div class="team-social">
-									<a href="#"><i class="fa fa-facebook"></i></a>
-									<a href="#"><i class="fa fa-google-plus"></i></a>
-									<a href="#"><i class="fa fa-twitter"></i></a>
-								</div>
-							</div>
-						</div>
-						<div class="team-content">
-							<h3>John Doe</h3>
-							<span>Web Designer</span>
+				<!-- Work -->
+				<div class="col-md-4 col-xs-6 work">
+					<img class="img-responsive" src="./img/work_2.jpg" alt="">
+					<div class="overlay"></div>
+					<div class="work-content">
+						<span>Category</span>
+						<h3>Lorem ipsum dolor</h3>
+						<div class="work-link">
+							<a href="#"><i class="fa fa-external-link"></i></a>
+							<a class="lightbox" href="./img/work_2.jpg"><i class="fa fa-search"></i></a>
 						</div>
 					</div>
 				</div>
-				<!-- /team -->
+				<!-- /Work -->
 
-				<!-- team -->
-				<div class="col-sm-4">
-					<div class="team">
-						<div class="team-img">
-							<img class="img-responsive" src="./img/team3.jpg" alt="">
-							<div class="overlay">
-								<div class="team-social">
-									<a href="#"><i class="fa fa-facebook"></i></a>
-									<a href="#"><i class="fa fa-google-plus"></i></a>
-									<a href="#"><i class="fa fa-twitter"></i></a>
-								</div>
-							</div>
-						</div>
-						<div class="team-content">
-							<h3>John Doe</h3>
-							<span>Web Designer</span>
+				<!-- Work -->
+				<div class="col-md-4 col-xs-6 work">
+					<img class="img-responsive" src="./img/work_3.jpg" alt="">
+					<div class="overlay"></div>
+					<div class="work-content">
+						<span>Category</span>
+						<h3>Lorem ipsum dolor</h3>
+						<div class="work-link">
+							<a href="#"><i class="fa fa-external-link"></i></a>
+							<a class="lightbox" href="./img/work_3.jpg"><i class="fa fa-search"></i></a>
 						</div>
 					</div>
 				</div>
-				<!-- /team -->
+				<!-- /Work -->
+
+				<!-- Work -->
+				<div class="col-md-4 col-xs-6 work">
+					<img class="img-responsive" src="./img/work_4.jpg" alt="">
+					<div class="overlay"></div>
+					<div class="work-content">
+						<span>Category</span>
+						<h3>Lorem ipsum dolor</h3>
+						<div class="work-link">
+							<a href="#"><i class="fa fa-external-link"></i></a>
+							<a class="lightbox" href="./img/work_4.jpg"><i class="fa fa-search"></i></a>
+						</div>
+					</div>
+				</div>
+				<!-- /Work -->
+
+				<!-- Work -->
+				<div class="col-md-4 col-xs-6 work">
+					<img class="img-responsive" src="./img/work_5.jpg" alt="">
+					<div class="overlay"></div>
+					<div class="work-content">
+						<span>Category</span>
+						<h3>Lorem ipsum dolor</h3>
+						<div class="work-link">
+							<a href="#"><i class="fa fa-external-link"></i></a>
+							<a class="lightbox" href="./img/work_5.jpg"><i class="fa fa-search"></i></a>
+						</div>
+					</div>
+				</div>
+				<!-- /Work -->
+
+				<!-- Work -->
+				<div class="col-md-4 col-xs-6 work">
+					<img class="img-responsive" src="./img/work_6.jpg" alt="">
+					<div class="overlay"></div>
+					<div class="work-content">
+						<span>Category</span>
+						<h3>Lorem ipsum dolor</h3>
+						<div class="work-link">
+							<a href="#"><i class="fa fa-external-link"></i></a>
+							<a class="lightbox" href="./img/work_6.jpg"><i class="fa fa-search"></i></a>
+						</div>
+					</div>
+				</div>
+				<!-- /Work -->
 
 			</div>
 			<!-- /Row -->
@@ -733,7 +996,7 @@
 		<!-- /Container -->
 
 	</div>
-	<!-- /Team -->
+	<!-- /Gallery -->
 
 	<!-- Blog -->
 	<div id="blog" class="section md-padding bg-grey">
@@ -754,17 +1017,19 @@
 				<div class="col-md-4">
 					<div class="blog">
 						<div class="blog-img">
-							<img class="img-responsive" src="./img/blog1.jpg" alt="">
+							<img class="img-responsive" src="./img/blog_1.jpg" alt="">
 						</div>
 						<div class="blog-content">
 							<ul class="blog-meta">
-								<li><i class="fa fa-user"></i>John doe</li>
-								<li><i class="fa fa-clock-o"></i>18 Oct</li>
-								<li><i class="fa fa-comments"></i>57</li>
+								<li><i class="fa fa-user"></i>Adeline Lum</li>
+								<li><i class="fa fa-clock-o"></i>7 Jan 2015</li>
 							</ul>
-							<h3>Molestie at elementum eu facilisis sed odio</h3>
-							<p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
-							<a href="blog-single.html">Read more</a>
+							<h3>Bringing the Plight of Children in Jinjang Utara to the
+								Forefront: An Outdoor Christmas Party</h3>
+							<p>On 3rd of January, Acts Global Networking (AGN) and Church of
+								Acts threw an outdoor Christmas party for 1500 children at
+								Padang Bolasepak</p>
+							<a href="http://christianitymalaysia.com/wp/bringing-the-plight-of-children-in-jinjang-utara-to-the-forefront-an-outdoor-christmas-party/" target="_blank">Read more</a>
 						</div>
 					</div>
 				</div>
@@ -774,17 +1039,18 @@
 				<div class="col-md-4">
 					<div class="blog">
 						<div class="blog-img">
-							<img class="img-responsive" src="./img/blog2.jpg" alt="">
+							<img class="img-responsive" src="./img/blog_2.jpg" alt="">
 						</div>
 						<div class="blog-content">
 							<ul class="blog-meta">
-								<li><i class="fa fa-user"></i>John doe</li>
-								<li><i class="fa fa-clock-o"></i>18 Oct</li>
-								<li><i class="fa fa-comments"></i>57</li>
+								<li><i class="fa fa-user"></i>Adeline Lum</li>
+								<li><i class="fa fa-clock-o"></i>24 Dec 2015</li>
 							</ul>
-							<h3>Molestie at elementum eu facilisis sed odio</h3>
-							<p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
-							<a href="blog-single.html">Read more</a>
+							<h3>Liberating the Illiterate – Holiday Education for the Poor Children of Jinjang Utara</h3>
+							<p>During this year-end school holiday, Acts Global Networking
+								(AGN) launched a three-day English literacy programme from 7th
+							</p>
+							<a href="https://christianitymalaysia.com/wp/liberating-the-illiterate-holiday-education-for-the-poor-children-of-jinjang-utara/" target="_blank">Read more</a>
 						</div>
 					</div>
 				</div>
@@ -794,17 +1060,20 @@
 				<div class="col-md-4">
 					<div class="blog">
 						<div class="blog-img">
-							<img class="img-responsive"  src="./img/blog3.jpg" alt="">
+							<img class="img-responsive"  src="./img/blog_3.jpg" alt="">
 						</div>
 						<div class="blog-content">
 							<ul class="blog-meta">
-								<li><i class="fa fa-user"></i>John doe</li>
-								<li><i class="fa fa-clock-o"></i>18 Oct</li>
-								<li><i class="fa fa-comments"></i>57</li>
+								<li><i class="fa fa-user"></i>Dereck Lim</li>
+								<li><i class="fa fa-clock-o"></i>31 Dec 2017</li>
 							</ul>
-							<h3>Molestie at elementum eu facilisis sed odio</h3>
-							<p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
-							<a href="blog-single.html">Read more</a>
+							<h3>Bringing Hope to Jinjang Utara</h3>
+							<p>Jinjang, KL – 2 December – The children (and parents)
+								of Jinjang Utara with great delight descended upon
+								Padang Taman Aman Putra where a massive Christmas and
+								Back-to-school party was organised especially for them.
+								Anticipation filled the </p>
+							<a href="https://christianitymalaysia.com/wp/bringing-hope-to-jinjang-utara/" target="_blank">Read more</a>
 						</div>
 					</div>
 				</div>
@@ -839,7 +1108,7 @@
 					<div class="contact">
 						<i class="fa fa-phone"></i>
 						<h3>Phone</h3>
-						<p>512-421-3940</p>
+						<p>+60 16-367-2568</p>
 					</div>
 				</div>
 				<!-- /contact -->
@@ -849,7 +1118,7 @@
 					<div class="contact">
 						<i class="fa fa-envelope"></i>
 						<h3>Email</h3>
-						<p>email@support.com</p>
+						<p>agn@support.com</p>
 					</div>
 				</div>
 				<!-- /contact -->
