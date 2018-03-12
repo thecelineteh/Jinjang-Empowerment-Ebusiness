@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>JinJang E-Business</title>
+	<title>Jinjang E-Business</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -53,6 +53,7 @@
 	text-align: left;
 	vertical-align: middle;
 	}
+
 	</style>
 </head>
 
@@ -174,7 +175,7 @@
 	    </div>
 	  </div>
 	</div>
-  <!-- End of Model -->
+  <!-- End of Modal -->
 
 	<!-- Modal -->
 	<div id="myModal2" class="modal fade" role="dialog">
@@ -185,107 +186,127 @@
 	        <button type="button" class="close" data-dismiss="modal">&times;</button>
 	        <h4 class="modal-title">Sign Up</h4>
 	      </div>
-				<div class="modal-body">
-        <div class="container">
+		  <div class="modal-body">
+        	<div class="container">
             <div class = "row">
               <div class = "col-xs-12 col-sm-6">
                 <br />
                 <ul class="nav nav-tabs nav-justified">
-                  <li class="active"><a data-toggle="tab" href="#member">Job Seeker</a></li>
-                  <li><a data-toggle="tab" href="#trainer">Company</a></li>
+                  <li class="active"><a data-toggle="tab" href="#jobseeker">Job Seeker</a></li>
+                  <li><a data-toggle="tab" href="#company">Company</a></li>
                 </ul>
                 <div class="tab-content">
-                  <div id="member" class="tab-pane fade in active">
-                    <form name="SsignUpForm" onsubmit="return validateMemberForm()">
+                  <div id="jobseeker" class="tab-pane fade in active">
+                    <form name="SsignUpForm" onsubmit="return validateJobSeekerSignUp()">
                       <div class="row" style="margin-top: 50px;">
                         <div class="col-sm-offset-2 col-sm-8">
                           <div class="form-group">
-                            <label>Full Name: </label>
-                            <input type="text" name="Sfullname" class="form-control" required>
-                            <div id="Mfullname_error" style="color:red;"></div>
-                          </div>
-                          <div class="form-group">
-                            <label>User Name: </label>
+                            <label>Username: </label>
                               <input type="text" name="Susername" class="form-control" required>
-                            <div id="Musername_error" style="color:red;"></div>
+                            <div id="Susername_error" style="color:red;"></div>
                           </div>
+
                           <div class="form-group">
                             <label>Password: </label>
                               <input type="password" name="Spassword" class="form-control" required>
-                            <div id="Mpassword_error" style="color:red;"></div>
+                            <div id="Spassword_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Full Name: </label>
+                            <input type="text" name="Sfullname" class="form-control" required>
+                            <div id="Sfullname_error" style="color:red;"></div>
                           </div>
 
                           <div class="form-group">
                             <label>Email: </label>
                               <input type="email" name="Semail" required
                               pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" class="form-control">
-                            <div id="Memail_error" style="color:red;"></div>
-                          </div>
-													<br />
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <div style="text-align: center;">
-                          <br />
-                          <input type="submit" value="Get Started" name="register" id="membersubmit" class="btn btn-default">
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                  <div id="trainer" class="tab-pane fade">
-                    <form name="CsignUpForm" onsubmit="return validateTrainerForm()">
-                      <div class="row" style="margin-top:50px;">
-                        <div class="col-sm-offset-2 col-sm-8">
-                          <div class="form-group">
-                            <label>Company Name: </label>
-                              <input type="text" name="Cfullname" class="form-control" required>
-                            <div id="Tfullname_error" style="color:red;"></div>
+                            <div id="Semail_error" style="color:red;"></div>
                           </div>
 
                           <div class="form-group">
-                            <label>User Name: </label>
-                              <input type="text" name="Cusername" class="form-control" required>
-                            <div id="Tusername_error" style="color:red;"></div>
-                          </div>
-
-                          <div class="form-group">
-                            <label>Password:</label>
-                              <input type="password" name="Cpassword" class="form-control" required>
-                            <div id="Tpassword_error" style="color:red;"></div>
-                          </div>
-
-                          <div class="form-group">
-                            <label>Email: </label>
-                            <input type="email" name="Cemail" required
-							pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" class="form-control">
-                            <div id="Temail_error" style="color:red;" ></div>
-                          </div>
-
-													<div class="form-group">
                             <label>Phone No: </label>
-                            <input type="text" name="Cphone" class="form-control" required>
-                            <div id="Temail_error" style="color:red;" ></div>
+                            <input type="text" name="Sphone" class="form-control" required>
+                            <div id="Sphone_error" style="color:red;" ></div>
                           </div>
+
                           <br />
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <div style="text-align: center;">
-                          <br />
-                          <input type="submit" value="Get Started" name="register" id="trainersubmit" class="btn btn-default">
-                        </div>
-                      </div>
-                    </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                      	</div>
+						</div>
+
+						<div class="modal-footer">
+	                        <div style="text-align: center;">
+	                          <br />
+	                          <input type="submit" value="Get Started" name="registerS" id="jobseekersubmit" class="btn btn-default">
+	                        </div>
+                      	</div>
+
+                      </form>
+                     </div>
+       
+                  	<div id="company" class="tab-pane fade">
+                    	<form name="CsignUpForm" onsubmit="return validateCompanySignUp()">
+	                      <div class="row" style="margin-top:50px;">
+	                        <div class="col-sm-offset-2 col-sm-8">
+	                          <div class="form-group">
+	                            <label>Username: </label>
+	                              <input type="text" name="Cusername" class="form-control" required>
+	                            <div id="Cusername_error" style="color:red;"></div>
+	                          </div>
+
+	                          <div class="form-group">
+	                            <label>Password:</label>
+	                              <input type="password" name="Cpassword" class="form-control" required>
+	                            <div id="Cpassword_error" style="color:red;"></div>
+	                          </div>
+
+	                          <div class="form-group">
+	                            <label>Company Name: </label>
+	                              <input type="text" name="Ccompanyname" class="form-control" required>
+	                            <div id="Ccompanyname_error" style="color:red;"></div>
+	                          </div>
+
+	                          <div class="form-group">
+	                            <label>Company Description: </label>
+	                              <textarea name="Ccompanydesc" class="form-control" required rows="5" required></textarea>
+	                            <div id="Ccompanydesc_error" style="color:red;"></div>
+	                          </div>
+
+	                          <div class="form-group">
+	                            <label>Email: </label>
+	                            <input type="email" name="Cemail" required
+								pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" class="form-control">
+	                            <div id="Cemail_error" style="color:red;" ></div>
+	                          </div>
+
+							  <div class="form-group">
+	                            <label>Phone No: </label>
+	                            <input type="text" name="Cphone" class="form-control" required>
+	                            <div id="Cphone_error" style="color:red;" ></div>
+	                          </div>
+
+	                          <br />
+	                        </div>
+	                      </div>
+	                      <div class="modal-footer">
+	                        <div style="text-align: center;">
+	                          <br />
+	                          <input type="submit" value="Get Started" name="registerC" id="companysubmit" class="btn btn-default">
+	                        </div>
+	                      </div>
+                    	</form>
+                   </div>
                 </div>
+               </div>
+             </div>
+             </div>
           </div>
+          <!-- End of modal body-->
 	    </div>
 	  </div>
 	</div>
-  <!-- End of Model -->
+  	<!-- End of Modal -->
 
 	<!-- About -->
 	<div id="about" class="section md-padding">
@@ -302,7 +323,7 @@
 					<br /><br /><br />
 					<p style="font-size: x-large; text-align: justify">
 						ACTS Global Networking (AGN) is a non-profit organisation mainly
-						focusing on education and social concern activities.AGN has many
+						focusing on education and social concern activities. AGN has many
 						success stories of these children having progressed to secondary
 						education and a few are even completing their university education
 						through the sponsorship of kind benefactors like HELP Education
@@ -515,7 +536,7 @@
 				<!-- why choose us content -->
 				<div class="col-md-6">
 					<div class="section-header">
-						<h2 class="title">Jin Jang Community</h2>
+						<h2 class="title">Jinjang Community</h2>
 					</div>
 					<p style='text-align: justify'>
 							Jinjang Utara is littered with dilapidated rumah transit
@@ -1010,7 +1031,7 @@
 
 				<!-- Section header -->
 				<div class="section-header text-center">
-					<h2 class="title">Recents news</h2>
+					<h2 class="title">Recent News</h2>
 				</div>
 				<!-- /Section header -->
 
@@ -1186,7 +1207,7 @@
 
 					<!-- footer copyright -->
 					<div class="footer-copyright">
-						<p>Copyright © 2017. All Rights Reserved. Designed by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+						<p>Copyright © 2017 AGN. All Rights Reserved. Designed by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
 					</div>
 					<!-- /footer copyright -->
 
