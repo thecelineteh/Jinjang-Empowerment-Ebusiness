@@ -1,3 +1,10 @@
+<?php
+	session_start();
+	if (!isset($_SESSION['userName'])) {
+	  $_SESSION['userName'] = "empty";
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -145,23 +152,53 @@
 	      </div>
 	      <div class="modal-body">
 					<br /><br />
-					<form action="/action_page.php">
+					<form action="signIn.php" method="post">
 						<div class="container">
 							<div class="row">
 								<div class="col-sm-offset-1 col-sm-4">
 									<div class="form-group">
-								    <label for="email">Email address:</label>
-								    <input type="email" class="form-control" id="username"
-										name="username" required>
+										<?php
+										if ($_SESSION['userName'] == "failed") {
+											echo "<div class='alert alert-danger'>";
+											echo "Wrong username or passowd!";
+											echo "</div><br />";
+										}
+										 ?>
+								    <label for="email">Username:</label>
+										<?php
+										if (isset($_SESSION['remember'])) {
+											echo "<input type='text' class='form-control' id='
+												username' name='username' value='" .
+												$_SESSION['remember'] . "' required>";
+										}
+										else {
+											echo "<input type='text' class='form-control' id='
+												username' name='username' required>";
+										}
+										?>
 								  </div>
 								  <div class="form-group">
 								    <label for="pwd">Password:</label>
 								    <input type="password" class="form-control" id="pwd"
 										name="password" required>
 								  </div>
-								  <div class="checkbox">
-								    <label><input type="checkbox"> Remember me</label>
-								  </div>
+									<?php
+									if (isset($_SESSION['remember'])) {
+										echo "
+										<div class='checkbox'>
+											<label><input type='checkbox' name='remember' checked> Remember me</label>
+										</div>
+										";
+									}
+									else {
+										echo "
+										<div class='checkbox'>
+											<label><input type='checkbox' name='remember'> Remember me</label>
+										</div>
+										";
+									}
+									?>
+
 								</div>
 							</div>
 						</div><br /><br>
