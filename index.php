@@ -234,7 +234,6 @@
                 </ul>
                 <div class="tab-content">
                   <div id="jobseeker" class="tab-pane fade in active">
-                    <form name="SsignUpForm" method="post" action="signUp.php">
 
                     <form name="SsignUpForm" action="jSignUp.php" method="post">
 
