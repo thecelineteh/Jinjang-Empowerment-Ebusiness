@@ -160,7 +160,7 @@
 										<?php
 										if ($_SESSION['userName'] == "failed") {
 											echo "<div class='alert alert-danger'>";
-											echo "Wrong username or passowd!";
+											echo "Wrong username or password!";
 											echo "</div><br />";
 										}
 										 ?>
@@ -234,59 +234,56 @@
                 </ul>
                 <div class="tab-content">
                   <div id="jobseeker" class="tab-pane fade in active">
-                    <form name="SsignUpForm" onsubmit="return validateJobSeekerSignUp()">
+                    <form name="SsignUpForm" method="post" action="signUp.php">
                       <div class="row" style="margin-top: 50px;">
                         <div class="col-sm-offset-2 col-sm-8">
+                        	<!-- User is a Job Seeker -->
+                        	<input type="hidden" name="userType" value="JobSeeker">
                           <div class="form-group">
                             <label>Username: </label>
-                              <input type="text" name="Susername" class="form-control" required>
-                            <div id="Susername_error" style="color:red;"></div>
+                              <input type="text" name="username" class="form-control" required>
+                            <div id="username_error" style="color:red;"></div>
                           </div>
 
                           <div class="form-group">
                             <label>Password: </label>
-                              <input type="password" name="Spassword" class="form-control" required>
-                            <div id="Spassword_error" style="color:red;"></div>
+                              <input type="password" name="password" class="form-control" required>
+                            <div id="password_error" style="color:red;"></div>
                           </div>
 
                           <div class="form-group">
                             <label>Full Name: </label>
-                            <input type="text" name="Sfullname" class="form-control" required>
-                            <div id="Sfullname_error" style="color:red;"></div>
+                            <input type="text" name="fullName" class="form-control" required>
+                            <div id="fullName_error" style="color:red;"></div>
                           </div>
 
                           <div class="form-group">
                             <label>Email: </label>
-                              <input type="email" name="Semail" required
+                              <input type="email" name="email" required
                               pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" class="form-control">
-                            <div id="Semail_error" style="color:red;"></div>
+                            <div id="email_error" style="color:red;"></div>
                           </div>
 
                           <div class="form-group">
                             <label>Phone No: </label>
-                            <input type="text" name="Sphone" class="form-control" required>
-                            <div id="Sphone_error" style="color:red;" ></div>
+                            <input type="text" name="phone" class="form-control" required>
+                            <div id="phone_error" style="color:red;" ></div>
                           </div>
-<<<<<<< HEAD:index.html
-	                        
-                            <div id="Cphone_error" style="color:red;" ></div>
 
 	                        <div class="form-group">
 		                      <label>Skill Sets: </label>
 	                          <div class="checkbox">
-							    <label><input type="checkbox" class="checkbox" value="weaving"> Weaving</label>
+							    <label><input type="checkbox" name="chk_weave" class="checkbox" value="weaving"> Weaving</label>
 							  </div>
 							  <div class="checkbox">
-							    <label><input type="checkbox" class="checkbox" value="knitting"> Knitting</label>
+							    <label><input type="checkbox" name="chk_knit" class="checkbox" value="knitting"> Knitting</label>
 							  </div>
 							  <div class="checkbox">
-							    <label><input type="checkbox" class="checkbox" value="baking"> Baking</label>
+							    <label><input type="checkbox" name="chk_bake" class="checkbox" value="baking"> Baking</label>
 							  </div>
 						  </div>
 
 	                      </div>
-=======
->>>>>>> master:index.php
 
                           <br />
                       	</div>
@@ -302,44 +299,46 @@
                      </div>
 
                   	<div id="company" class="tab-pane fade">
-                    	<form name="CsignUpForm" onsubmit="return validateCompanySignUp()">
+                    	<form name="CsignUpForm" method="post" action="signUp.php">
 	                      <div class="row" style="margin-top:50px;">
 	                        <div class="col-sm-offset-2 col-sm-8">
+	                        <!-- User is a Client -->
+                        	<input type="hidden" name="userType" value="Client">
 	                          <div class="form-group">
 	                            <label>Username: </label>
-	                              <input type="text" name="Cusername" class="form-control" required>
-	                            <div id="Cusername_error" style="color:red;"></div>
+	                              <input type="text" name="username" class="form-control" required>
+	                            <div id="username_error" style="color:red;"></div>
 	                          </div>
 
 	                          <div class="form-group">
 	                            <label>Password:</label>
-	                              <input type="password" name="Cpassword" class="form-control" required>
-	                            <div id="Cpassword_error" style="color:red;"></div>
+	                              <input type="password" name="password" class="form-control" required>
+	                            <div id="password_error" style="color:red;"></div>
 	                          </div>
 
 	                          <div class="form-group">
 	                            <label>Company Name: </label>
-	                              <input type="text" name="Ccompanyname" class="form-control" required>
-	                            <div id="Ccompanyname_error" style="color:red;"></div>
+	                              <input type="text" name="companyname" class="form-control" required>
+	                            <div id="companyname_error" style="color:red;"></div>
 	                          </div>
 
 	                          <div class="form-group">
 	                            <label>Company Description: </label>
-	                            <textarea name="Ccompanydesc" required rows="5" required></textarea>
-	                            <div id="Ccompanydesc_error" style="color:red;"></div>
+	                            <textarea name="companydesc" required rows="5" required></textarea>
+	                            <div id="companydesc_error" style="color:red;"></div>
 	                          </div>
 
 	                          <div class="form-group">
 	                            <label>Email: </label>
-	                            <input type="email" name="Cemail" required
+	                            <input type="email" name="email" required
 								pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" class="form-control">
-	                            <div id="Cemail_error" style="color:red;" ></div>
+	                            <div id="email_error" style="color:red;" ></div>
 	                          </div>
 
 							  <div class="form-group">
 	                            <label>Phone No: </label>
-	                            <input type="text" name="Cphone" class="form-control" required>
-	                            <div id="Cphone_error" style="color:red;" ></div>
+	                            <input type="text" name="phone" class="form-control" required>
+	                            <div id="phone_error" style="color:red;" ></div>
 	                          </div>
 
 	                          <br />
