@@ -12,20 +12,12 @@
   $row = mysqli_fetch_assoc($result);
 
   if ($row['username'] == $userName && $row['password'] == $password) {
-    $_SESSION['userName'] = $row['username'];
-    $_SESSION['password'] = $row['password'];
-    $_SESSION['phone'] = $row['phoneNo'];
-    $_SESSION['address'] = $row['address'];
-
     if ($row['userType'] == 'Job Seeker') {
-      $query_S = "SELECT * FROM jobseeker WHERE username = '$userName'";
-      $result_S = mysqli_query($connection, $query_S);
-      $row_S = mysqli_fetch_assoc($result_S);
-      $_SESSION['Sfullname'] = $row_S['fullName'];
       header('Location: jobs.html');
     } else {
       header('Location: postJob.html');
-    }
+
+    $_SESSION['userName'] = $row['username'];
 
     if (isset($remember)) {
       $_SESSION['remember'] = $row['username'];
@@ -39,5 +31,5 @@
     $_SESSION['userName'] = "failed";
   }
 
-   mysqli_close($connection);
+  mysqli_close($connection);
  ?>
