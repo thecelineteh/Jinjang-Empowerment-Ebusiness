@@ -1,3 +1,10 @@
+<?php
+	session_start();
+	if (!isset($_SESSION['userName'])) {
+	  $_SESSION['userName'] = "empty";
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -114,7 +121,7 @@
 						<div class="home-content">
 							<h1 class="white-text">JinJang Empowerment E&nbsp;-&nbsp;Business</h1>
 							<p class="white-text">
-								Giving a voice to the faces of poverty
+								"Impact a life, transform a community"
 							</p>
 							<button class="white-btn" data-toggle="modal" data-target="#myModal">
 								Log In
@@ -145,23 +152,53 @@
 	      </div>
 	      <div class="modal-body">
 					<br /><br />
-					<form action="/action_page.php">
+					<form action="signIn.php" method="post">
 						<div class="container">
 							<div class="row">
 								<div class="col-sm-offset-1 col-sm-4">
 									<div class="form-group">
-								    <label for="email">Email address:</label>
-								    <input type="email" class="form-control" id="username"
-										name="username" required>
+										<?php
+										if ($_SESSION['userName'] == "failed") {
+											echo "<div class='alert alert-danger'>";
+											echo "Wrong username or passowd!";
+											echo "</div><br />";
+										}
+										 ?>
+								    <label for="email">Username:</label>
+										<?php
+										if (isset($_SESSION['remember'])) {
+											echo "<input type='text' class='form-control' id='
+												username' name='username' value='" .
+												$_SESSION['remember'] . "' required>";
+										}
+										else {
+											echo "<input type='text' class='form-control' id='
+												username' name='username' required>";
+										}
+										?>
 								  </div>
 								  <div class="form-group">
 								    <label for="pwd">Password:</label>
 								    <input type="password" class="form-control" id="pwd"
 										name="password" required>
 								  </div>
-								  <div class="checkbox">
-								    <label><input type="checkbox"> Remember me</label>
-								  </div>
+									<?php
+									if (isset($_SESSION['remember'])) {
+										echo "
+										<div class='checkbox'>
+											<label><input type='checkbox' name='remember' checked> Remember me</label>
+										</div>
+										";
+									}
+									else {
+										echo "
+										<div class='checkbox'>
+											<label><input type='checkbox' name='remember'> Remember me</label>
+										</div>
+										";
+									}
+									?>
+
 								</div>
 							</div>
 						</div><br /><br>
@@ -230,6 +267,7 @@
                             <input type="text" name="Sphone" class="form-control" required>
                             <div id="Sphone_error" style="color:red;" ></div>
                           </div>
+<<<<<<< HEAD:index.html
 	                        
                             <div id="Cphone_error" style="color:red;" ></div>
 
@@ -247,6 +285,8 @@
 						  </div>
 
 	                      </div>
+=======
+>>>>>>> master:index.php
 
                           <br />
                       	</div>
@@ -260,7 +300,7 @@
 
                       </form>
                      </div>
-       
+
                   	<div id="company" class="tab-pane fade">
                     	<form name="CsignUpForm" onsubmit="return validateCompanySignUp()">
 	                      <div class="row" style="margin-top:50px;">
@@ -285,7 +325,7 @@
 
 	                          <div class="form-group">
 	                            <label>Company Description: </label>
-	                              <textarea name="Ccompanydesc" required rows="5" required></textarea>
+	                            <textarea name="Ccompanydesc" required rows="5" required></textarea>
 	                            <div id="Ccompanydesc_error" style="color:red;"></div>
 	                          </div>
 
