@@ -235,6 +235,9 @@
                 <div class="tab-content">
                   <div id="jobseeker" class="tab-pane fade in active">
                     <form name="SsignUpForm" method="post" action="signUp.php">
+
+                    <form name="SsignUpForm" action="jSignUp.php" method="post">
+
                       <div class="row" style="margin-top: 50px;">
                         <div class="col-sm-offset-2 col-sm-8">
                         	<!-- User is a Job Seeker -->
@@ -299,7 +302,7 @@
                      </div>
 
                   	<div id="company" class="tab-pane fade">
-                    	<form name="CsignUpForm" method="post" action="signUp.php">
+                    	<form name="CsignUpForm" method="post" action="cSignUp.php">
 	                      <div class="row" style="margin-top:50px;">
 	                        <div class="col-sm-offset-2 col-sm-8">
 	                        <!-- User is a Client -->
@@ -323,12 +326,6 @@
 	                          </div>
 
 	                          <div class="form-group">
-	                            <label>Company Description: </label>
-	                            <textarea name="companydesc" required rows="5" required></textarea>
-	                            <div id="companydesc_error" style="color:red;"></div>
-	                          </div>
-
-	                          <div class="form-group">
 	                            <label>Email: </label>
 	                            <input type="email" name="email" required
 								pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" class="form-control">
@@ -340,7 +337,6 @@
 	                            <input type="text" name="phone" class="form-control" required>
 	                            <div id="phone_error" style="color:red;" ></div>
 	                          </div>
-
 	                          <br />
 	                        </div>
 	                      </div>

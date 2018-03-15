@@ -1,70 +1,50 @@
-body {
-  background-color: #41B3FF;
-
-  font-family: 'helvetica', 'verdana', sans-serif;
-  font-size: 16px;
-}
-h1, p {
-  text-align: center;
-  color: #fff;
-  margin: 0 auto;
-  max-width: 700px;
+input[type=text] {
+  width: 130px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
 }
 
-/* ----------- Relevant Code Below ----- */
-
-div#container {
-  display: table;
-  
-  /* I want the whole search box
-     to be exactly this wide. */
-  width: 70%;
-  
-  margin: 50px auto 0;
-}
-div#container div.cell {
-  display: table-cell;
-}
-div#container div.cell:last-child {
-  /* Makes sure this cell is only wide enough
-     for the button label. */
-  width: 5%;
-}
-
-input[type=search], div.button {  
+/* When the input field gets focus, change its width to 100% */
+input[type=text]:focus {
   width: 100%;
-  height: 35px;
-
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  
-  font-family: inherit;
-  font-size: inherit;
 }
 
-input[type=search] {
-  margin: 0;
-  padding: 0 10px;
-  
-  background-color: #f8f8f8;
-  
-  border: 0;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], input[type="url"], input[type="tel"], textarea {
+  height: 40px;
+  width: 100%;
+  border: none;
+  background: white;
+  color: #354052;
+  padding: 0px 10px;
+  opacity: 0.8;
+  -webkit-transition: 0.2s border-color, 0.2s opacity;
+  transition: 0.2s border-color, 0.2s opacity;
+}
+input, button {
+display: inline;
 }
 
-div.button {
-  line-height: 35px;
-
-  margin: 0;
-  padding: 0 20px;
-
-  color: #fff;
-  background-color: #FF1717;
-  font-weight: bold;
-  
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  
-  white-space: nowrap;
+form {
+width:500px;
+margin:50px auto;
+}
+.search {
+padding:8px 15px;
+background:rgba(50, 50, 50, 0.2);
+border:0px solid #dbdbdb;
+}
+.button {
+position:relative;
+padding:6px 15px;
+left:-8px;
+border:2px solid #80AAFF;
+background-color:#80AAFF;
+color:#fafafa;
+width: 100%;
+}
+.button:hover  {
+border:2px solid #80AAFF;
+background-color:#80AAFF;
+color:#fafafa;
+opacity: 0.8;
 }
