@@ -234,7 +234,7 @@
                 </ul>
                 <div class="tab-content">
                   <div id="jobseeker" class="tab-pane fade in active">
-                    <form name="SsignUpForm" onsubmit="return validateJobSeekerSignUp()">
+                    <form action="jSignUp.php" method="post">
                       <div class="row" style="margin-top: 50px;">
                         <div class="col-sm-offset-2 col-sm-8">
                           <div class="form-group">
@@ -283,7 +283,7 @@
                      </div>
 
                   	<div id="company" class="tab-pane fade">
-                    	<form name="CsignUpForm" onsubmit="return validateCompanySignUp()">
+                    	<form action="cSignUp.php" method="post">
 	                      <div class="row" style="margin-top:50px;">
 	                        <div class="col-sm-offset-2 col-sm-8">
 	                          <div class="form-group">
@@ -303,13 +303,6 @@
 	                              <input type="text" name="Ccompanyname" class="form-control" required>
 	                            <div id="Ccompanyname_error" style="color:red;"></div>
 	                          </div>
-
-	                          <div class="form-group">
-	                            <label>Company Description: </label>
-	                            <textarea name="Ccompanydesc" required rows="5" required></textarea>
-	                            <div id="Ccompanydesc_error" style="color:red;"></div>
-	                          </div>
-
 	                          <div class="form-group">
 	                            <label>Email: </label>
 	                            <input type="email" name="Cemail" required
@@ -322,7 +315,6 @@
 	                            <input type="text" name="Cphone" class="form-control" required>
 	                            <div id="Cphone_error" style="color:red;" ></div>
 	                          </div>
-
 	                          <br />
 	                        </div>
 	                      </div>
