@@ -1,6 +1,15 @@
 <?php
-  session_start();
-  ?>
+	session_start();
+	include 'dbConnection.php';
+/*
+	$userName = $_SESSION['userName'];
+
+	$query = "SELECT * FROM user WHERE username = '$userName'";
+	$result = mysqli_query($connection, $query);
+	$row = mysqli_fetch_assoc($result);
+*/
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,8 +118,8 @@
 
 			<!--  Main navigation  -->
 			<ul class="main-nav nav navbar-nav navbar-right">
-				<li><a href="postJob.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Post Job</a></li>
-				<li><a href="jProfile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
+				<li><a href="#home"><i class="fa fa-suitcase"></i>&nbsp;Search Job</a></li>
+				<li><a href="#profile"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         		<li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Job Applications</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
@@ -150,53 +159,55 @@
 				<div class="col-xs-12">
 					<div class ="card">
 						<br>
-						<div class = "form-group">
-							<label for = "Susername">Username:</label>
-							<?php
-								echo "<h4>" . $_SESSION['userName'] . "</h4>";
-							?>
-						</div>
-            <br>
-						<div class = "form-group">
-							<label for = "Spassword">Password:</label>
-							<?php
-								echo "<input type='password' class='form-control' id='Spassword'
-									name='password' value='" .
-									$_SESSION['password'] . "' required>";
-							?>
-						</div>
-            <br>
-						<div class = "form-group">
-							<label for = "Sfullname">Full Name:</label>
-              <?php
-                echo "<input type = 'text' class = 'form-control' id = 'Sfullname' value='" . $_SESSION['Sfullname'] . "' required>";
-              ?>
-						</div>
-						<br>
-						<div class = "form-group">
-							<label for = "Semail">Email:</label>
-              <?php
-                echo "<input type = 'email' class = 'form-control' id = 'Semail' value='" . $_SESSION['email'] . "' required>";
-              ?>
-						</div>
-						<br>
-						<div class = "form-group">
-							<label for = "Sphone">Phone No:</label>
-              <?php
-                echo "<input type = 'text' class = 'form-control' id = 'Sphone' value='" . $_SESSION['phone'] . "' required>";
-              ?>
-						</div>
-						<br>
-						<div class="form-group">
-							<label for = "Saddress">Address:</label>
-              <?php
-                echo "<textarea rows='4' cols='50' value='" . $_SESSION['address'] . "' required>";
-              ?>
-						</div>
-						<br>
-						<div style="text-align:center;">
-							<button type="submit" class="btn btn-default">Update</button>
-						</div>
+						<form method="post" action="updateJProfile.php">
+							<div class = "form-group">
+								<label for = "Susername">Username:</label>
+								<?php
+									echo "<h4>" . $_SESSION['userName'] . "</h4>";
+								?>
+							</div>
+	            			<br>
+							<div class = "form-group">
+								<label for = "Spassword">Password:</label>
+								<?php
+									echo "<input type='password' class='form-control' id='Spassword'
+										name='Spassword' value='" .
+										$_SESSION['password'] . "' required>";
+								?>
+							</div>
+	            			<br>
+							<div class = "form-group">
+								<label for = "Sfullname">Full Name:</label>
+					              <?php
+					                echo "<input type = 'text' class = 'form-control' id = 'Sfullname' name = 'Sfullname' value='" . $_SESSION['Sfullname'] . "' required>";
+					              ?>
+							</div>
+							<br>
+							<div class = "form-group">
+								<label for = "Semail">Email:</label>
+					              <?php
+					                echo "<input type = 'email' class = 'form-control' id = 'Semail' name = 'Semail' value='" . $_SESSION['email'] . "' required>";
+					              ?>
+							</div>
+							<br>
+							<div class = "form-group">
+								<label for = "Sphone">Phone No:</label>
+					              <?php
+					                echo "<input type = 'text' class = 'form-control' id = 'Sphone' name = 'Sphone' value='" . $_SESSION['phone'] . "' required>";
+					              ?>
+							</div>
+							<br>
+							<div class="form-group">
+								<label for = "Saddress">Address:</label>
+					              <?php
+					                echo "<textarea name='Saddress' rows='4' cols='50' required>" . $_SESSION['address'] . "</textarea>";
+					              ?>
+							</div>
+							<br>
+							<div style="text-align:center;">
+								<button type="submit" class="btn btn-default">Update</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
