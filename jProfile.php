@@ -1,12 +1,15 @@
-<!DOCTYPE>
-<html>
+<?php
+  session_start();
+  ?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Jinjang E-Business</title>
+	<title>My Profile</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -106,11 +109,11 @@
 
 			<!--  Main navigation  -->
 			<ul class="main-nav nav navbar-nav navbar-right">
-				<li><a href="#home"><i class="fa fa-home"></i>&nbsp;Home</a></li>
-				<li><a href="#profile"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
+				<li><a href="postJob.html"><i class="fa fa-pencil-square-o"></i>&nbsp;Post Job</a></li>
+				<li><a href="jProfile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
-				<li><a href="#logout"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
+        		<li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Job Applications</a></li>
+				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
 
@@ -148,28 +151,47 @@
 					<div class ="card">
 						<br>
 						<div class = "form-group">
-							<label for = "full-name">Full Name:</label>
-							<input type = "text" class = "form-control" id = "full-name" required>
+							<label for = "Susername">Username:</label>
+							<?php
+								echo "<h4>" . $_SESSION['userName'] . "</h4>";
+							?>
+						</div>
+            <br>
+						<div class = "form-group">
+							<label for = "Spassword">Password:</label>
+							<?php
+								echo "<input type='password' class='form-control' id='Spassword'
+									name='password' value='" .
+									$_SESSION['password'] . "' required>";
+							?>
+						</div>
+            <br>
+						<div class = "form-group">
+							<label for = "Sfullname">Full Name:</label>
+              <?php
+                echo "<input type = 'text' class = 'form-control' id = 'Sfullname' value='" . $_SESSION['Sfullname'] . "' required>";
+              ?>
 						</div>
 						<br>
 						<div class = "form-group">
-							<label for = "password">Password:</label>
-							<input type = "password" class = "form-control" id = "password" required>
+							<label for = "Semail">Email:</label>
+              <?php
+                echo "<input type = 'email' class = 'form-control' id = 'Semail' value='" . $_SESSION['email'] . "' required>";
+              ?>
 						</div>
 						<br>
 						<div class = "form-group">
-							<label for = "email">Email:</label>
-							<input type = "email" class = "form-control" id = "email" required>
-						</div>
-						<br>
-						<div class = "form-group">
-							<label for = "phone">Phone No:</label>
-							<input type = "text" class = "form-control" id = "phone" required>
+							<label for = "Sphone">Phone No:</label>
+              <?php
+                echo "<input type = 'text' class = 'form-control' id = 'Sphone' value='" . $_SESSION['phone'] . "' required>";
+              ?>
 						</div>
 						<br>
 						<div class="form-group">
-							<label for = "address">Address:</label>
-							<textarea rows="4" cols="50"></textarea>
+							<label for = "Saddress">Address:</label>
+              <?php
+                echo "<textarea rows='4' cols='50' value='" . $_SESSION['address'] . "' required>";
+              ?>
 						</div>
 						<br>
 						<div style="text-align:center;">

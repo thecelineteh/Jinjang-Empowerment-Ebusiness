@@ -11,11 +11,13 @@
   $fullName = stripcslashes($_POST['Sfullname']);
   $email = stripcslashes($_POST['Semail']);
   $phone = stripcslashes($_POST['Sphone']);
+  $userType = stripcslashes($_POST['userType']);
   $userName = mysqli_real_escape_string($connection, $userName);
   $password = mysqli_real_escape_string($connection, $password);
   $fullName = mysqli_real_escape_string($connection, $fullName);
   $email = mysqli_real_escape_string($connection, $email);
   $phone = mysqli_real_escape_string($connection, $phone);
+  $userType = mysqli_real_escape_string($connection, $userType);
 
   $query = "SELECT * FROM user WHERE userName = '$userName'";
   $result = mysqli_query($connection, $query);
@@ -27,7 +29,7 @@
   }
   else {
     $query = "INSERT INTO  user (username, password, address, phoneNo, email, userType) VALUES
-    ('$userName','$password','','$email', '$phone','job seeker')";
+    ('$userName','$password','','$email', '$phone','$userType')";
     $query2 = "INSERT INTO  jobseeker (username, fullName) VALUES
     ('$userName', '$fullName')";
     mysqli_query($connection, $query);

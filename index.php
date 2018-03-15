@@ -164,7 +164,7 @@
 											echo "</div><br />";
 										}
 										 ?>
-								    <label for="email">Username:</label>
+								    <label for="username">Username:</label>
 										<?php
 										if (isset($_SESSION['remember'])) {
 											echo "<input type='text' class='form-control' id='
@@ -240,36 +240,36 @@
                       <div class="row" style="margin-top: 50px;">
                         <div class="col-sm-offset-2 col-sm-8">
                         	<!-- User is a Job Seeker -->
-                        	<input type="hidden" name="userType" value="JobSeeker">
+                        	<input type="hidden" name="userType" value="Job Seeker">
                           <div class="form-group">
                             <label>Username: </label>
-                              <input type="text" name="username" class="form-control" required>
-                            <div id="username_error" style="color:red;"></div>
+                              <input type="text" name="Susername" class="form-control" required>
+                            <div id="Susername_error" style="color:red;"></div>
                           </div>
 
                           <div class="form-group">
                             <label>Password: </label>
-                              <input type="password" name="password" class="form-control" required>
-                            <div id="password_error" style="color:red;"></div>
+                              <input type="password" name="Spassword" class="form-control" required>
+                            <div id="Spassword_error" style="color:red;"></div>
                           </div>
 
                           <div class="form-group">
                             <label>Full Name: </label>
-                            <input type="text" name="fullName" class="form-control" required>
-                            <div id="fullName_error" style="color:red;"></div>
+                            <input type="text" name="Sfullname" class="form-control" required>
+                            <div id="Sfullname_error" style="color:red;"></div>
                           </div>
 
                           <div class="form-group">
                             <label>Email: </label>
-                              <input type="email" name="email" required
+                              <input type="email" name="Semail" required
                               pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" class="form-control">
-                            <div id="email_error" style="color:red;"></div>
+                            <div id="Semail_error" style="color:red;"></div>
                           </div>
 
                           <div class="form-group">
                             <label>Phone No: </label>
-                            <input type="text" name="phone" class="form-control" required>
-                            <div id="phone_error" style="color:red;" ></div>
+                            <input type="text" name="Sphone" class="form-control" required>
+                            <div id="Sphone_error" style="color:red;" ></div>
                           </div>
 
 	                        <div class="form-group">
@@ -308,33 +308,33 @@
                         	<input type="hidden" name="userType" value="Client">
 	                          <div class="form-group">
 	                            <label>Username: </label>
-	                              <input type="text" name="username" class="form-control" required>
-	                            <div id="username_error" style="color:red;"></div>
+	                              <input type="text" name="Cusername" class="form-control" required>
+	                            <div id="Cusername_error" style="color:red;"></div>
 	                          </div>
 
 	                          <div class="form-group">
 	                            <label>Password:</label>
-	                              <input type="password" name="password" class="form-control" required>
-	                            <div id="password_error" style="color:red;"></div>
+	                              <input type="password" name="Cpassword" class="form-control" required>
+	                            <div id="Cpassword_error" style="color:red;"></div>
 	                          </div>
 
 	                          <div class="form-group">
 	                            <label>Company Name: </label>
-	                              <input type="text" name="companyname" class="form-control" required>
-	                            <div id="companyname_error" style="color:red;"></div>
+	                              <input type="text" name="Ccompanyname" class="form-control" required>
+	                            <div id="Ccompanyname_error" style="color:red;"></div>
 	                          </div>
 
 	                          <div class="form-group">
 	                            <label>Email: </label>
-	                            <input type="email" name="email" required
+	                            <input type="email" name="Cemail" required
 								pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" class="form-control">
-	                            <div id="email_error" style="color:red;" ></div>
+	                            <div id="Cemail_error" style="color:red;" ></div>
 	                          </div>
 
 							  <div class="form-group">
 	                            <label>Phone No: </label>
-	                            <input type="text" name="phone" class="form-control" required>
-	                            <div id="phone_error" style="color:red;" ></div>
+	                            <input type="text" name="Cphone" class="form-control" required>
+	                            <div id="Cphone_error" style="color:red;" ></div>
 	                          </div>
 	                          <br />
 	                        </div>
