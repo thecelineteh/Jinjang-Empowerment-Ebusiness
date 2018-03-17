@@ -14,11 +14,11 @@
   unset($_SESSION['SignUp']);
 
   if ($row['username'] == $userName && $row['password'] == $password) {
+    $_SESSION['userID'] = $row['userID'];
+    $_SESSION['userName'] = $row['username'];
     if ($row['userType'] == 'Job Seeker') {
-      $_SESSION['userName'] = $row['username'];
       header('Location: jobs.php');
     } else if ($row['userType'] == 'Client') {
-      $_SESSION['userName'] = $row['username'];
       header('Location: createJob.php');
     }
     if (isset($remember)) {

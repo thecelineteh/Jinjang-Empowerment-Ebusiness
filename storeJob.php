@@ -2,10 +2,6 @@
   session_start();
   include 'dbConnection.php';
 
-  if (!isset($_SESSION['jobID'])) {
-    $_SESSION['jobID'] = 'J1';
-  }
-
   $title = stripcslashes($_POST['jobTitle']);
   $desc = stripcslashes($_POST['jobDescription']);
   $address = stripcslashes($_POST['jobAddress']);
@@ -19,19 +15,15 @@
   $desc = mysqli_real_escape_string($connection, $desc);
   $address = mysqli_real_escape_string($connection, $address);
   $city = mysqli_real_escape_string($connection, $city);
-  $salary = mysqli_real_escape_string($connection, $salary);
-  $hours = mysqli_real_escape_string($connection, $hours);
-  $weeks = mysqli_real_escape_string($connection, $weeks);
 
   $status = 'AVAILABLE';
-  $theClient = mysqli_real_escape_string($connection, $_SESSION['userName']);
+  $theClient = $_SESSION['userID'];
 
-  $query_storeJob = "INSERT INTO jobposition (title, description, salaryPerHour, hoursPerWeek, durationInWeeks, address, city, status, theClient) VALUES
-  ('$title','$desc','','$salary', '$hours', '$weeks', '$address','$city', '$status', '$theClient')";
+  $query_storeJob = "INSERT INTO jobposition (title, description, salaryPerHour, hoursPerWeek, durationInWeeks, address, city, status, theClient) VALUES ('$title','$desc', '$salary', '$hours', '$weeks', '$address','$city', '$status', $theClient)";
   $result_storeJob = mysqli_query($connection, $query_storeJob);
-/*
+
   // find jobID of created job
-  $query_findJob = "SELECT * FROM jobposition WHERE theClient = '$theClient' AND title = '$title'";
+  $query_findJob = "SELECT * FROM jobposition WHERE theClient = $theClient AND title = '$title'";
   $result_findJob = mysqli_query($connection, $query_findJob);
   while($row_jobPositions = mysqli_fetch_assoc($result_findJob)) {
     $jobID = $row_jobPositions['jobID'];
@@ -50,7 +42,7 @@
 
   }
 
-*/
+
 
 
   if ($result_storeJob ) {

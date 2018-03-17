@@ -2,6 +2,7 @@
   session_start();
   include 'dbConnection.php';
 
+  $userID = $_SESSION['userID'];
   $username = mysqli_real_escape_string($connection, $_SESSION['userName']);
 
   $password = stripcslashes($_POST['Spassword']);
@@ -23,13 +24,13 @@
   $result_user = mysqli_query($connection, $update_user);
 
   // update jobseeker attribute
-  $update_s = "UPDATE jobseeker SET fullName = '$fullName' WHERE username = '$username'";
+  $update_s = "UPDATE jobseeker SET fullName = '$fullName' WHERE userID = $userID";
   $result_s = mysqli_query($connection, $update_s);
 
   // update skillset
   /*$s_skillset = "SELECT * FROM skillset WHERE username = '$username'";
   $result_s_skillset = mysqli_query($connection, $result_s_skillset);*/
-  $clear_skillset = "DELETE FROM skillset WHERE username = '$username'";
+  $clear_skillset = "DELETE FROM skillsets WHERE theJobSeeker = $userID";
   $result_clear_skillset = mysqli_query($connection, $clear_skillset);
 
   // Based on skillName, find user selected skills in skill table
@@ -39,7 +40,7 @@
 
     while ($row_selected_skills = mysqli_fetch_assoc($result_selected_skills)) {
       $skillID = $row_selected_skills['skillID'];
-      $add_skillset = "INSERT INTO skillset VALUES('$username', '$skillID')";
+      $add_skillset = "INSERT INTO skillsets VALUES('$skillID', $userID)";
       $result_add_skillset = mysqli_query($connection, $add_skillset);
     }
   }

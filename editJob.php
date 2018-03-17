@@ -10,7 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Create New Job</title>
+	<title>Edit Job Position</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -135,10 +135,18 @@
               <form name="postJobForm" action="storeJob.php" method="post">
                 <div class="row">
                   <div class="col-sm-offset-3 col-sm-6">
-                    <h4 class="form-title">Create Job Position</h4>
+                    <h4 class="form-title">Edit Job Position</h4>
                     <div class="form-group">
                       <label>Job Title: </label>
                       <div class="form-control-big">
+                        <?php
+                          $query_jobpos = "SELECT * FROM jobposition WHERE theClient = $theClient AND jobID = '$title'";
+                          $result_findJob = mysqli_query($connection, $query_findJob);
+                          while($row_jobPositions = mysqli_fetch_assoc($result_findJob)) {
+                            $jobID = $row_jobPositions['jobID'];
+                          }
+
+                         ?>
                         <input type="text" name="jobTitle" class="form-control" required>
                       </div>
                       <div id="jobTitle_error" style="color:red;"></div>
@@ -205,6 +213,32 @@
     											}
                          ?>
                     </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Status: </label>
+                      <div class="checkbox">
+                        <?php
+                          $query_skills = "SELECT * FROM skill s";
+                          $result_skills = mysqli_query($connection, $query_skills);
+
+                          while($row_skills = mysqli_fetch_assoc($result_skills)) {
+                            echo "<label><input type='checkbox' name='reqSkillSet[]'' class='checkbox' value='" . $row_skills['skillName'] . "'>" . $row_skills['skillName'] . "</label><br>";
+                          }
+                         ?>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Employee username: </label>
+                        <?php
+                          $query_emp = "SELECT * FROM jobposition jp, user u WHERE jobID = $jobID AND jp.theEmployee = u.userID";
+                          $result_emp = mysqli_query($connection, $query_emp);
+
+                          while($row_emp = mysqli_fetch_assoc($result_emp)) {
+                            echo "<label><input type='text' name='theEmployee'' class='form-control' value='" . $row_emp['userID'] . "'>" . $row_emp['username'] . "</label><br>";
+                          }
+                         ?>
                   </div>
 
     							<div style="text-align:right; margin-top:50px">

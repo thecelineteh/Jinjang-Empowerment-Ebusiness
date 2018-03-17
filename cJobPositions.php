@@ -1,6 +1,8 @@
 <?php
   session_start();
   include 'dbConnection.php';
+
+  $theClient = $_SESSION['userID'];
  ?>
 <!DOCTYPE>
 <html>
@@ -10,7 +12,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Create New Job</title>
+	<title>Job Positions</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -68,10 +70,11 @@
     }
     .form-title {
       font-family: "Britannic Bold";
-      color: #F8F8F8;
+      color: #696969;
       font-size: 25pt;
-      margin-top: 20px;
-      margin-bottom: 40px;
+      margin-top: 10px;
+      margin-bottom: 30px;
+      margin-left: 10px;
     }
     .form-control-big {
       width: 90%;
@@ -83,6 +86,14 @@
     .white-btn {
       margin-right:50px;
     }
+    .card {
+				/* Add shadows to create the "card" effect */
+				box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+				transition: 0.3s;
+				padding: 20px;
+		    background-color: #F8F8FF;
+        height: 40em;
+		}
 
 	</style>
 </head>
@@ -132,10 +143,79 @@
                 <div class="overlay2">
                 </div>
               </div>
-              <form name="postJobForm" action="storeJob.php" method="post">
-                <div class="row">
-                  <div class="col-sm-offset-3 col-sm-6">
-                    <h4 class="form-title">Create Job Position</h4>
+              <br>
+              <div class="row">
+                <div class="col-sm-offset-1 col-sm-10 col-xs-12">
+                  <div class ="card">
+                    <h4 class="form-title">Job Positions</h4>
+                    <table class="table table-hover table-condensed table-bordered table-striped">
+                      <tr class="info">
+                        <th></th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Salary per hour</th>
+                        <th>Hours per week</th>
+                        <th>Number of weeks</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>Status </th>
+                        <th>Employee Name</th>
+                      </tr>
+
+                        <?php
+                        $client_jobpos = "SELECT * FROM jobposition WHERE theClient = $theClient";
+                        $result_client_jobpos = mysqli_query($connection, $client_jobpos);
+
+                        //fetch data from database
+                        while($row_client_jobpos = mysqli_fetch_array($result_client_jobpos) )
+                        {
+                          //declaration
+                          $title = $row_client_jobpos['title'];
+                          $desc = $row_client_jobpos['description'];
+                          $salary = $row_client_jobpos['salaryPerHour'];
+                          $hours = $row_client_jobpos['hoursPerWeek'];
+                          $weeks = $row_client_jobpos['durationInWeeks'];
+                          $address = $row_client_jobpos['address'];
+                          $city= $row_client_jobpos['city'];
+                          $status= $row_client_jobpos['status'];
+                          $theEmployee = $row_client_jobpos['theEmployee'];
+
+                          $job_emp = "SELECT * FROM jobseeker WHERE userID = $theEmployee";
+                          $result_job_emp = mysqli_query($connection, $job_emp);
+                          if (mysqli_num_rows($result_job_emp) > 0){
+                            while($row_job_emp = mysqli_fetch_assoc($result_job_emp) ) {
+                              $_SESSION['empName'] = $row_job_emp['fullName'];
+                            }
+                          } else {
+                              $_SESSION['empName'] = '-';
+                          }
+
+                          //print out the output
+                          echo '
+                          <tr>
+                          <td align="center">
+                          <input type="checkbox" class="checkbox" name="regSess[]"
+                          value="'//.$sessionID.
+                          .'"></td>';
+                          echo '
+                          <td align="center"> '.$title.'</td>
+                          <td align="center"> '.$desc. '</td>
+                          <td align="center"> '.$salary.'</td>
+                          <td align="center"> '.$hours.'</td>
+                          <td align="center"> '.$weeks.'</td>
+                          <td align="center"> '.$address.'</td>
+                          <td align="center"> '.$city.'</td>
+                          <td align="center"> '.$status.'</td>
+                          <td align="center"> '.$_SESSION['empName'].'</td>
+                          </tr>
+                          ';
+                        }
+                        ?>
+
+                    </table>
+
+  <?php
+  /*
                     <div class="form-group">
                       <label>Job Title: </label>
                       <div class="form-control-big">
@@ -169,59 +249,62 @@
                     </div>
 
 
-                  <div class="form-group">
-                      <label>Salary per hour ($): </label>
-                      <div class="form-control-small">
-                        <input type="number"  name="jobSalary" class="form-control-small" min = "1" value="1.00" step="0.25" required>
-                      </div>
-                      <div id="jobSalary_error" style="color:red;"></div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Hours per week: </label>
-                    <div class="form-control-small">
-                        <input type="number" name="jobHours" class="form-control-small" min = "1" value="1" required>
+                    <div class="form-group">
+                        <label>Salary per hour ($): </label>
+                        <div class="form-control-small">
+                          <input type="number"  name="jobSalary" class="form-control-small" min = "1" value="1.00" step="0.25" required>
+                        </div>
+                        <div id="jobSalary_error" style="color:red;"></div>
                     </div>
-                    <div id="jobHours_error" style="color:red;"></div>
-                  </div>
 
-                  <div class="form-group">
-                      <label>Duration (weeks): </label>
+                    <div class="form-group">
+                      <label>Hours per week: </label>
                       <div class="form-control-small">
-                        <input type="number" name="jobDuration" class="form-control-small" min = "1" value = "1" required>
+                          <input type="number" name="jobHours" class="form-control-small" min = "1" value="1" required>
                       </div>
-                      <div id="jobDuration_error" style="color:red;"></div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Skills Required: </label>
-                      <div class="checkbox">
-                        <?php
-                          $query_skills = "SELECT * FROM skill s";
-                          $result_skills = mysqli_query($connection, $query_skills);
-
-                          while($row_skills = mysqli_fetch_assoc($result_skills)) {
-    												echo "<label><input type='checkbox' name='reqSkillSet[]'' class='checkbox' value='" . $row_skills['skillName'] . "'>" . $row_skills['skillName'] . "</label><br>";
-    											}
-                         ?>
+                      <div id="jobHours_error" style="color:red;"></div>
                     </div>
-                  </div>
 
-    							<div style="text-align:right; margin-top:50px">
-    								<button type="submit" class="white-btn">Create</button>
-    							</div>
+                    <div class="form-group">
+                        <label>Duration (weeks): </label>
+                        <div class="form-control-small">
+                          <input type="number" name="jobDuration" class="form-control-small" min = "1" value = "1" required>
+                        </div>
+                        <div id="jobDuration_error" style="color:red;"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Skills Required: </label>
+                        <div class="checkbox">
+                          <?php
+                            $query_skills = "SELECT * FROM skill s";
+                            $result_skills = mysqli_query($connection, $query_skills);
+
+                            while($row_skills = mysqli_fetch_assoc($result_skills)) {
+      												echo "<label><input type='checkbox' name='reqSkillSet[]'' class='checkbox' value='" . $row_skills['skillName'] . "'>" . $row_skills['skillName'] . "</label><br>";
+      											}
+
+
+                           ?>
+
+
+
+
+                      </div>
+                    </div>
+*/
+?>
 
                   </div>
                 </div>
-              </form>
-						</div>
-					</div>
-				</div>
-        <br><br><br>
-			</div>
-		</div>
-	</div>
-</div>
+  						</div>
+  					</div>
+  				</div>
+          <br><br>
+  			</div>
+  		</div>
+  	</div>
+  </div>
 
 	<!-- Footer -->
 	<footer id="footer" class="sm-padding bg-dark">
