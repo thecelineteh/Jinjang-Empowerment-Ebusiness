@@ -11,6 +11,8 @@
   $result = mysqli_query($connection, $query);
   $row = mysqli_fetch_assoc($result);
 
+  unset($_SESSION['SignUp']);
+
   if ($row['username'] == $userName && $row['password'] == $password) {
     if ($row['userType'] == 'Job Seeker') {
       $_SESSION['userName'] = $row['username'];
@@ -19,9 +21,6 @@
       $_SESSION['userName'] = $row['username'];
       header('Location: createJob.php');
     }
-	else {
-		echo "nothing";
-	}
     if (isset($remember)) {
       $_SESSION['remember'] = $row['username'];
     }
@@ -30,7 +29,7 @@
     }
 
     echo $_SESSION['userName'];
-}
+  }
   else {
     header('Location: index.php');
     $_SESSION['userName'] = "failed";

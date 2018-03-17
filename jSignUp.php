@@ -22,6 +22,7 @@
   $query = "SELECT * FROM user WHERE userName = '$userName'";
   $result = mysqli_query($connection, $query);
 
+  unset($_SESSION['userName']);
   if (mysqli_num_rows($result) > 0) {
     echo "<script>alert('sign up failed');</script>";
     $_SESSION['SignUp'] = "failed";
@@ -30,9 +31,16 @@
   else {
     $query = "INSERT INTO  user (username, password, address, phoneNo, email, userType) VALUES
     ('$userName','$password','','$email', '$phone','$userType')";
-    $query2 = "INSERT INTO  jobseeker (username, fullName) VALUES
-    ('$userName', '$fullName')";
     mysqli_query($connection, $query);
+    $query3 = "SELECT userID from user where userName='$userName'";
+    $result = mysqli_query($connection, $query3);
+    if (mysqli_num_rows($result) > 0) {
+      while ($row = mysqli_fetch_assoc($result)) {
+        $userID = $row['userID'];
+      }
+    }
+    $query2 = "INSERT INTO  jobseeker (userID, fullName) VALUES
+    ('$userID', '$fullName')";
     mysqli_query($connection, $query2);
     header("Location: index.php");
     $_SESSION['SignUp'] = "success";

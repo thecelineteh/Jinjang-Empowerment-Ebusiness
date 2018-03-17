@@ -78,7 +78,7 @@ include 'dbConnection.php';
 			<!--  Main navigation  -->
 			<ul class="main-nav nav navbar-nav navbar-right">
 				<li class="active"><a href="#home"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
-				<li><a href="#profile"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
+				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
@@ -131,6 +131,7 @@ include 'dbConnection.php';
 				$result = mysqli_query($connection, $query);
 				if (mysqli_num_rows($result) > 0) {
 					while ($row = mysqli_fetch_assoc($result)) {
+            $totalSalary = $row['salaryPerHour'] * $row['hoursPerWeek'] * $row['durationInWeeks'];
 						echo "
             <div class='col-sm-3'>
               <div class='pricing'>
@@ -142,7 +143,7 @@ include 'dbConnection.php';
 					  ;
 						echo "
                   <div class='price'>
-                    <h3>$" . $row['salary'] . "<span class='duration'>/ month</span></h3>
+                    <h3>$" . $totalSalary . "</h3>
                   </div> ";
 						$link='"jobDetails.php"';
 						echo "

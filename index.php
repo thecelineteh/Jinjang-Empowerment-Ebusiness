@@ -3,8 +3,8 @@
 	if (!isset($_SESSION['userName'])) {
 	  $_SESSION['userName'] = "empty";
 	}
-	if (!isset($SESSION['SignUp'])) {
-		$_SESSION['userName'] = "empty";
+	if (!isset($_SESSION['SignUp'])) {
+		$_SESSION['SignUp'] = "empty";
 	}
 ?>
 
@@ -165,7 +165,6 @@
 											echo "<div class='alert alert-danger'>";
 											echo "Wrong username or password!";
 											echo "</div><br />";
-											echo "<script>alert('Wrong username or password!');</script>";
 										}
 										 ?>
 								    <label for="username">Username:</label>
@@ -1269,10 +1268,13 @@
 
 	<?php
 	if ($_SESSION['SignUp'] == "failed") {
-		echo "<script>alert('This username has been taken!');</script>";
+		echo "<script>alert('Sign up failed!');</script>";
+	}
+	else if ($_SESSION['userName'] == "failed") {
+		echo "<script>alert('Wrong password or username!');</script>";
 	}
 	else if ($_SESSION['SignUp'] == "success") {
-		echo "<script>alert('Sign Up successfully!');</script>";
+		echo "<script>alert('Sign up successfully!');</script>";
 	}
 	else {
 		echo "

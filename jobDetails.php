@@ -78,7 +78,10 @@
 			<!--  Main navigation  -->
 			<ul class="main-nav nav navbar-nav navbar-right">
 				<li><a href="jobs.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
-				<li><a href="#profile"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
+				<?php
+
+				 ?>
+				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
@@ -156,8 +159,9 @@
 								$result = mysqli_query($connection, $query);
 								if (mysqli_num_rows($result) > 0) {
 									while ($row = mysqli_fetch_assoc($result)) {
+										$totalSalary = $row['salaryPerHour'] * $row['hoursPerWeek'] * $row['durationInWeeks'];
 										echo "<li>Salary:&nbsp;&nbsp;RM";
-										echo $row['salary'];
+										echo $totalSalary;
 										echo "</li>";
 
 										echo "<li>City:&nbsp;&nbsp;";
@@ -193,7 +197,7 @@
 									$jobID = $_POST['jobID'];
 									$query = "SELECT * FROM jobposition, user, client
 														WHERE jobID='$jobID'
-														AND jobposition.company = user.userID
+														AND jobposition.theClient = user.userID
 														AND user.userID = client.userID";
 									$result = mysqli_query($connection, $query);
 									if (mysqli_num_rows($result) > 0) {
