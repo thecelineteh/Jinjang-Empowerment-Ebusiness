@@ -165,6 +165,7 @@
 											echo "<div class='alert alert-danger'>";
 											echo "Wrong username or password!";
 											echo "</div><br />";
+											echo "<script>alert('Wrong username or password!');</script>";
 										}
 										 ?>
 								    <label for="username">Username:</label>
@@ -1268,7 +1269,10 @@
 
 	<?php
 	if ($_SESSION['SignUp'] == "failed") {
-		echo "<script>alert('sign up failed');</script>";
+		echo "<script>alert('This username has been taken!');</script>";
+	}
+	else if ($_SESSION['SignUp'] == "success") {
+		echo "<script>alert('Sign Up successfully!');</script>";
 	}
 	else {
 		echo "
