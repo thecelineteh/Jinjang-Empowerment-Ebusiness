@@ -96,7 +96,7 @@ include 'dbConnection.php';
 	</nav>
 	<!-- /Nav -->
 	<!-- Search Bar -->
-	<div class="container" style="padding-top: 2em; padding-bottom: 2em;">
+	<div class="container" style="padding-top: 2em; padding-bottom: 0.5em;">
 			<div class="row">
 				<form style="width: 100%;" action="search.php" method="post">
 					<div class="col-sm-offset-2 col-sm-7 col-xs-offset-1 col-xs-10" style="padding:0; margin:0 position:relative;">
@@ -107,15 +107,37 @@ include 'dbConnection.php';
 	  			</div>
 				</form>
 			</div>
-			<!--
+
 			<div class="row">
-				<form>
-					<div>
-						<input type="button" type="submit" value="All Jobs"/>
+				<form id="theform" action="jobs.php" method="post">
+					<div class="col-sm-offset-10 col-xs-12" style="padding-top: 2em">
+						Filter By:
+						<select id="mySelect" name="skill" size="1" onchange="this.form.submit()">
+							<option value="default">
+								Default
+							</option>
+							<?php
+								$query = "SELECT * FROM skill";
+								$result = mysqli_query($connection, $query);
+								if (mysqli_num_rows($result) > 0) {
+									while ($row = mysqli_fetch_assoc($result)) {
+										if (isset($_POST['skill']) &&
+												$_POST['skill'] == $row['skillName']) {
+													echo "<option selected='selected' value='" . $row['skillName'] . "'>" .
+													$row['skillName'] . "</option>";
+										}
+										else {
+											echo "<option value='" . $row['skillName'] . "'>" .
+											$row['skillName'] . "</option>";
+										}
+									}
+								}
+							 ?>
+					  </select>
 					</div>
 				</form>
 			</div>
-		-->
+
 	</div>
 
 
@@ -126,9 +148,18 @@ include 'dbConnection.php';
 			<div class="row">
 				<!-- pricing -->
 				<?php
-				if (!isset($_SESSION['searchValue']) || $_SESSION['searchValue'] == "allJobs") {
+				if (!isset($_SESSION['searchValue']) || $_SESSION['searchValue'] == "allJobs" ||
+						!isset($_POST['skill']) || $_POST['skill'] == "default") {
 					$query = "SELECT * FROM jobposition WHERE status='AVAILABLE'";
 
+				}
+				else if (isset($_POST['skill']) && $_POST['skill'] != "Default") {
+					$skillFilter = $_POST['skill'];
+					$query = "SELECT * FROM jobposition, jobrequiredskill, skill
+									WHERE status='AVAILABLE'
+									AND jobposition.jobID = jobrequiredskill.jobID
+									AND jobrequiredskill.skillID = skill.skillID
+									AND skillName='$skillFilter'";
 				}
 				else {
 					$searchValue = $_SESSION["searchValue"];
@@ -139,7 +170,8 @@ include 'dbConnection.php';
 				if (mysqli_num_rows($result) > 0) {
 					while ($row = mysqli_fetch_assoc($result)) {
             $totalSalary = $row['salaryPerHour'] * $row['hoursPerWeek'] * $row['durationInWeeks'];
-						$query2 = "SELECT skill.skillName FROM jobrequiredskill, skill WHERE jobID = '$row[jobID]'
+						$jobID = $row['jobID'];
+						$query2 = "SELECT skill.skillName FROM jobrequiredskill, skill WHERE jobID = '$jobID'
 											AND jobrequiredskill.skillID=skill.skillID";
 						$result2 = mysqli_query($connection, $query2);
 						echo "
@@ -159,6 +191,7 @@ include 'dbConnection.php';
 						echo "
                 </div>
                 <ul class='price-content'>";
+
 						if (mysqli_num_rows($result2) > 0) {
 							echo "Skills Required: ";
 							$counter = 0;
@@ -175,15 +208,13 @@ include 'dbConnection.php';
 						}
 						else {
 							echo "No skills required";
-							for ($i = 0; $i <= 4; $i++) {
+							for ($i = 0; $i <= 5; $i++) {
 								echo "<br />";
 							}
 						}
-
-
             echo "<div class='price-btn'>
 									<form action='jobDetails.php' method='post'  target='_blank'>
-										<input type=hidden name='jobID' value='" . $row['jobID'] .
+										<input type=hidden name='jobID' value='" . $jobID .
 										"'>
 										<input class='outline-btn' type='submit' value='Details'>
 									</form>
@@ -270,5 +301,7 @@ include 'dbConnection.php';
 	<script type="text/javascript" src="js/owl.carousel.min.js"></script>
 	<script type="text/javascript" src="js/jquery.magnific-popup.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
+	<script>
+
 </body>
 </html>
