@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2018 at 12:12 PM
+-- Generation Time: Mar 17, 2018 at 07:52 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -64,7 +64,9 @@ CREATE TABLE `jobposition` (
   `jobID` varchar(15) NOT NULL,
   `title` varchar(30) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `salary` int(7) NOT NULL,
+  `salaryPerHour` double(5,2) NOT NULL,
+  `hoursPerWeek` int(3) NOT NULL,
+  `durationInWeeks` int(3) NOT NULL,
   `address` varchar(255) NOT NULL,
   `city` varchar(30) NOT NULL,
   `status` varchar(15) NOT NULL,
@@ -75,8 +77,8 @@ CREATE TABLE `jobposition` (
 -- Dumping data for table `jobposition`
 --
 
-INSERT INTO `jobposition` (`jobID`, `title`, `description`, `salary`, `address`, `city`, `status`, `theClient`) VALUES
-('J123', 'job position 1', 'asdf', 123, 'asdf', 'asdf', 'AVAILABLE', 'celine');
+INSERT INTO `jobposition` (`jobID`, `title`, `description`, `salaryPerHour`, `hoursPerWeek`, `durationInWeeks`, `address`, `city`, `status`, `theClient`) VALUES
+('J1', 'job position', 'job position for weaving', 1.00, 3, 6, '1212 Jln Beta', 'KL', 'AVAILABLE', 'celine');
 
 -- --------------------------------------------------------
 
@@ -105,7 +107,8 @@ CREATE TABLE `jobseeker` (
 --
 
 INSERT INTO `jobseeker` (`username`, `fullName`) VALUES
-('admin2', 'admin2');
+('admin', 'Admin Name'),
+('admin2', 'Admin2');
 
 -- --------------------------------------------------------
 
@@ -132,6 +135,15 @@ CREATE TABLE `skill` (
   `skillName` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `skill`
+--
+
+INSERT INTO `skill` (`skillID`, `skillName`) VALUES
+('SK1', 'weaving'),
+('SK2', 'knitting'),
+('SK3', 'baking');
+
 -- --------------------------------------------------------
 
 --
@@ -142,6 +154,15 @@ CREATE TABLE `skillset` (
   `username` varchar(30) NOT NULL,
   `skillID` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `skillset`
+--
+
+INSERT INTO `skillset` (`username`, `skillID`) VALUES
+('admin', 'SK2'),
+('admin', 'SK3'),
+('celine', 'SK2');
 
 -- --------------------------------------------------------
 
@@ -163,10 +184,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `address`, `phoneNo`, `email`, `userType`) VALUES
-('admin', 'admin', '123 Street', '123', '123@hotmail.com', 'job seeker'),
-('admin2', '123', '', '012923222', '234', 'job seeker'),
-('adrian', '123', '8 Road', '123', '123', 'client'),
-('celine', 'celine', 'Jalan Merah', '0192823473', 'celine@gmail.com', 'client');
+('admin', 'admin', '123 Street', '123', '123@hotmail.com', 'Job Seeker'),
+('admin2', 'admin2', 'Admin Address Street 11', '019999999', 'admin2@gmail.com', 'Job Seeker'),
+('adrian', 'adrian', '8 Road', '123', '123', 'Client'),
+('celine', 'celine', 'Jalan Merah', '0192823473', 'celine@gmail.com', 'Client');
 
 --
 -- Indexes for dumped tables
@@ -190,7 +211,7 @@ ALTER TABLE `jobapplication`
 -- Indexes for table `jobposition`
 --
 ALTER TABLE `jobposition`
-  ADD PRIMARY KEY (`jobID`),
+  ADD PRIMARY KEY (`jobID`,`theClient`),
   ADD KEY `fk_jobpos_theClient` (`theClient`);
 
 --
