@@ -11,11 +11,13 @@
   $companyName = stripcslashes($_POST['Ccompanyname']);
   $email = stripcslashes($_POST['Cemail']);
   $phone = stripcslashes($_POST['Cphone']);
+  $userType = stripcslashes($_POST['userType']);
   $userName = mysqli_real_escape_string($connection, $userName);
   $password = mysqli_real_escape_string($connection, $password);
   $companyName = mysqli_real_escape_string($connection, $companyName);
   $email = mysqli_real_escape_string($connection, $email);
   $phone = mysqli_real_escape_string($connection, $phone);
+  $userType = mysqli_real_escape_string($connection, $userType);
 
   $query = "SELECT * FROM user WHERE userName = '$userName'";
   $result = mysqli_query($connection, $query);
@@ -27,7 +29,7 @@
   }
   else {
     $query = "INSERT INTO  user (username, password, address, phoneNo, email, userType) VALUES
-    ('$userName','$password','','$email', '$phone','client')";
+    ('$userName','$password','','$email', '$phone','$userType')";
     $query2 = "INSERT INTO  client (username, companyName, companyDescription) VALUES
     ('$userName', '$companyName', '')";
     mysqli_query($connection, $query);

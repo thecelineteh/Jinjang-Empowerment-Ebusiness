@@ -35,7 +35,7 @@
 	<!-- Font Awesome Icon -->
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 
-	<!-- Custom stlylesheet -->
+	<!-- Custom stylesheet -->
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -163,11 +163,11 @@
 										<?php
 										if ($_SESSION['userName'] == "failed") {
 											echo "<div class='alert alert-danger'>";
-											echo "Wrong username or passowd!";
+											echo "Wrong username or password!";
 											echo "</div><br />";
 										}
 										 ?>
-								    <label for="email">Username:</label>
+								    <label for="username">Username:</label>
 										<?php
 										if (isset($_SESSION['remember'])) {
 											echo "<input type='text' class='form-control' id='
@@ -237,9 +237,13 @@
                 </ul>
                 <div class="tab-content">
                   <div id="jobseeker" class="tab-pane fade in active">
-                    <form action="jSignUp.php" method="post">
+
+                    <form name="SsignUpForm" action="jSignUp.php" method="post">
+
                       <div class="row" style="margin-top: 50px;">
                         <div class="col-sm-offset-2 col-sm-8">
+                        	<!-- User is a Job Seeker -->
+                        	<input type="hidden" name="userType" value="Job Seeker">
                           <div class="form-group">
                             <label>Username: </label>
                               <input type="text" name="Susername" class="form-control" required>
@@ -270,10 +274,10 @@
                             <input type="text" name="Sphone" class="form-control" required>
                             <div id="Sphone_error" style="color:red;" ></div>
                           </div>
+	                      </div>
 
                           <br />
                       	</div>
-						</div>
 
 						<div class="modal-footer">
 	                        <div style="text-align: center;">
@@ -286,9 +290,11 @@
                      </div>
 
                   	<div id="company" class="tab-pane fade">
-                    	<form action="cSignUp.php" method="post">
+                    	<form name="CsignUpForm" method="post" action="cSignUp.php">
 	                      <div class="row" style="margin-top:50px;">
 	                        <div class="col-sm-offset-2 col-sm-8">
+	                        <!-- User is a Client -->
+                        	<input type="hidden" name="userType" value="Client">
 	                          <div class="form-group">
 	                            <label>Username: </label>
 	                              <input type="text" name="Cusername" class="form-control" required>
@@ -306,6 +312,7 @@
 	                              <input type="text" name="Ccompanyname" class="form-control" required>
 	                            <div id="Ccompanyname_error" style="color:red;"></div>
 	                          </div>
+
 	                          <div class="form-group">
 	                            <label>Email: </label>
 	                            <input type="email" name="Cemail" required
@@ -958,8 +965,8 @@
 					<img class="img-responsive" src="./img/work_1.jpg" alt="">
 					<div class="overlay"></div>
 					<div class="work-content">
-						<span>Category</span>
-						<h3>Lorem ipsum dolor</h3>
+						<span>Educational Event</span>
+						<h3>Science Quiz</h3>
 						<div class="work-link">
 							<a href="#"><i class="fa fa-external-link"></i></a>
 							<a class="lightbox" href="./img/work_1.jpg"><i class="fa fa-search"></i></a>
@@ -973,8 +980,8 @@
 					<img class="img-responsive" src="./img/work_2.jpg" alt="">
 					<div class="overlay"></div>
 					<div class="work-content">
-						<span>Category</span>
-						<h3>Lorem ipsum dolor</h3>
+						<span>Social Event</span>
+						<h3>Bookmarking Our Dreams</h3>
 						<div class="work-link">
 							<a href="#"><i class="fa fa-external-link"></i></a>
 							<a class="lightbox" href="./img/work_2.jpg"><i class="fa fa-search"></i></a>
@@ -988,8 +995,8 @@
 					<img class="img-responsive" src="./img/work_3.jpg" alt="">
 					<div class="overlay"></div>
 					<div class="work-content">
-						<span>Category</span>
-						<h3>Lorem ipsum dolor</h3>
+						<span>Social Event</span>
+						<h3>Story of the Day</h3>
 						<div class="work-link">
 							<a href="#"><i class="fa fa-external-link"></i></a>
 							<a class="lightbox" href="./img/work_3.jpg"><i class="fa fa-search"></i></a>
@@ -1003,8 +1010,8 @@
 					<img class="img-responsive" src="./img/work_4.jpg" alt="">
 					<div class="overlay"></div>
 					<div class="work-content">
-						<span>Category</span>
-						<h3>Lorem ipsum dolor</h3>
+						<span>Teambuilding</span>
+						<h3>We Are All Alike</h3>
 						<div class="work-link">
 							<a href="#"><i class="fa fa-external-link"></i></a>
 							<a class="lightbox" href="./img/work_4.jpg"><i class="fa fa-search"></i></a>
@@ -1018,8 +1025,8 @@
 					<img class="img-responsive" src="./img/work_5.jpg" alt="">
 					<div class="overlay"></div>
 					<div class="work-content">
-						<span>Category</span>
-						<h3>Lorem ipsum dolor</h3>
+						<span>Social Event</span>
+						<h3>Bag 'em All</h3>
 						<div class="work-link">
 							<a href="#"><i class="fa fa-external-link"></i></a>
 							<a class="lightbox" href="./img/work_5.jpg"><i class="fa fa-search"></i></a>
@@ -1033,8 +1040,8 @@
 					<img class="img-responsive" src="./img/work_6.jpg" alt="">
 					<div class="overlay"></div>
 					<div class="work-content">
-						<span>Category</span>
-						<h3>Lorem ipsum dolor</h3>
+						<span>Educational Event</span>
+						<h3>Health Awareness Day</h3>
 						<div class="work-link">
 							<a href="#"><i class="fa fa-external-link"></i></a>
 							<a class="lightbox" href="./img/work_6.jpg"><i class="fa fa-search"></i></a>
@@ -1239,7 +1246,7 @@
 
 					<!-- footer copyright -->
 					<div class="footer-copyright">
-						<p>Copyright © 2017 AGN. All Rights Reserved. Designed by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+						<p>Copyright © 2017 AGN. All Rights Reserved.</p>
 					</div>
 					<!-- /footer copyright -->
 
