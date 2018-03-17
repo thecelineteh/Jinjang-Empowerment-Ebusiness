@@ -3,6 +3,9 @@
 	if (!isset($_SESSION['userName'])) {
 	  $_SESSION['userName'] = "empty";
 	}
+	if (!isset($SESSION['SignUp'])) {
+		$_SESSION['userName'] = "empty";
+	}
 ?>
 
 <!DOCTYPE html>
@@ -234,7 +237,7 @@
                 </ul>
                 <div class="tab-content">
                   <div id="jobseeker" class="tab-pane fade in active">
-                    <form name="SsignUpForm" onsubmit="return validateJobSeekerSignUp()">
+                    <form action="jSignUp.php" method="post">
                       <div class="row" style="margin-top: 50px;">
                         <div class="col-sm-offset-2 col-sm-8">
                           <div class="form-group">
@@ -283,7 +286,7 @@
                      </div>
 
                   	<div id="company" class="tab-pane fade">
-                    	<form name="CsignUpForm" onsubmit="return validateCompanySignUp()">
+                    	<form action="cSignUp.php" method="post">
 	                      <div class="row" style="margin-top:50px;">
 	                        <div class="col-sm-offset-2 col-sm-8">
 	                          <div class="form-group">
@@ -303,13 +306,6 @@
 	                              <input type="text" name="Ccompanyname" class="form-control" required>
 	                            <div id="Ccompanyname_error" style="color:red;"></div>
 	                          </div>
-
-	                          <div class="form-group">
-	                            <label>Company Description: </label>
-	                            <textarea name="Ccompanydesc" required rows="5" required></textarea>
-	                            <div id="Ccompanydesc_error" style="color:red;"></div>
-	                          </div>
-
 	                          <div class="form-group">
 	                            <label>Email: </label>
 	                            <input type="email" name="Cemail" required
@@ -322,7 +318,6 @@
 	                            <input type="text" name="Cphone" class="form-control" required>
 	                            <div id="Cphone_error" style="color:red;" ></div>
 	                          </div>
-
 	                          <br />
 	                        </div>
 	                      </div>
@@ -1263,16 +1258,27 @@
 	<div id="back-to-top"></div>
 	<!-- /Back to top -->
 
-	<!-- Preloader -->
-	<div id="preloader">
-		<div class="preloader">
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
+
+	<?php
+	if ($_SESSION['SignUp'] == "failed") {
+		echo "<script>alert('sign up failed');</script>";
+	}
+	else {
+		echo "
+		<!-- Preloader -->
+		<div id='preloader'>
+			<div class='preloader'>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
 		</div>
-	</div>
-	<!-- /Preloader -->
+		<!-- /Preloader -->
+		";
+	}
+	?>
+
 
 	<!-- jQuery Plugins -->
 	<script type="text/javascript" src="js/jquery.min.js"></script>
@@ -1281,6 +1287,11 @@
 	<script type="text/javascript" src="js/jquery.magnific-popup.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 
+	<?php
+	if (isset($_SESSION['searchValue'])) {
+		unset($_SESSION['searchValue']);
+	}
+	?>
 </body>
 
 </html>

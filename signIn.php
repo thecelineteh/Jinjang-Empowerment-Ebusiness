@@ -12,8 +12,8 @@
   $row = mysqli_fetch_assoc($result);
 
   if ($row['username'] == $userName && $row['password'] == $password) {
-    header('Location: jobs.html');
-    $_SESSION['userName'] = $row['username'];
+      header('Location: jobs.php');
+      $_SESSION['userName'] = $row['username'];
     if (isset($remember)) {
       $_SESSION['remember'] = $row['username'];
     }
