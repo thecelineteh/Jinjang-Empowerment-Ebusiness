@@ -13,19 +13,21 @@
 
   if ($row['username'] == $userName && $row['password'] == $password) {
     if ($row['userType'] == 'Job Seeker') {
+      $_SESSION['userName'] = $row['username'];
       header('Location: jobs.html');
     } else {
-      header('Location: postJob.html');
-
-    $_SESSION['userName'] = $row['username'];
-
+      $_SESSION['userName'] = $row['username'];
+      header('Location: createJob.php');
+    }
     if (isset($remember)) {
       $_SESSION['remember'] = $row['username'];
     }
     else {
       unset($_SESSION['remember']);
     }
-  }
+
+    echo $_SESSION['userName'];
+}
   else {
     header('Location: index.php');
     $_SESSION['userName'] = "failed";

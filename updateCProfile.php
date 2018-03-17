@@ -1,48 +1,38 @@
 <?php
-  /* requires editing */
   session_start();
   include 'dbConnection.php';
-  
-  $username = $_SESSION['userName'];
-  // update job seeker profile
-  if ($_SESSION['userType'] == 'Job Seeker'){
-    $password = stripcslashes($_POST['Spassword']);
-    $fullName = stripcslashes($_POST['Sfullname']);
-    $email = stripcslashes($_POST['Semail']);
-    $phone = stripcslashes($_POST['Sphone']);
-    $address = stripcslashes($_POST['Saddress']);
 
-   
-    $fullName = mysqli_real_escape_string($connection, $fullName);
+  $username = mysqli_real_escape_string($connection, $_SESSION['userName']);
 
-    // update jobseeker attribute
-    $update_s= "UPDATE jobseeker SET fullName = '$fullName' WHERE username = '$username'" ;
-    $result_s = mysqli_query($con, $update_s);
+  $password = stripcslashes($_POST['Cpassword']);
+  $phone = stripcslashes($_POST['Cphone']);
+  $address = stripcslashes($_POST['Caddress']);
+  $email = stripcslashes($_POST['Cemail']);
+  $companyName = stripcslashes($_POST['CcompanyName']);
+  $companyDescription = stripcslashes($_POST['CcompanyDescription']);
 
-  } else {
-    $password = stripcslashes($_POST['Cpassword']);
-    $companyName = stripcslashes($_POST['CcompanyName']);
-    $companyDescription = stripcslashes($_POST['CcompanyDescription']);
-    $phone = stripcslashes($_POST['Cphone']);
-    $address = stripcslashes($_POST['Saddress']);
-
-    $companyName = mysqli_real_escape_string($connection, $companyName);
-    $companyDescription = mysqli_real_escape_string($connection, $companyDescription);
-
-    // update client attributes
-    $update_c= "UPDATE client SET companyName = '$companyName', companyDescription = '$companyDescription' WHERE username = '$username'" ;
-    $result_c = mysqli_query($con, $update_c);
-  }
-  
   $password = mysqli_real_escape_string($connection, $password);
-  $email = mysqli_real_escape_string($connection, $email);
   $phone = mysqli_real_escape_string($connection, $phone);
   $address = mysqli_real_escape_string($connection, $address);
+  $email = mysqli_real_escape_string($connection, $email);
+  $companyName = mysqli_real_escape_string($connection, $companyName);
+  $companyDescription = mysqli_real_escape_string($connection, $companyDescription);
 
   // update user attributes
-  $update_user= "UPDATE user SET password = '$password', address = '$address', phone='$phone', email = '$email' WHERE username = '$username'" ;
-  $result_user = mysqli_query($con, $update_user);
-  
+  $update_user = "UPDATE user SET password = '$password', address = '$address', phoneNo='$phone', email = '$email' WHERE username = '$username'";
+  $result_user = mysqli_query($connection, $update_user);
+
+  // update client attributes
+  $update_c= "UPDATE client SET companyName = '$companyName', companyDescription = '$companyDescription' WHERE username = '$username'" ;
+  $result_c = mysqli_query($con, $update_c);
+
+  if ($result_user && $result_c) {
+    echo "<script>alert('Update profile successful.');</script>";
+    header("Refresh: 1; url= jProfile.php");
+  } else {
+    echo "<script>alert('Unable to update profile.');</script>";
+    header("Refresh: 1; url= jProfile.php");
+  }
 
   mysqli_close($connection);
 ?>

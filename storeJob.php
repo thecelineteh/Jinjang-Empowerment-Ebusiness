@@ -1,0 +1,52 @@
+<?php
+  session_start();
+  include 'dbConnection.php';
+
+  $title = stripcslashes($_POST['jobTitle']);
+  $desc = stripcslashes($_POST['jobDescription']);
+  $address = stripcslashes($_POST['jobAddress']);
+  $city = stripcslashes($_POST['jobCity']);
+  $salary = stripcslashes($_POST['jobSalary']);
+  $hours = stripcslashes($_POST['jobHours']);
+  $weeks = stripcslashes($_POST['jobDuration']);
+  $reqSkillSet = $_POST['reqSkillSet'];
+
+  $title = mysqli_real_escape_string($connection, $title);
+  $desc = mysqli_real_escape_string($connection, $desc);
+  $address = mysqli_real_escape_string($connection, $address);
+  $city = mysqli_real_escape_string($connection, $city);
+  $salary = mysqli_real_escape_string($connection, $salary);
+  $hours = mysqli_real_escape_string($connection, $hours);
+  $weeks = mysqli_real_escape_string($connection, $weeks);
+
+  $status = 'AVAILABLE';
+  $theClient = mysqli_real_escape_string($connection, $_SESSION['userName']);
+
+  $query_storeJob = "INSERT INTO  jobposition (title, description, salaryPerHour, hoursPerWeek, durationInWeeks, address, city, status, theClient) VALUES
+  ('$title','$desc','','$salary', '$hours', '$weeks', '$address','$city', '$status', '$theClient')";
+  $result_storeJob = mysqli_query($connection, $query_storeJob);
+
+  // Based on skillName, find skills required in skill table
+  foreach ($reqSkillSet as $skillName) {
+    $req_skills = "SELECT * FROM skill WHERE skillName = '$skillName'";
+    $result_req_skills = mysqli_query($connection, $req_skills);
+
+    while ($row_req_skills = mysqli_fetch_assoc($result_req_skills)) {
+      $skillID = $row_req_skills['skillID'];
+      $add_reqskillset = "INSERT INTO jobrequiredskill VALUES('$theClient', '$skillID')";
+      $result_add_reqskillset = mysqli_query($connection, $add_reqskillset);
+    }
+  }
+
+  if ($result_storeJob && $result_add_reqskillset) {
+    echo "<script>alert('Job position created successfully.');</script>";
+    header("Refresh: 1; url= cJobPositions.php");
+  } else {
+    echo $result_add_reqskillset;
+    echo mysqli_error($connection);
+    //echo "<script>alert('Unable to create job.');</script>";
+    //header("Refresh: 1; url= createJob.php");
+  }
+
+  mysqli_close($connection);
+?>

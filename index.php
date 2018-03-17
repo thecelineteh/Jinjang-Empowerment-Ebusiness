@@ -271,25 +271,11 @@
                             <input type="text" name="Sphone" class="form-control" required>
                             <div id="Sphone_error" style="color:red;" ></div>
                           </div>
-
-	                        <div class="form-group">
-		                      <label>Skill Sets: </label>
-	                          <div class="checkbox">
-							    <label><input type="checkbox" name="chk_weave" class="checkbox" value="weaving"> Weaving</label>
-							  </div>
-							  <div class="checkbox">
-							    <label><input type="checkbox" name="chk_knit" class="checkbox" value="knitting"> Knitting</label>
-							  </div>
-							  <div class="checkbox">
-							    <label><input type="checkbox" name="chk_bake" class="checkbox" value="baking"> Baking</label>
-							  </div>
-						  </div>
-
 	                      </div>
 
                           <br />
                       	</div>
-					 	
+
 						<div class="modal-footer">
 	                        <div style="text-align: center;">
 	                          <br />
