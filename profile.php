@@ -4,14 +4,6 @@
 
 	$userName = $_SESSION['userName'];
 
-	$query = "SELECT * FROM user WHERE username = '$userName'";
-	$result = mysqli_query($connection, $query);
-	$row = mysqli_fetch_assoc($result);
-
-	$query_S = "SELECT * FROM jobseeker WHERE username = '$userName'";
-	$result_S = mysqli_query($connection, $query_S);
-	$row_S = mysqli_fetch_assoc($result_S);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -166,6 +158,14 @@
 						  <div class = "form-group">
 						    <label for = "Susername">Username:</label>
 						    <?php
+									$query = "SELECT * FROM user WHERE username = '$userName'";
+									$result = mysqli_query($connection, $query);
+									$row = mysqli_fetch_assoc($result);
+
+									$query_S = "SELECT * FROM jobseeker WHERE username = '$userName'";
+									$result_S = mysqli_query($connection, $query_S);
+									$row_S = mysqli_fetch_assoc($result_S);
+
 						      echo "<h4>" . $row['username'] . "</h4>";
 						    ?>
 						  </div>
@@ -211,66 +211,27 @@
 						    <label for = "SskillSet">Skill Sets:</label>
 									<div class="checkbox">
 										<?php
-										/*
+										// find all selected skillset of this job seeker
+											$userID = $row['userID'];
+
+										  $query_skillset = "SELECT * FROM skillsets, skill WHERE theJobSeeker = '$userID' AND skillsets.skillID = skill.skillID";
+										  $result_skillset = mysqli_query($connection, $query_skillset);
+
 											$query_skills = "SELECT * FROM skill";
-											$result_skills = mysqli_query($connection, $query_skills);
-
-											while($row_skills = mysqli_fetch_assoc($result_skills)) {
-												$skills_array = array();
-												array_push($skills_array, $row_skills['skillName']);
-											}
-											*/
+										  $result_skills = mysqli_query($connection, $query_skills);
 
 
-// find all skillset of this job seeker
-											$query_skillset = "SELECT * FROM skillset ss, skill s WHERE username = '$userName' AND ss.skillID = s.skillID";
-											$result_skillset = mysqli_query($connection, $query_skillset);
-
-// skillset array
-											// store all selected skills in array
-											while($row_skillset = mysqli_fetch_assoc($result_skillset)) {
-												$skillset_array = array();
-												array_push($skillset_array, $row_skillset['skillName']);
-											}
-
-// skills array
-											while ($row_skill)
-											foreach ($skillset_array as $s_skill) {
-												foreach ($skills_array as $aSkill) {
-													if ($s_skill == $aSkill) {
-														echo "<label><input type='checkbox' name='sSkillSet[]' class='checkbox' value='" . $aSkill . "' checked>" . $aSkill. "</label><br>";
-													} else {
-														echo "<label><input type='checkbox' name='sSkillSet[]' class='checkbox' value='" . $aSkill . "'>" . $aSkill. "</label><br>";
-													}
+											if (mysqli_num_rows($result_skillset) > 0) {
+												
+											} else {
+												// if no skillset have been recorded for this job seeker
+												// display all skill options
+												while($row_skills = mysqli_fetch_assoc($result_skills)) {
+								        echo "<label><input type='checkbox' name='sSkillSet[]' class='checkbox' value='" . $row_skills['skillName'] . "'>" . $row_skills['skillName'] . "</label><br>";
 												}
 											}
-foreach ( $skillset_array as $ss) {
-	echo $ss;
-}
-foreach ( $skills_array as $s) {
-	echo $s;
-}
-											//$notSelectedSkills = explode(',', $skillset_array);
-// all skills not selected
-											$query_notSelected_skills = "SELECT * FROM skill WHERE skillName NOT IN($notSelectedSkills)";
 
 
-
-
-
-/*
-											while($row_skillset = mysqli_fetch_assoc($result_skillset)){
-												//while($row_skills = mysqli_fetch_assoc($result_skills)) {
-													//if($row_skillset['skillID'] == $row_skills['skillID']){
-														echo "<label><input type='checkbox' name='sSkillSet[]' class='checkbox' value='" . $row_skillset['skillName'] . "' checked>" . $row_skillset['skillName']. "</label><br>";
-													//} else {
-
-														echo "<label><input type='checkbox' name='sSkillSet[]' class='checkbox' value='" . $row_skillset['skillName'] . "'>" . $row_skillset['skillName']. "</label><br>";
-													}
-
-												//}
-											//}
-											*/
 											?>
 								</div>
 						  </div>

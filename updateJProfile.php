@@ -47,10 +47,10 @@
 
   if ($result_user && $result_s && $result_add_skillset) {
     echo "<script>alert('Update profile successful.');</script>";
-    header("Refresh: 1; url= jProfile.php");
+    header("Refresh: 1; url= profile.php");
   } else {
     echo "<script>alert('Unable to update profile.');</script>";
-    header("Refresh: 1; url= jProfile.php");
+    header("Refresh: 1; url= profile.php");
   }
 
   mysqli_close($connection);
