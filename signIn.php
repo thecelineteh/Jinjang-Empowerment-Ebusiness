@@ -14,11 +14,14 @@
   if ($row['username'] == $userName && $row['password'] == $password) {
     if ($row['userType'] == 'Job Seeker') {
       $_SESSION['userName'] = $row['username'];
-      header('Location: jobs.html');
-    } else {
+      header('Location: jobs.php');
+    } else if ($row['userType'] == 'Client') {
       $_SESSION['userName'] = $row['username'];
       header('Location: createJob.php');
     }
+	else {
+		echo "nothing";
+	}
     if (isset($remember)) {
       $_SESSION['remember'] = $row['username'];
     }
