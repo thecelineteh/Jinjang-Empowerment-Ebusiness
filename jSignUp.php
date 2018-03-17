@@ -33,7 +33,7 @@
     mysqli_query($connection, $query);
     mysqli_query($connection, $query2);
     header("Location: index.php");
-    unset($_SESSION['SignUp']);
+    $_SESSION['SignUp'] = "success";
   }
 
   mysqli_close($connection);
