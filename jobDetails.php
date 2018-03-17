@@ -78,9 +78,6 @@
 			<!--  Main navigation  -->
 			<ul class="main-nav nav navbar-nav navbar-right">
 				<li><a href="jobs.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
-				<?php
-
-				 ?>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>

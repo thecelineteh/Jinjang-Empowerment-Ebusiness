@@ -51,6 +51,13 @@ include 'dbConnection.php';
 	    -ms-transform: translate(-50%, -50%);
 	    transform: translate(-50%, -50%);
 	}
+	@media (max-width: 575.98px) {
+		.sButton {
+			position: relative;
+			margin-left: 2.45em;
+			margin-top: 1em;
+		}
+	}
 	</style>
 </head>
 <body style="background-color: ecf0f1;">
@@ -95,8 +102,8 @@ include 'dbConnection.php';
 					<div class="col-sm-offset-2 col-sm-7 col-xs-offset-1 col-xs-10" style="padding:0; margin:0 position:relative;">
 	  				<input class="search" type="text" name="search" placeholder="Search..">
 	  			</div>
-	  			<div class="col-sm-1 col-xs-offset-1 col-xs-10" style="padding:0; margin:0;">
-	  				<input class="button" type="submit" value="Search">
+	  			<div class="col-sm-1 col-xs-10" style="padding:0; margin:0;">
+	  				<input class="button sButton" type="submit" value="Search">
 	  			</div>
 				</form>
 			</div>
@@ -132,6 +139,9 @@ include 'dbConnection.php';
 				if (mysqli_num_rows($result) > 0) {
 					while ($row = mysqli_fetch_assoc($result)) {
             $totalSalary = $row['salaryPerHour'] * $row['hoursPerWeek'] * $row['durationInWeeks'];
+						$query2 = "SELECT skill.skillName FROM jobrequiredskill, skill WHERE jobID = '$row[jobID]'
+											AND jobrequiredskill.skillID=skill.skillID";
+						$result2 = mysqli_query($connection, $query2);
 						echo "
             <div class='col-sm-3'>
               <div class='pricing'>
@@ -148,13 +158,30 @@ include 'dbConnection.php';
 						$link='"jobDetails.php"';
 						echo "
                 </div>
-                <ul class='price-content'>
-                  <li>
-                    <p>Address: <br />" .
-											$row['address'] .
-                    "</p>
-                  </li>
-                <div class='price-btn'>
+                <ul class='price-content'>";
+						if (mysqli_num_rows($result2) > 0) {
+							echo "Skills Required: ";
+							$counter = 0;
+							while ($row = mysqli_fetch_assoc($result2)) {
+								$counter += 1;
+								echo "
+								<li>" . $row['skillName'] . "</li>
+								";
+							}
+							$rowPrint = 4 - $counter;
+							for ($i = 0; $i <= $rowPrint; $i++) {
+								echo "<br />";
+							}
+						}
+						else {
+							echo "No skills required";
+							for ($i = 0; $i <= 4; $i++) {
+								echo "<br />";
+							}
+						}
+
+
+            echo "<div class='price-btn'>
 									<form action='jobDetails.php' method='post'  target='_blank'>
 										<input type=hidden name='jobID' value='" . $row['jobID'] .
 										"'>
