@@ -24,7 +24,7 @@
 
   if (mysqli_num_rows($result) > 0) {
     echo "<script>alert('sign up failed');</script>";
-    $_SESSION['tSignUp'] = "failed";
+    $_SESSION['SignUp'] = "failed";
     header("Location: index.php");
   }
   else {
@@ -35,6 +35,7 @@
     mysqli_query($connection, $query);
     mysqli_query($connection, $query2);
     header("Location: index.php");
+    unset($_SESSION['SignUp']);
   }
 
   mysqli_close($connection);

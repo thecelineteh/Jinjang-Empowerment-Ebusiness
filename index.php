@@ -3,6 +3,9 @@
 	if (!isset($_SESSION['userName'])) {
 	  $_SESSION['userName'] = "empty";
 	}
+	if (!isset($SESSION['SignUp'])) {
+		$_SESSION['userName'] = "empty";
+	}
 ?>
 
 <!DOCTYPE html>
@@ -1262,16 +1265,27 @@
 	<div id="back-to-top"></div>
 	<!-- /Back to top -->
 
-	<!-- Preloader -->
-	<div id="preloader">
-		<div class="preloader">
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
+
+	<?php
+	if ($_SESSION['SignUp'] == "failed") {
+		echo "<script>alert('sign up failed');</script>";
+	}
+	else {
+		echo "
+		<!-- Preloader -->
+		<div id='preloader'>
+			<div class='preloader'>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
 		</div>
-	</div>
-	<!-- /Preloader -->
+		<!-- /Preloader -->
+		";
+	}
+	?>
+
 
 	<!-- jQuery Plugins -->
 	<script type="text/javascript" src="js/jquery.min.js"></script>
@@ -1280,6 +1294,11 @@
 	<script type="text/javascript" src="js/jquery.magnific-popup.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 
+	<?php
+	if (isset($_SESSION['searchValue'])) {
+		unset($_SESSION['searchValue']);
+	}
+	?>
 </body>
 
 </html>
