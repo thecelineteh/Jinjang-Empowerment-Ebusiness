@@ -84,7 +84,7 @@
 					<!-- Logo -->
 					<div class="navbar-brand">
 						<a href="index.php">
-							<img class="logo" src="img/logo.png" alt="logo">
+							<img class="logo" src="img/logo2.png" alt="logo">
 							<img class="logo-alt" src="img/logo-alt.png" alt="logo">
 						</a>
 					</div>
@@ -915,7 +915,7 @@
 								<h3 class="white-text">Elon Musk</h3>
 								<span>HR Manager</span>
 							</div>
-							<p class="white-text">Molestie at elementum eu facilisis sed odio. Scelerisque in dictum non consectetur a erat. Aliquam id diam maecenas ultricies mi eget mauris.</p>
+							<p class="white-text">We are honoured to be part of the Jinjang project. It is heartwarming to see that no matter how small each contribution is, it goes a long way for them.</p>
 						</div>
 						<!-- /testimonial -->
 
@@ -926,7 +926,7 @@
 								<h3 class="white-text">John Doe</h3>
 								<span>CEO</span>
 							</div>
-							<p class="white-text">Molestie at elementum eu facilisis sed odio. Scelerisque in dictum non consectetur a erat. Aliquam id diam maecenas ultricies mi eget mauris.</p>
+							<p class="white-text">AGN is glad to be partners with educational organisations such as HELP University. The love of all those who have invested their time, effort and dedication shines through this project.</p>
 						</div>
 						<!-- /testimonial -->
 
