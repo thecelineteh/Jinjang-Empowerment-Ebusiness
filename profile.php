@@ -108,7 +108,7 @@
 			<div class="navbar-header">
 				<!-- Logo -->
 				<div class="navbar-brand">
-					<a href="index.html">
+					<a href="index.php">
 						<img class="logo" src="img/logo.png" alt="logo">
 						<img class="logo-alt" src="img/logo-alt.png" alt="logo">
 					</a>
@@ -124,8 +124,16 @@
 
 			<!--  Main navigation  -->
       <ul class="main-nav nav navbar-nav navbar-right">
-				<li><a href="cJobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
-				<li><a href="#profile"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
+				<li>
+				<?php
+					if ($_SESSION['userType'] == 'Job Seeker') {
+						echo '<a href="jobs.php">';
+					} else if ($_SESSION['userType'] == 'Client') {
+						echo '<a href="jobPositions.php">';
+					}
+				 ?>
+				<i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
+				<li class="active"><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
@@ -184,8 +192,6 @@
 										        <br>
 
 										      <?php
-														$_SESSION['userType'] = $row['userType'];
-
 														if ($row['userType'] == 'Job Seeker') {
 											        echo "<div class = 'form-group'>
 														    <label for = 'Sfullname'>Full Name:</label>
@@ -312,7 +318,7 @@
 
 					<!-- footer logo -->
 					<div class="footer-logo">
-						<a href="index.html"><img src="img/logo-alt.png" alt="logo"></a>
+						<a href="index.php"><img src="img/logo-alt.png" alt="logo"></a>
 					</div>
 					<!-- /footer logo -->
 

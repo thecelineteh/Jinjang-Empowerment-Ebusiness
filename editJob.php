@@ -1,6 +1,14 @@
 <?php
   session_start();
   include 'dbConnection.php';
+
+  $theClient = $_SESSION['userID'];
+  $jobID = $_POST['job'];
+  echo $jobID;
+  if (isset($_POST["$jobID"])) {
+    echo "number 9";
+  }
+
  ?>
 <!DOCTYPE>
 <html>
@@ -81,7 +89,13 @@
     }
 
     .white-btn {
+      background-color: #F8F8FF;
+      opacity: 0.8;
+    }
+
+    .main-btn {
       margin-right:50px;
+      background-color: #0073e6;
     }
 
 	</style>
@@ -94,7 +108,7 @@
 			<div class="navbar-header">
 				<!-- Logo -->
 				<div class="navbar-brand">
-					<a href="index.html">
+					<a href="index.php">
 						<img class="logo" src="img/logo.png" alt="logo">
 						<img class="logo-alt" src="img/logo-alt.png" alt="logo">
 					</a>
@@ -110,7 +124,7 @@
 
 			<!--  Main navigation  -->
       <ul class="main-nav nav navbar-nav navbar-right">
-				<li><a href="cJobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
+				<li><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="#profile"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
@@ -241,8 +255,9 @@
                          ?>
                   </div>
 
-    							<div style="text-align:right; margin-top:50px">
-    								<button type="submit" class="white-btn">Create</button>
+                  <div style="text-align:right; margin-top:50px">
+                    <a class="white-btn" href="jobPositions.php">Cancel</a>
+    								<button type="submit" class=" main-btn">Create</button>
     							</div>
 
                   </div>
@@ -270,7 +285,7 @@
 
 					<!-- footer logo -->
 					<div class="footer-logo">
-						<a href="index.html"><img src="img/logo-alt.png" alt="logo"></a>
+						<a href="index.php"><img src="img/logo-alt.png" alt="logo"></a>
 					</div>
 					<!-- /footer logo -->
 
@@ -307,6 +322,7 @@
 	<!-- /Back to top -->
 
 	<!-- Preloader -->
+  <!--
 	<div id="preloader">
 		<div class="preloader">
 			<span></span>
@@ -315,6 +331,7 @@
 			<span></span>
 		</div>
 	</div>
+  -->
 	<!-- /Preloader -->
 
 	<!-- jQuery Plugins -->

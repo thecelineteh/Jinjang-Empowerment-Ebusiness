@@ -47,7 +47,7 @@
 
   if ($result_storeJob ) {
     echo "<script>alert('Job position created successfully.');</script>";
-    header("Refresh: 1; url= cJobPositions.php");
+    header("Refresh: 1; url= jobPositions.php");
   } else {
     //echo $result_add_reqskillset;
     echo mysqli_error($connection);
