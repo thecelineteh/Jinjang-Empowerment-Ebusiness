@@ -1,6 +1,9 @@
 <?php
 session_start();
 include 'dbConnection.php';
+if (isset($_POST['skill'])) {
+	$_SESSION['searchValue'] = "filter";
+}
 ?>
 <!DOCTYPE>
 <html>
@@ -148,10 +151,16 @@ include 'dbConnection.php';
 			<div class="row">
 				<!-- pricing -->
 				<?php
-				if (!isset($_SESSION['searchValue']) || $_SESSION['searchValue'] == "allJobs" ||
-						!isset($_POST['skill']) || $_POST['skill'] == "default") {
+				if (!isset($_SESSION['searchValue']) || $_SESSION['searchValue'] == "allJobs") {
 					$query = "SELECT * FROM jobposition WHERE status='AVAILABLE'";
-
+				}
+				else if (isset($_SESSION['searchValue']) && $_SESSION['searchValue'] != "filter"){
+					$searchValue = $_SESSION["searchValue"];
+					$query = "SELECT * FROM jobposition WHERE title LIKE '%$searchValue%'
+										AND status='AVAILABLE'";
+				}
+				else if (!isset($_POST['skill']) || $_POST['skill'] == "default") {
+					$query = "SELECT * FROM jobposition WHERE status='AVAILABLE'";
 				}
 				else if (isset($_POST['skill']) && $_POST['skill'] != "Default") {
 					$skillFilter = $_POST['skill'];
@@ -160,11 +169,6 @@ include 'dbConnection.php';
 									AND jobposition.jobID = jobrequiredskill.jobID
 									AND jobrequiredskill.skillID = skill.skillID
 									AND skillName='$skillFilter'";
-				}
-				else {
-					$searchValue = $_SESSION["searchValue"];
-					$query = "SELECT * FROM jobposition WHERE title LIKE '%$searchValue%'
-										AND status='AVAILABLE'";
 				}
 				$result = mysqli_query($connection, $query);
 				if (mysqli_num_rows($result) > 0) {
