@@ -135,7 +135,7 @@
 		</div>
 	</nav>
 	<!-- /Nav -->
-	<form action="updateJProfile.php" method="post">
+	<form action="updateProfile.php" method="post">
 	<div class = "container-fluid">
 		<div class = "row">
 			<div class = "col-sm-12 col-xs-12" style = "padding:0;">
@@ -164,7 +164,7 @@
 													$row_S = mysqli_fetch_assoc($result_S);
 
 													// client
-													$query_C = "SELECT * FROM client WHERE userID = '$userID'";
+													$query_C = "SELECT * FROM client WHERE userID = $userID";
 													$result_C = mysqli_query($connection, $query_C);
 													$row_C = mysqli_fetch_assoc($result_C);
 
@@ -174,16 +174,18 @@
 										  </div>
 										        <br>
 										  <div class = "form-group">
-										    <label for = "Spassword">Password:</label>
+										    <label for = "password">Password:</label>
 										    <?php
-										      echo "<input type='password' class='form-control' id='Spassword'
-										        name='Spassword' value='" .
+										      echo "<input type='password' class='form-control' id='password'
+										        name='password' value='" .
 										        $row['password'] . "' required>";
 										    ?>
 										  </div>
 										        <br>
 
 										      <?php
+														$_SESSION['userType'] = $row['userType'];
+
 														if ($row['userType'] == 'Job Seeker') {
 											        echo "<div class = 'form-group'>
 														    <label for = 'Sfullname'>Full Name:</label>
@@ -208,23 +210,23 @@
 										      ?>
 
 										  <div class = "form-group">
-										    <label for = "Semail">Email:</label>
+										    <label for = "email">Email:</label>
 										      <?php
-										        echo "<input type = 'email' class = 'form-control' id = 'Semail' name = 'Semail' value='" . $row['email'] . "' required>";
+										        echo "<input type = 'email' class = 'form-control' id = 'email' name = 'email' value='" . $row['email'] . "' required>";
 										      ?>
 										  </div>
 										  <br>
 										  <div class = "form-group">
-										    <label for = "Sphone">Phone No:</label>
+										    <label for = "phone">Phone No:</label>
 										      <?php
-										        echo "<input type = 'text' class = 'form-control' id = 'Sphone' name = 'Sphone' value='" . $row['phoneNo'] . "' required>";
+										        echo "<input type = 'text' class = 'form-control' id = 'phone' name = 'phone' value='" . $row['phoneNo'] . "' required>";
 										      ?>
 										  </div>
 										  <br>
 										  <div class="form-group">
-										    <label for = "Saddress">Address:</label>
+										    <label for = "address">Address:</label>
 										      <?php
-										        echo "<textarea name='Saddress' rows='4' cols='50' required>" . $row['address'] . "</textarea>";
+										        echo "<textarea name='address' rows='4' cols='50' required>" . $row['address'] . "</textarea>";
 										      ?>
 										  </div>
 										  <br>

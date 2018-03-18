@@ -30,7 +30,7 @@
   }
   else {
     $query = "INSERT INTO  user (username, password, address, phoneNo, email, userType) VALUES
-    ('$userName','$password','','$email', '$phone','$userType')";
+    ('$userName','$password','','$phone', '$email','$userType')";
     mysqli_query($connection, $query);
     $query3 = "SELECT userID from user where userName='$userName'";
     $result = mysqli_query($connection, $query3);
