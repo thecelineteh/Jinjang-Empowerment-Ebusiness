@@ -99,7 +99,7 @@
 			<div class="navbar-header">
 				<!-- Logo -->
 				<div class="navbar-brand">
-					<a href="index.html">
+					<a href="index.php">
 						<img class="logo" src="img/logo.png" alt="logo">
 						<img class="logo-alt" src="img/logo-alt.png" alt="logo">
 					</a>
@@ -135,7 +135,7 @@
 						<div class = "row" style = "margin: 0;">
 							<div class="middle">
 								<h2 style="margin:0; color:white;">Edit Profile</h2><br />
-								
+
 								<div id="dvPreview">
                     <img src="img/person-flat.png" height=200 width=200 alt="profile-img"/>
                 </div><br />

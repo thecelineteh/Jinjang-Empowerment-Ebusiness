@@ -218,7 +218,7 @@ include 'dbConnection.php';
 
 					<!-- footer logo -->
 					<div class="footer-logo">
-						<a href="index.html"><img src="img/logo-alt.png" alt="logo"></a>
+						<a href="index.php"><img src="img/logo-alt.png" alt="logo"></a>
 					</div>
 					<!-- /footer logo -->
 
