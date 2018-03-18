@@ -20,7 +20,7 @@
     if ($row['userType'] == 'Job Seeker') {
       header('Location: jobs.php');
     } else if ($row['userType'] == 'Client') {
-      header('Location: cJobPositions.php');
+      header('Location: jobPositions.php');
     }
     if (isset($remember)) {
       $_SESSION['remember'] = $row['username'];

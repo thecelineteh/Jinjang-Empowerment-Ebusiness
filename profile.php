@@ -129,7 +129,7 @@
 					if ($_SESSION['userType'] == 'Job Seeker') {
 						echo '<a href="jobs.php">';
 					} else if ($_SESSION['userType'] == 'Client') {
-						echo '<a href="cJobPositions.php">';
+						echo '<a href="jobPositions.php">';
 					}
 				 ?>
 				<i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
