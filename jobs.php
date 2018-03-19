@@ -87,14 +87,22 @@ if (isset($_POST['skill'])) {
 
 			<!--  Main navigation  -->
 			<ul class="main-nav nav navbar-nav navbar-right">
-				<li class="active"><a href="#home"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
+				<li class="active"><a href="#home" onclick='resetJob()'><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
+			<script>
+				function resetJob() {
+					document.getElementById("myForm").submit();
+				}
+			</script>
 
+			<form id="myForm" action="resetJob.php" method="post">
+				<input type='hidden' value='reset' name=resetJob />
+			</form>
 		</div>
 	</nav>
 	<!-- /Nav -->
@@ -158,6 +166,7 @@ if (isset($_POST['skill'])) {
 					$searchValue = $_SESSION["searchValue"];
 					$query = "SELECT * FROM jobposition WHERE title LIKE '%$searchValue%'
 										AND status='AVAILABLE'";
+					unset($_SESSION['searchValue']);
 				}
 				else if (!isset($_POST['skill']) || $_POST['skill'] == "default") {
 					$query = "SELECT * FROM jobposition WHERE status='AVAILABLE'";
