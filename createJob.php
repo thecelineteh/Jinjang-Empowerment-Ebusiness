@@ -117,7 +117,7 @@
 			<!--  Main navigation  -->
       <ul class="main-nav nav navbar-nav navbar-right">
 				<li><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
-				<li><a href="#profile"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
+				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
@@ -215,7 +215,7 @@
 
     							<div style="text-align:right; margin-top:50px">
                     <a class="white-btn" href="jobPositions.php">Cancel</a>
-    								<button type="submit" class=" main-btn">Create</button>
+    								<button type="submit" name="createJobBtn" class=" main-btn">Create</button>
     							</div>
 
                   </div>

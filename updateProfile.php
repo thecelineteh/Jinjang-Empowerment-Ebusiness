@@ -43,7 +43,7 @@
 
       while ($row_selected_skills = mysqli_fetch_assoc($result_selected_skills)) {
         $skillID = $row_selected_skills['skillID'];
-        $add_skillset = "INSERT INTO skillsets VALUES('$skillID', $userID)";
+        $add_skillset = "INSERT INTO skillsets VALUES($skillID, $userID)";
         $result_add_skillset = mysqli_query($connection, $add_skillset);
       }
     }

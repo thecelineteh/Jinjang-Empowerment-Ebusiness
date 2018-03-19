@@ -92,6 +92,7 @@
     }
     .edit:hover {
       color: blue;
+      text-decoration: none;
     }
     .edit:focus {
       color: #8B4513;
@@ -179,6 +180,7 @@
                         {
                           // declaration
                           $jobID = $row_client_jobpos['jobID'];
+                          $_SESSION['jobID'] = $jobID;
                           $title = $row_client_jobpos['title'];
                           $desc = $row_client_jobpos['description'];
                           $salary = $row_client_jobpos['salaryPerHour'];
@@ -199,18 +201,13 @@
                           } else {
                               $_SESSION['empName'] = '-';
                           }
-
+                          echo $jobID;
                           // print out the output
                           echo '
                           <tr>
                           <td align="center">
-
                           <input type="hidden" name="job" value="'; echo $jobID; echo '">
-                          <input type="submit" name="' .$jobID. '">
-
-                          <a class="edit" href="editJob.php"><i class="fa fa-pencil-square-o"></i>&nbsp; Edit</a>
-
-
+                          <button type="submit" name="' .$jobID. '" class="edit btn-link"><i class="fa fa-pencil-square-o"></i>&nbsp; Edit</button>
 
                           </td>';
                           echo '
@@ -225,6 +222,7 @@
                           <td align="center"> '.$_SESSION['empName'].'</td>
                           </tr>
                           ';
+
                         }
                       } else {
                         echo '<span style="margin-left:10px">No job positions created yet.</span>';
