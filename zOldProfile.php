@@ -1,12 +1,20 @@
-<!DOCTYPE>
-<html>
+<?php
+	session_start();
+	include 'dbConnection.php';
+
+	$userID = $_SESSION['userID'];
+	$userName = $_SESSION['userName'];
+
+?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Jinjang E-Business</title>
+	<title>My Profile</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -83,6 +91,7 @@
 		</style>
 </head>
 <body style="background-color: #F4F4F4;">
+<script src = "js/fileUpload.js"></script>
 	<!-- Nav -->
 	<nav id="nav" class="navbar">
 		<div class="container">
@@ -90,7 +99,7 @@
 			<div class="navbar-header">
 				<!-- Logo -->
 				<div class="navbar-brand">
-					<a href="index.html">
+					<a href="index.php">
 						<img class="logo" src="img/logo.png" alt="logo">
 						<img class="logo-alt" src="img/logo-alt.png" alt="logo">
 					</a>
@@ -106,18 +115,18 @@
 
 			<!--  Main navigation  -->
 			<ul class="main-nav nav navbar-nav navbar-right">
-				<li><a href="#home"><i class="fa fa-home"></i>&nbsp;Home</a></li>
+				<li><a href="#home"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="#profile"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
-				<li><a href="#logout"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
+				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
 
 		</div>
 	</nav>
 	<!-- /Nav -->
-	<form>
+	<form action="updateJProfile.php" method="post">
 	<div style = "margin: 0; padding: 0;">
 		<div class = "container-fluid">
 			<div class = "row">
@@ -126,9 +135,10 @@
 						<div class = "row" style = "margin: 0;">
 							<div class="middle">
 								<h2 style="margin:0; color:white;">Edit Profile</h2><br />
+
 								<div id="dvPreview">
-									<img src="img/person-flat.png" height=200 width=200 alt="profile-img"/>
-								</div><br />
+                    <img src="img/person-flat.png" height=200 width=200 alt="profile-img"/>
+                </div><br />
 								<label class="btn btn-default btn-file">
 										Browse <input id="fileupload" type="file" style="display: none;">
 								</label>
@@ -147,40 +157,122 @@
 				<div class="col-xs-12">
 					<div class ="card">
 						<br>
-						<div class = "form-group">
-							<label for = "full-name">Full Name:</label>
-							<input type = "text" class = "form-control" id = "full-name" required>
-						</div>
-						<br>
-						<div class = "form-group">
-							<label for = "password">Password:</label>
-							<input type = "password" class = "form-control" id = "password" required>
-						</div>
-						<br>
-						<div class = "form-group">
-							<label for = "email">Email:</label>
-							<input type = "email" class = "form-control" id = "email" required>
-						</div>
-						<br>
-						<div class = "form-group">
-							<label for = "phone">Phone No:</label>
-							<input type = "text" class = "form-control" id = "phone" required>
-						</div>
-						<br>
-						<div class="form-group">
-							<label for = "address">Address:</label>
-							<textarea rows="4" cols="50"></textarea>
-						</div>
-						<br>
-						<div style="text-align:center;">
-							<button type="submit" class="btn btn-default">Update</button>
-						</div>
+						  <div class = "form-group">
+						    <label for = "Susername">Username:</label>
+						    <?php
+									$query = "SELECT * FROM user WHERE username = '$userName'";
+									$result = mysqli_query($connection, $query);
+									$row = mysqli_fetch_assoc($result);
+
+									$query_S = "SELECT * FROM jobseeker WHERE userID = $userID";
+									$result_S = mysqli_query($connection, $query_S);
+									$row_S = mysqli_fetch_assoc($result_S);
+
+						      echo "<h4>" . $row['username'] . "</h4>";
+						    ?>
+						  </div>
+						        <br>
+						  <div class = "form-group">
+						    <label for = "Spassword">Password:</label>
+						    <?php
+						      echo "<input type='password' class='form-control' id='Spassword'
+						        name='Spassword' value='" .
+						        $row['password'] . "' required>";
+						    ?>
+						  </div>
+						        <br>
+						  <div class = "form-group">
+						    <label for = "Sfullname">Full Name:</label>
+						      <?php
+						        echo "<input type = 'text' class = 'form-control' id = 'Sfullname' name = 'Sfullname' value='" . $row_S['fullName'] . "' required>";
+						      ?>
+						  </div>
+						  <br>
+						  <div class = "form-group">
+						    <label for = "Semail">Email:</label>
+						      <?php
+						        echo "<input type = 'email' class = 'form-control' id = 'Semail' name = 'Semail' value='" . $row['email'] . "' required>";
+						      ?>
+						  </div>
+						  <br>
+						  <div class = "form-group">
+						    <label for = "Sphone">Phone No:</label>
+						      <?php
+						        echo "<input type = 'text' class = 'form-control' id = 'Sphone' name = 'Sphone' value='" . $row['phoneNo'] . "' required>";
+						      ?>
+						  </div>
+						  <br>
+						  <div class="form-group">
+						    <label for = "Saddress">Address:</label>
+						      <?php
+						        echo "<textarea name='Saddress' rows='4' cols='50' required>" . $row['address'] . "</textarea>";
+						      ?>
+						  </div>
+						  <br>
+							<div class="form-group">
+						    <label for = "SskillSet">Skill Sets:</label>
+									<div class="checkbox">
+										<?php
+										// find all selected skillset of this job seeker
+										  $query_skillset = "SELECT * FROM skillsets, skill WHERE theJobSeeker = $userID AND skillsets.skillID = skill.skillID";
+										  $result_skillset = mysqli_query($connection, $query_skillset);
+
+											$query_skills = "SELECT * FROM skill";
+										  $result_skills = mysqli_query($connection, $query_skills);
+
+											if (mysqli_num_rows($result_skillset) > 0) {
+												// if there is existing skillset for this job seeker
+												// match skillID in skillsets table against skill table
+												while($row_skillset = mysqli_fetch_assoc($result_skillset)) {
+//////////
+													$selectedSkills_array = array();
+												  $selectedSkills_array[] = $row_skillset['skillName'];
+
+													foreach ($selectedSkills_array as $aSkill) {
+
+													}
+
+
+													$selectedSkills = implode(",", $selectedSkills_array);
+													$query_notSelected_skills = "SELECT * FROM skill WHERE skillName NOT IN($selectedSkills)";
+/////////
+
+													while($row_skills = mysqli_fetch_assoc($result_skills)) {
+														// if skillID exists in both tables,
+														if ($row_skillset['skillID'] == $row_skills['skillID']) {
+															// display all checked skills
+															echo "<label><input type='checkbox' name='sSkillSet[]' class='checkbox' value='" . $row_skillset['skillName'] . "' checked>" . $row_skillset['skillName'] . "</label><br>";
+														} else {
+															// else if skillID does not exist in skillset table
+															// display unchecked skills
+															echo "<label><input type='checkbox' name='sSkillSet[]' class='checkbox' value='" . $row_skills['skillName'] . "'>" . $row_skills['skillName'] . "</label><br>";
+														}
+													}
+												}
+
+											} else {
+												// if no skillset have been recorded for this job seeker
+												// display all skill options
+												while($row_skills = mysqli_fetch_assoc($result_skills)) {
+								        echo "<label><input type='checkbox' name='sSkillSet[]' class='checkbox' value='" . $row_skills['skillName'] . "'>" . $row_skills['skillName'] . "</label><br>";
+												}
+											}
+
+
+
+											?>
+								</div>
+						  </div>
+							<br>
+						  <div style="text-align:center;">
+						    <input type="submit" class="btn btn-default" value="Update"></input>
+						  </div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	</form>
+</form>
 	<br>
 	<script>
 	$(function () {

@@ -11,20 +11,30 @@
   $result = mysqli_query($connection, $query);
   $row = mysqli_fetch_assoc($result);
 
+  unset($_SESSION['SignUp']);
+
   if ($row['username'] == $userName && $row['password'] == $password) {
+    $_SESSION['userID'] = $row['userID'];
+    $_SESSION['userName'] = $row['username'];
+    $_SESSION['userType'] = $row['userType'];
+    if ($row['userType'] == 'Job Seeker') {
       header('Location: jobs.php');
-      $_SESSION['userName'] = $row['username'];
+    } else if ($row['userType'] == 'Client') {
+      header('Location: jobPositions.php');
+    }
     if (isset($remember)) {
       $_SESSION['remember'] = $row['username'];
     }
     else {
       unset($_SESSION['remember']);
     }
+
+    echo $_SESSION['userName'];
   }
   else {
     header('Location: index.php');
     $_SESSION['userName'] = "failed";
   }
 
-   mysqli_close($connection);
+  mysqli_close($connection);
  ?>

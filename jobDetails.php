@@ -10,7 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>JinJang E-Business</title>
+	<title>Job Details</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -61,7 +61,7 @@
 			<div class="navbar-header">
 				<!-- Logo -->
 				<div class="navbar-brand">
-					<a href="index.html">
+					<a href="index.php">
 						<img class="logo" src="img/logo.png" alt="logo">
 						<img class="logo-alt" src="img/logo-alt.png" alt="logo">
 					</a>
@@ -78,7 +78,7 @@
 			<!--  Main navigation  -->
 			<ul class="main-nav nav navbar-nav navbar-right">
 				<li><a href="jobs.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
-				<li><a href="#profile"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
+				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
@@ -156,8 +156,9 @@
 								$result = mysqli_query($connection, $query);
 								if (mysqli_num_rows($result) > 0) {
 									while ($row = mysqli_fetch_assoc($result)) {
+										$totalSalary = $row['salaryPerHour'] * $row['hoursPerWeek'] * $row['durationInWeeks'];
 										echo "<li>Salary:&nbsp;&nbsp;RM";
-										echo $row['salary'];
+										echo $totalSalary;
 										echo "</li>";
 
 										echo "<li>City:&nbsp;&nbsp;";
@@ -193,7 +194,7 @@
 									$jobID = $_POST['jobID'];
 									$query = "SELECT * FROM jobposition, user, client
 														WHERE jobID='$jobID'
-														AND jobposition.company = user.userID
+														AND jobposition.theClient = user.userID
 														AND user.userID = client.userID";
 									$result = mysqli_query($connection, $query);
 									if (mysqli_num_rows($result) > 0) {
@@ -248,7 +249,7 @@
 
 					<!-- footer logo -->
 					<div class="footer-logo">
-						<a href="index.html"><img src="img/logo-alt.png" alt="logo"></a>
+						<a href="index.php"><img src="img/logo-alt.png" alt="logo"></a>
 					</div>
 					<!-- /footer logo -->
 

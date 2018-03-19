@@ -1,9 +1,6 @@
 <?php
 session_start();
 include 'dbConnection.php';
-if (isset($_POST['skill'])) {
-	$_SESSION['searchValue'] = "filter";
-}
 ?>
 <!DOCTYPE>
 <html>
@@ -13,7 +10,7 @@ if (isset($_POST['skill'])) {
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Search Job</title>
+	<title>JinJang E-Business</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -99,7 +96,7 @@ if (isset($_POST['skill'])) {
 	</nav>
 	<!-- /Nav -->
 	<!-- Search Bar -->
-	<div class="container" style="padding-top: 2em; padding-bottom: 0.5em;">
+	<div class="container" style="padding-top: 2em; padding-bottom: 2em;">
 			<div class="row">
 				<form style="width: 100%;" action="search.php" method="post">
 					<div class="col-sm-offset-2 col-sm-7 col-xs-offset-1 col-xs-10" style="padding:0; margin:0 position:relative;">
@@ -110,37 +107,15 @@ if (isset($_POST['skill'])) {
 	  			</div>
 				</form>
 			</div>
-
+			<!--
 			<div class="row">
-				<form id="theform" action="jobs.php" method="post">
-					<div class="col-sm-offset-10 col-xs-12" style="padding-top: 2em">
-						Filter By:
-						<select id="mySelect" name="skill" size="1" onchange="this.form.submit()">
-							<option value="default">
-								Default
-							</option>
-							<?php
-								$query = "SELECT * FROM skill";
-								$result = mysqli_query($connection, $query);
-								if (mysqli_num_rows($result) > 0) {
-									while ($row = mysqli_fetch_assoc($result)) {
-										if (isset($_POST['skill']) &&
-												$_POST['skill'] == $row['skillName']) {
-													echo "<option selected='selected' value='" . $row['skillName'] . "'>" .
-													$row['skillName'] . "</option>";
-										}
-										else {
-											echo "<option value='" . $row['skillName'] . "'>" .
-											$row['skillName'] . "</option>";
-										}
-									}
-								}
-							 ?>
-					  </select>
+				<form>
+					<div>
+						<input type="button" type="submit" value="All Jobs"/>
 					</div>
 				</form>
 			</div>
-
+		-->
 	</div>
 
 
@@ -153,29 +128,18 @@ if (isset($_POST['skill'])) {
 				<?php
 				if (!isset($_SESSION['searchValue']) || $_SESSION['searchValue'] == "allJobs") {
 					$query = "SELECT * FROM jobposition WHERE status='AVAILABLE'";
+
 				}
-				else if (isset($_SESSION['searchValue']) && $_SESSION['searchValue'] != "filter"){
+				else {
 					$searchValue = $_SESSION["searchValue"];
 					$query = "SELECT * FROM jobposition WHERE title LIKE '%$searchValue%'
 										AND status='AVAILABLE'";
-				}
-				else if (!isset($_POST['skill']) || $_POST['skill'] == "default") {
-					$query = "SELECT * FROM jobposition WHERE status='AVAILABLE'";
-				}
-				else if (isset($_POST['skill']) && $_POST['skill'] != "Default") {
-					$skillFilter = $_POST['skill'];
-					$query = "SELECT * FROM jobposition, jobrequiredskill, skill
-									WHERE status='AVAILABLE'
-									AND jobposition.jobID = jobrequiredskill.jobID
-									AND jobrequiredskill.skillID = skill.skillID
-									AND skillName='$skillFilter'";
 				}
 				$result = mysqli_query($connection, $query);
 				if (mysqli_num_rows($result) > 0) {
 					while ($row = mysqli_fetch_assoc($result)) {
             $totalSalary = $row['salaryPerHour'] * $row['hoursPerWeek'] * $row['durationInWeeks'];
-						$jobID = $row['jobID'];
-						$query2 = "SELECT skill.skillName FROM jobrequiredskill, skill WHERE jobID = '$jobID'
+						$query2 = "SELECT skill.skillName FROM jobrequiredskill, skill WHERE jobID = '$row[jobID]'
 											AND jobrequiredskill.skillID=skill.skillID";
 						$result2 = mysqli_query($connection, $query2);
 						echo "
@@ -195,7 +159,6 @@ if (isset($_POST['skill'])) {
 						echo "
                 </div>
                 <ul class='price-content'>";
-
 						if (mysqli_num_rows($result2) > 0) {
 							echo "Skills Required: ";
 							$counter = 0;
@@ -212,13 +175,15 @@ if (isset($_POST['skill'])) {
 						}
 						else {
 							echo "No skills required";
-							for ($i = 0; $i <= 5; $i++) {
+							for ($i = 0; $i <= 4; $i++) {
 								echo "<br />";
 							}
 						}
+
+
             echo "<div class='price-btn'>
 									<form action='jobDetails.php' method='post'  target='_blank'>
-										<input type=hidden name='jobID' value='" . $jobID .
+										<input type=hidden name='jobID' value='" . $row['jobID'] .
 										"'>
 										<input class='outline-btn' type='submit' value='Details'>
 									</form>
@@ -305,7 +270,5 @@ if (isset($_POST['skill'])) {
 	<script type="text/javascript" src="js/owl.carousel.min.js"></script>
 	<script type="text/javascript" src="js/jquery.magnific-popup.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
-	<script>
-
 </body>
 </html>
