@@ -1,6 +1,16 @@
 <?php
   session_start();
 	include 'dbConnection.php';
+
+	if (isset($_SESSION['apply']) && $_SESSION['apply']=="success")  {
+		echo "<script>alert('Thanks For Your Application!" .
+			" Your application has been sent!');</script>";
+		$_POST['jobID'] = $_SESSION['jobID'];
+	}
+	else if (isset($_SESSION['apply']) && $_SESSION['apply']=="failed") {
+		echo "<script>alert('You have applied for his job before!');</script>";
+		$_POST['jobID'] = $_SESSION['jobID'];
+	}
 ?>
 <!DOCTYPE>
 <html>
@@ -173,8 +183,12 @@
 								?>
 							</ul><br />
 							<div style="text-align:center;">
-								<form>
-									<input class="main-btn" type="button" value="Apply">
+								<form action="applyJob.php" method="post">
+                  <?php
+                    $jobID = $_POST['jobID'];
+                    echo "<input type='hidden' value='$jobID' name='jobID'/>";
+                  ?>
+									<input class="main-btn" type="submit" value="Apply">
 								</form>
 							</div>
 						</div>
@@ -283,17 +297,29 @@
 	<!-- Back to top -->
 	<div id="back-to-top"></div>
 	<!-- /Back to top -->
+	<?php
+		if (isset($_SESSION['apply']) && $_SESSION['apply']=="success")  {
+			unset($_SESSION['apply']);
+		}
+		else if (isset($_SESSION['apply']) && $_SESSION['apply']=="failed") {
+			unset($_SESSION['apply']);
+		}
+		else {
+			echo "
+			<!-- Preloader -->
+			<div id='preloader'>
+				<div class='preloader'>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</div>
+			<!-- /Preloader -->
+			";
+		}
+	?>
 
-	<!-- Preloader -->
-	<div id="preloader">
-		<div class="preloader">
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-		</div>
-	</div>
-	<!-- /Preloader -->
 
 	<!-- jQuery Plugins -->
 	<script type="text/javascript" src="js/jquery.min.js"></script>
@@ -303,3 +329,4 @@
 	<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
+]
