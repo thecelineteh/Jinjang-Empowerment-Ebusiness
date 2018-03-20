@@ -4,10 +4,9 @@
 
   $theClient = $_SESSION['userID'];
   $jobID = $_POST['job'];
-  echo $jobID;
-  if (isset($_POST["$jobID"])) {
-    echo "number 9";
-  }
+  $_SESSION['jobID'] = $jobID;
+  $empName = $_POST['empName'];
+
 
  ?>
 <!DOCTYPE>
@@ -71,6 +70,10 @@
       border-radius: 3px;
     }
 
+    .checkbox {
+			margin-left: 20px;
+		}
+
     label {
       color: #F8F8F8;
     }
@@ -86,6 +89,11 @@
     }
     .form-control-small {
       width:40%;
+    }
+
+    select {
+      color: black;
+      background-color: lightgrey;
     }
 
     .white-btn {
@@ -125,7 +133,7 @@
 			<!--  Main navigation  -->
       <ul class="main-nav nav navbar-nav navbar-right">
 				<li><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
-				<li><a href="#profile"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
+				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
@@ -154,110 +162,146 @@
                       <label>Job Title: </label>
                       <div class="form-control-big">
                         <?php
-                          $query_jobpos = "SELECT * FROM jobposition WHERE theClient = $theClient AND jobID = '$title'";
-                          $result_findJob = mysqli_query($connection, $query_findJob);
+                          $query_jobpos = "SELECT * FROM jobposition WHERE theClient = $theClient AND jobID = $jobID";
+                          $result_findJob = mysqli_query($connection, $query_jobpos);
                           while($row_jobPositions = mysqli_fetch_assoc($result_findJob)) {
-                            $jobID = $row_jobPositions['jobID'];
+                            echo '<input type="text" name="jobTitle" class="form-control" value = "' . $row_jobPositions['title'] .
+                            '" required>
+                              </div>
+                              <div id="jobTitle_error" style="color:red;"></div>
+                            </div>';
+
+                            echo '
+                            <div class="form-group">
+                              <label>Job Description: </label>
+                              <div class="form-control-big">
+                                <textarea name="jobDescription" rows="6" cols="50" required>' .$row_jobPositions['description']. '</textarea>
+                              </div>
+                              <div id="jobDescription_error" style="color:red;"></div>
+                            </div>
+
+                            <div class="form-group">
+                              <label>Address: </label>
+                              <div class="form-control-big">
+                                <textarea name="jobAddress" rows="4" cols="50" required>' .$row_jobPositions['address']. '</textarea>
+                              </div>
+                              <div id="jobAddress_error" style="color:red;"></div>
+                            </div>
+
+                            <div class="form-group">
+                              <label>City: </label>
+                                <div class="form-control-small">
+                                  <input type="text" name="jobCity" class="form-control" value = "'
+                                  . $row_jobPositions['city'] .
+                                  '" required>
+                                </div>
+                                <div id="jobCity_error" style="color:red;"></div>
+                            </div>
+
+
+                          <div class="form-group">
+                              <label>Salary per hour ($): </label>
+                              <div class="form-control-small">
+                                <input type="number"  name="jobSalary" class="form-control-small" min = "1" value="' .$row_jobPositions['salaryPerHour']. '" step="0.25" required>
+                              </div>
+                              <div id="jobSalary_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Hours per week: </label>
+                            <div class="form-control-small">
+                                <input type="number" name="jobHours" class="form-control-small" min = "1" value="' .$row_jobPositions['hoursPerWeek']. '" required>
+                            </div>
+                            <div id="jobHours_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                              <label>Duration (weeks): </label>
+                              <div class="form-control-small">
+                                <input type="number" name="jobDuration" class="form-control-small" min = "1" value = "' .$row_jobPositions['durationInWeeks']. '" required>
+                              </div>
+                              <div id="jobDuration_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                              <label>Status: </label>
+                              <div class="form-control-small">
+                                <select name="jobStatus">';
+                                if ($row_jobPositions['status'] == 'AVAILABLE'){
+                                  echo '<option value="AVAILABLE" selected>AVAILABLE</option>
+                                  <option value="NOT AVAILABLE">NOT AVAILABLE</option>
+                                  ';
+                                } else if ($row_jobPositions['status'] == 'NOT AVAILABLE') {
+                                  echo '<option value="AVAILABLE">AVAILABLE</option>
+                                  <option value="NOT AVAILABLE" selected>NOT AVAILABLE</option>';
+                                } else {
+                                  echo '<option value="AVAILABLE">AVAILABLE</option>
+                                  <option value="NOT AVAILABLE">NOT AVAILABLE</option>
+                                  ';
+                                }
+
+
+
+                                echo '
+                                </select>
+                              </div>
+                              <div id="jobStatus_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="form-control-small">
+                              <label>Employee Name: </label>
+                              <input type="text" name="empName" class="form-control" value="' . $empName. '">
+                            </div>
+                            <div id="jobEmployee_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Skills Required: </label>
+                              <div class="checkbox">';
+
+                              $query_jobreqskills = "SELECT * FROM jobrequiredskill jrs, skill s WHERE jrs.skillID = s.skillID AND jobID = $jobID";
+                              $result_jobreqskills = mysqli_query($connection, $query_jobreqskills);
+
+                              $jobReqSkills = array();
+                              if (mysqli_num_rows($result_jobreqskills) > 0) {
+                                while ($row_jobreqskills = mysqli_fetch_assoc($result_jobreqskills)) {
+                                  $reqskillName = $row_jobreqskills['skillName'];
+                                  array_push($jobReqSkills, $reqskillName);
+                                }
+                              }
+
+                              $check = false;
+                              $query = "SELECT * FROM skill";
+                              $result = mysqli_query($connection, $query);
+                              if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                  $skillName = $row['skillName'];
+                                  for ($i = 0; $i < count($jobReqSkills); $i++ ) {
+                                    $check = false;
+                                    if ($skillName == $jobReqSkills[$i]) {
+                                      $check = true;
+                                      break;
+                                    }
+                                  }
+                                  if ($check) {
+                                    echo "<input type='checkbox' class='checkbox' name='jobReqSkills[]' value='" . $skillName . "' checked>" . $skillName . "<br>";
+                                    array_push($jobReqSkills, $skillName);
+                                  }
+                                  else {
+                                    echo "<input type='checkbox' class='checkbox' name='jobReqSkills[]' value='" . $skillName . "'>" . $skillName . "<br>";
+
+                                  }
+                                }
+                              }
                           }
-
                          ?>
-                        <input type="text" name="jobTitle" class="form-control" required>
-                      </div>
-                      <div id="jobTitle_error" style="color:red;"></div>
-                    </div>
-
-                    <div class="form-group">
-                      <label>Job Description: </label>
-                      <div class="form-control-big">
-                        <textarea name='jobDescription' rows='6' cols='50' required></textarea>
-                      </div>
-                      <div id="jobDescription_error" style="color:red;"></div>
-                    </div>
-
-                    <div class="form-group">
-                      <label>Address: </label>
-                      <div class="form-control-big">
-                        <textarea name='jobAddress' rows='4' cols='50' required></textarea>
-                      </div>
-                      <div id="jobAddress_error" style="color:red;"></div>
-                    </div>
-
-                    <div class="form-group">
-                      <label>City: </label>
-                        <div class="form-control-small">
-                          <input type="text" name="jobCity" class="form-control" required>
-                        </div>
-                        <div id="jobCity_error" style="color:red;"></div>
-                    </div>
 
 
-                  <div class="form-group">
-                      <label>Salary per hour ($): </label>
-                      <div class="form-control-small">
-                        <input type="number"  name="jobSalary" class="form-control-small" min = "1" value="1.00" step="0.25" required>
-                      </div>
-                      <div id="jobSalary_error" style="color:red;"></div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Hours per week: </label>
-                    <div class="form-control-small">
-                        <input type="number" name="jobHours" class="form-control-small" min = "1" value="1" required>
-                    </div>
-                    <div id="jobHours_error" style="color:red;"></div>
-                  </div>
-
-                  <div class="form-group">
-                      <label>Duration (weeks): </label>
-                      <div class="form-control-small">
-                        <input type="number" name="jobDuration" class="form-control-small" min = "1" value = "1" required>
-                      </div>
-                      <div id="jobDuration_error" style="color:red;"></div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Skills Required: </label>
-                      <div class="checkbox">
-                        <?php
-                          $query_skills = "SELECT * FROM skill s";
-                          $result_skills = mysqli_query($connection, $query_skills);
-
-                          while($row_skills = mysqli_fetch_assoc($result_skills)) {
-    												echo "<label><input type='checkbox' name='reqSkillSet[]'' class='checkbox' value='" . $row_skills['skillName'] . "'>" . $row_skills['skillName'] . "</label><br>";
-    											}
-                         ?>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Status: </label>
-                      <div class="checkbox">
-                        <?php
-                          $query_skills = "SELECT * FROM skill s";
-                          $result_skills = mysqli_query($connection, $query_skills);
-
-                          while($row_skills = mysqli_fetch_assoc($result_skills)) {
-                            echo "<label><input type='checkbox' name='reqSkillSet[]'' class='checkbox' value='" . $row_skills['skillName'] . "'>" . $row_skills['skillName'] . "</label><br>";
-                          }
-                         ?>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Employee username: </label>
-                        <?php
-                          $query_emp = "SELECT * FROM jobposition jp, user u WHERE jobID = $jobID AND jp.theEmployee = u.userID";
-                          $result_emp = mysqli_query($connection, $query_emp);
-
-                          while($row_emp = mysqli_fetch_assoc($result_emp)) {
-                            echo "<label><input type='text' name='theEmployee'' class='form-control' value='" . $row_emp['userID'] . "'>" . $row_emp['username'] . "</label><br>";
-                          }
-                         ?>
-                  </div>
 
                   <div style="text-align:right; margin-top:50px">
                     <a class="white-btn" href="jobPositions.php">Cancel</a>
-    								<button type="submit" class=" main-btn">Create</button>
+    								<button type="submit" name="updateJobBtn" class=" main-btn">Update</button>
     							</div>
 
                   </div>
@@ -266,10 +310,10 @@
 						</div>
 					</div>
 				</div>
-        <br><br><br>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 
 	<!-- Footer -->

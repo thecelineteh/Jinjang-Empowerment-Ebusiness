@@ -92,6 +92,7 @@
     }
     .edit:hover {
       color: blue;
+      text-decoration: none;
     }
     .edit:focus {
       color: #8B4513;
@@ -158,7 +159,7 @@
 
                       if (mysqli_num_rows($result_client_jobpos) > 0) {
                         echo '
-                        <form action="editJob.php" method="post">
+
                         <div class="table-responsive">
                         <table class="table table-hover table-condensed table-bordered table-striped">
                             <tr class="info">
@@ -194,23 +195,20 @@
                           $result_job_emp = mysqli_query($connection, $job_emp);
                           if (mysqli_num_rows($result_job_emp) > 0){
                             while($row_job_emp = mysqli_fetch_assoc($result_job_emp) ) {
-                              $_SESSION['empName'] = $row_job_emp['fullName'];
+                              $empName = $row_job_emp['fullName'];
                             }
                           } else {
-                              $_SESSION['empName'] = '-';
+                              $empName = '-';
                           }
-
+                          //echo $jobID;
                           // print out the output
                           echo '
+                          <form action="editJob.php" method="post">
                           <tr>
                           <td align="center">
-
                           <input type="hidden" name="job" value="'; echo $jobID; echo '">
-                          <input type="submit" name="' .$jobID. '">
-
-                          <a class="edit" href="editJob.php"><i class="fa fa-pencil-square-o"></i>&nbsp; Edit</a>
-
-
+                          <input type="hidden" name="empName" value="'; echo $empName; echo '">
+                          <button type="submit" name="' .$jobID. '" class="edit btn-link"><i class="fa fa-pencil-square-o"></i>&nbsp; Edit</button>
 
                           </td>';
                           echo '
@@ -222,9 +220,11 @@
                           <td align="center"> '.$address.'</td>
                           <td align="center"> '.$city.'</td>
                           <td align="center"> '.$status.'</td>
-                          <td align="center"> '.$_SESSION['empName'].'</td>
+                          <td align="center"> '.$empName.'</td>
                           </tr>
+                          </form>
                           ';
+
                         }
                       } else {
                         echo '<span style="margin-left:10px">No job positions created yet.</span>';
@@ -233,7 +233,7 @@
 
                     </table>
                     </div>
-                    </form>
+
                   </div>
                 </div>
   						</div>
