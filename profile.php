@@ -69,6 +69,10 @@
 			background-color: #DCDCDC;
     }
 
+		.checkbox {
+			margin-left: 20px;
+		}
+
 		label {
 			color: black;
 		}
@@ -242,59 +246,47 @@
 													    <label for = 'SskillSet'>Skill Sets:</label>
 																<div class='checkbox'>";
 
-															// find all selected skillset of this job seeker
-														  $query_skillset = "SELECT * FROM skillsets, skill WHERE theJobSeeker = $userID AND skillsets.skillID = skill.skillID";
-														  $result_skillset = mysqli_query($connection, $query_skillset);
-
-															$query_skills = "SELECT * FROM skill";
-														  $result_skills = mysqli_query($connection, $query_skills);
-
-															if (mysqli_num_rows($result_skillset) > 0) {
-																// if there is existing skillset for this job seeker
-																// match skillID in skillsets table against skill table
-																while($row_skillset = mysqli_fetch_assoc($result_skillset)) {
-				//////////
-																	$selectedSkills_array = array();
-																  $selectedSkills_array[] = $row_skillset['skillName'];
-
-																	foreach ($selectedSkills_array as $aSkill) {
-
+																$useriD = $_SESSION['userID'];
+																$query = "SELECT * FROM skillsets ss, skill s where theJobSeeker = $userID AND ss.skillID = s.skillID";
+																$result = mysqli_query($connection, $query);
+																$skill = array();
+																if (mysqli_num_rows($result) > 0) {
+																	while ($row = mysqli_fetch_assoc($result)) {
+																		$skillName = $row['skillName'];
+																		array_push($skill, $skillName);
 																	}
+																}
 
+																$check = false;
+																$updateSkill = array();
+																$query = "SELECT * FROM skill";
+																$result = mysqli_query($connection, $query);
+																if (mysqli_num_rows($result) > 0) {
+																	while ($row = mysqli_fetch_assoc($result)) {
+																		$skillName = $row['skillName'];
+																		for ($i = 0; $i < count($skill); $i++ ) {
+																			$check = false;
+																			if ($skillName == $skill[$i]) {
+																				$check = true;
+																				break;
+																			}
+																		}
+																		if ($check) {
+																			echo "<input type='checkbox' class='checkbox' name='". $skillName . "' value='" . $skillName . "' checked>" . $skillName . "<br>";
+																			array_push($updateSkill, $skillName);
+																			echo $updateSkill;
+																		}
+																		else {
+																			echo "<input type='checkbox' class='checkbox' name='". $skillName . "' value='" . $skillName . "'>" . $skillName . "<br>";
 
-																	$selectedSkills = implode(",", $selectedSkills_array);
-																	$query_notSelected_skills = "SELECT * FROM skill WHERE skillName NOT IN($selectedSkills)";
-																	$result_notSelected_skills = mysqli_query($connection, $query_notSelected_skills);
-
-																	while($row_notSelected_skills = mysqli_fetch_assoc($result_notSelected_skills)) {
-																		echo "<label><input type='checkbox' name='sSkillSet[]' class='checkbox' value='" . $row_notSelected_skills['skillName'] . "' checked>";
-																	}
-				/////////
-
-																	while($row_skills = mysqli_fetch_assoc($result_skills)) {
-																		// if skillID exists in both tables,
-																		if ($row_skillset['skillID'] == $row_skills['skillID']) {
-																			// display all checked skills
-																			echo "<label><input type='checkbox' name='sSkillSet[]' class='checkbox' value='" . $row_skillset['skillName'] . "' checked>" . $row_skillset['skillName'] . "</label><br>";
-																		} else {
-																			// else if skillID does not exist in skillset table
-																			// display unchecked skills
-																			echo "<label><input type='checkbox' name='sSkillSet[]' class='checkbox' value='" . $row_skills['skillName'] . "'>" . $row_skills['skillName'] . "</label><br>";
 																		}
 																	}
 																}
 
-															} else {
-																// if no skillset have been recorded for this job seeker
-																// display all skill options
-																while($row_skills = mysqli_fetch_assoc($result_skills)) {
-												        echo "<label><input type='checkbox' name='sSkillSet[]' class='checkbox' value='" . $row_skills['skillName'] . "'>" . $row_skills['skillName'] . "</label><br>";
-																}
-															}
-
 														}
 														echo "</div> <br>";
 														?>
+														<input type='hidden' name='updateSkillArray' value="<?php echo htmlentities(serialize($updateSkill)); ?>" />
 														<div style="text-align:center;">
 															<input type="submit" class="btn btn-default" value="Update"></input>
 														</div>

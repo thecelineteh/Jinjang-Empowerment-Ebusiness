@@ -5,7 +5,7 @@
   $theClient = $_SESSION['userID'];
   $jobID = $_POST['job'];
   $_SESSION['jobID'] = $jobID;
-  echo $_SESSION['jobID'];
+  $empName = $_POST['empName'];
 
 
  ?>
@@ -69,6 +69,10 @@
     input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], input[type="url"], input[type="tel"], textarea {
       border-radius: 3px;
     }
+
+    .checkbox {
+			margin-left: 20px;
+		}
 
     label {
       color: #F8F8F8;
@@ -171,7 +175,7 @@
                             <div class="form-group">
                               <label>Job Description: </label>
                               <div class="form-control-big">
-                                <textarea name="jobDescription" rows="6" cols="50" required>.' .$row_jobPositions['description']. '</textarea>
+                                <textarea name="jobDescription" rows="6" cols="50" required>' .$row_jobPositions['description']. '</textarea>
                               </div>
                               <div id="jobDescription_error" style="color:red;"></div>
                             </div>
@@ -247,7 +251,7 @@
                           <div class="form-group">
                             <div class="form-control-small">
                               <label>Employee Name: </label>
-                              <input type="text" name="empName" class="form-control" value="' . $_SESSION['empName']. '">
+                              <input type="text" name="empName" class="form-control" value="' . $empName. '">
                             </div>
                             <div id="jobEmployee_error" style="color:red;"></div>
                           </div>
@@ -259,6 +263,39 @@
                               $query_jobreqskills = "SELECT * FROM jobrequiredskill jrs, skill s WHERE jrs.skillID = s.skillID AND jobID = $jobID";
                               $result_jobreqskills = mysqli_query($connection, $query_jobreqskills);
 
+                              $jobReqSkills = array();
+                              if (mysqli_num_rows($result_jobreqskills) > 0) {
+                                while ($row_jobreqskills = mysqli_fetch_assoc($result_jobreqskills)) {
+                                  $reqskillName = $row_jobreqskills['skillName'];
+                                  array_push($jobReqSkills, $reqskillName);
+                                }
+                              }
+
+                              $check = false;
+                              $query = "SELECT * FROM skill";
+                              $result = mysqli_query($connection, $query);
+                              if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                  $skillName = $row['skillName'];
+                                  for ($i = 0; $i < count($jobReqSkills); $i++ ) {
+                                    $check = false;
+                                    if ($skillName == $jobReqSkills[$i]) {
+                                      $check = true;
+                                      break;
+                                    }
+                                  }
+                                  if ($check) {
+                                    echo "<input type='checkbox' class='checkbox' name='jobReqSkills[]' value='" . $skillName . "' checked>" . $skillName . "<br>";
+                                    array_push($jobReqSkills, $skillName);
+                                  }
+                                  else {
+                                    echo "<input type='checkbox' class='checkbox' name='jobReqSkills[]' value='" . $skillName . "'>" . $skillName . "<br>";
+
+                                  }
+                                }
+                              }
+
+                              /*
                               while($row_jobreqskills = mysqli_fetch_assoc($result_jobreqskills)) {
                                 echo "<label><input type='checkbox' name='jobReqSkills[]'' class='checkbox' value='" . $row_jobreqskills['skillName'] . "' checked>" . $row_jobreqskills['skillName'] . "</label><br>";
                               }
@@ -267,6 +304,8 @@
                                         </div>
                                       </div>
                           ';
+                          */
+
                           }
                          ?>
 

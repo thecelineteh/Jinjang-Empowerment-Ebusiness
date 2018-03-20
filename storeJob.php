@@ -10,7 +10,7 @@
   $hours = stripcslashes($_POST['jobHours']);
   $weeks = stripcslashes($_POST['jobDuration']);
   $jobStatus = stripcslashes($_POST['jobStatus']);
-  $theEmployee_userID = stripcslashes($_POST['empName']);
+  $empName = stripcslashes($_POST['empName']);
 
   $title = mysqli_real_escape_string($connection, $title);
   $desc = mysqli_real_escape_string($connection, $desc);
@@ -69,10 +69,26 @@
   // update existing job position
   if (isset($_POST['updateJobBtn'])){
     $existing_jobID = $_SESSION['jobID'];
-    $jobReqSkills = $_POST['jobReqSkills'];
+
+    if (!isset($_POST['jobReqSkills'])) {
+      $jobReqSkills = array();
+    } else {
+      $jobReqSkills = $_POST['jobReqSkills'];
+    }
+
+    $findEmp_userID = "SELECT * FROM jobseeker WHERE fullName = '$empName'";
+    $result_findEmployee_userID = mysqli_query($connection, $findEmp_userID);
+
+    //if (mysqli_num_rows($result_findEmployee_userID) > 0) {
+      while ($row_findEmp_userID = mysqli_fetch_assoc($result_findEmployee_userID)) {
+        $theEmployee_userID = $row_findEmp_userID['userID'];
+      }
+    //}
 
     $update_jobpos = "UPDATE jobposition SET title = '$title', description = '$desc', salaryPerHour = '$salary', hoursPerWeek = '$hours', durationInWeeks = '$weeks', address = '$address', city = '$city', status = '$jobStatus', theClient = '$theClient', theEmployee = $theEmployee_userID WHERE jobID = $existing_jobID";
-    $result_update_jobpos = mysqli_query($connection, $update_jobpos);
+    if (null !== mysqli_query($connection, $update_jobpos)) {
+      $result_update_jobpos = mysqli_query($connection, $update_jobpos);
+    }
 
     // update job position required skills
     $clear_skillsreq = "DELETE FROM jobrequiredskill WHERE jobID = $existing_jobID";
@@ -90,13 +106,13 @@
       }
     }
 
-    if ($result_update_jobpos && $result_update_skillsreq){
+    if ($result_update_jobpos && isset($result_update_skillsreq)){
       echo "<script>alert('Job position details updated successfully.');</script>";
       header("Refresh: 1; url= jobPositions.php");
     } else {
-      echo mysqli_error($connection);
+      //echo mysqli_error($connection);
       echo "<script>alert('Unable to update job.');</script>";
-      //header("Refresh: 1; url= jobPositions.php");
+      header("Refresh: 1; url= jobPositions.php");
 
     }
   }
