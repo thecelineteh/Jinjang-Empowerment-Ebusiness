@@ -294,18 +294,6 @@
                                   }
                                 }
                               }
-
-                              /*
-                              while($row_jobreqskills = mysqli_fetch_assoc($result_jobreqskills)) {
-                                echo "<label><input type='checkbox' name='jobReqSkills[]'' class='checkbox' value='" . $row_jobreqskills['skillName'] . "' checked>" . $row_jobreqskills['skillName'] . "</label><br>";
-                              }
-
-                                echo '
-                                        </div>
-                                      </div>
-                          ';
-                          */
-
                           }
                          ?>
 
@@ -322,10 +310,10 @@
 						</div>
 					</div>
 				</div>
-        <br><br><br>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 
 	<!-- Footer -->

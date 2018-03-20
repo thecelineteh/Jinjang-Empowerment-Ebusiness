@@ -30,8 +30,7 @@
     $result_s = mysqli_query($connection, $update_s);
 
     // update skillset
-    echo $_POST['updateSkillArray'];
-    $updatedSkillsArray = unserialize($_POST['updateSkillArray']);
+    $updatedSkillsArray = $_POST['updateSkillArray'];
     $clear_skillset = "DELETE FROM skillsets WHERE theJobSeeker = $userID";
     $result_clear_skillset = mysqli_query($connection, $clear_skillset);
 

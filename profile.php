@@ -272,12 +272,10 @@
 																			}
 																		}
 																		if ($check) {
-																			echo "<input type='checkbox' class='checkbox' name='". $skillName . "' value='" . $skillName . "' checked>" . $skillName . "<br>";
-																			array_push($updateSkill, $skillName);
-																			echo $updateSkill;
+																			echo "<input type='checkbox' class='checkbox' name='updateSkillArray[]' value='" . $skillName . "' checked>" . $skillName . "<br>";
 																		}
 																		else {
-																			echo "<input type='checkbox' class='checkbox' name='". $skillName . "' value='" . $skillName . "'>" . $skillName . "<br>";
+																			echo "<input type='checkbox' class='checkbox' name='updateSkillArray[]' value='" . $skillName . "'>" . $skillName . "<br>";
 
 																		}
 																	}
@@ -286,7 +284,6 @@
 														}
 														echo "</div> <br>";
 														?>
-														<input type='hidden' name='updateSkillArray' value="<?php echo htmlentities(serialize($updateSkill)); ?>" />
 														<div style="text-align:center;">
 															<input type="submit" class="btn btn-default" value="Update"></input>
 														</div>

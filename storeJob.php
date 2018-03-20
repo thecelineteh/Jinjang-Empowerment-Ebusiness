@@ -9,14 +9,11 @@
   $salary = stripcslashes($_POST['jobSalary']);
   $hours = stripcslashes($_POST['jobHours']);
   $weeks = stripcslashes($_POST['jobDuration']);
-  $jobStatus = stripcslashes($_POST['jobStatus']);
-  $empName = stripcslashes($_POST['empName']);
 
   $title = mysqli_real_escape_string($connection, $title);
   $desc = mysqli_real_escape_string($connection, $desc);
   $address = mysqli_real_escape_string($connection, $address);
   $city = mysqli_real_escape_string($connection, $city);
-  $jobStatus = mysqli_real_escape_string($connection, $jobStatus);
 
   if (!isset($jobStatus)) {
     $jobStatus = 'AVAILABLE';
@@ -60,15 +57,18 @@
       echo "<script>alert('Job position created successfully.');</script>";
       header("Refresh: 1; url= jobPositions.php");
     } else {
-      echo mysqli_error($connection);
       echo "<script>alert('Unable to create job.');</script>";
-      //header("Refresh: 1; url= jobPositions.php");
+      header("Refresh: 1; url= jobPositions.php");
     }
   }
 
   // update existing job position
   if (isset($_POST['updateJobBtn'])){
     $existing_jobID = $_SESSION['jobID'];
+    $jobStatus = stripcslashes($_POST['jobStatus']);
+    $jobStatus = mysqli_real_escape_string($connection, $jobStatus);
+    $empName = stripcslashes($_POST['empName']);
+    $empName = mysqli_real_escape_string($connection, $empName);
 
     if (!isset($_POST['jobReqSkills'])) {
       $jobReqSkills = array();
@@ -86,9 +86,8 @@
     //}
 
     $update_jobpos = "UPDATE jobposition SET title = '$title', description = '$desc', salaryPerHour = '$salary', hoursPerWeek = '$hours', durationInWeeks = '$weeks', address = '$address', city = '$city', status = '$jobStatus', theClient = '$theClient', theEmployee = $theEmployee_userID WHERE jobID = $existing_jobID";
-    if (null !== mysqli_query($connection, $update_jobpos)) {
-      $result_update_jobpos = mysqli_query($connection, $update_jobpos);
-    }
+    $result_update_jobpos = mysqli_query($connection, $update_jobpos);
+
 
     // update job position required skills
     $clear_skillsreq = "DELETE FROM jobrequiredskill WHERE jobID = $existing_jobID";
@@ -106,7 +105,7 @@
       }
     }
 
-    if ($result_update_jobpos && isset($result_update_skillsreq)){
+    if ($result_update_jobpos && $result_update_skillsreq){
       echo "<script>alert('Job position details updated successfully.');</script>";
       header("Refresh: 1; url= jobPositions.php");
     } else {
