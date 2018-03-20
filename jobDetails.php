@@ -8,7 +8,7 @@
 		$_POST['jobID'] = $_SESSION['jobID'];
 	}
 	else if (isset($_SESSION['apply']) && $_SESSION['apply']=="failed") {
-		echo "<script>alert('You have applied for his job before!');</script>";
+		echo "<script>alert('You have applied for this job before!');</script>";
 		$_POST['jobID'] = $_SESSION['jobID'];
 	}
 ?>
@@ -226,7 +226,7 @@
 											echo "</li><br />";
 
 											echo "<li>Company Description:<br />";
-											echo $row['description'];
+											echo $row['companyDescription'];
 											echo "</li><br />";
 
 											echo "<li>Address:<br />";
