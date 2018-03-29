@@ -26,7 +26,7 @@
   if (mysqli_num_rows($result) > 0) {
     echo "<script>alert('sign up failed');</script>";
     $_SESSION['SignUp'] = "failed";
-    //header("Location: index.php");
+    header("Location: index.php");
   }
   else {
     $query = "INSERT INTO  user (userID, username, password, address, phoneNo, email, userType) VALUES
