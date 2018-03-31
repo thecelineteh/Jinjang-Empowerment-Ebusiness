@@ -59,10 +59,21 @@
         background: #181818;
     }
 
-    input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], input[type="url"], input[type="tel"], textarea {
+    input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], input[type="time"], input[type="url"], input[type="tel"], textarea {
       border-radius: 3px;
     }
-
+    input[type="date"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        display: none;
+    }
+    input[type="time"] {
+      background: #F4F4F4;
+      border-bottom: 2px solid #EEE;
+      color: #354052;
+      opacity: 0.5;
+      -webkit-transition: 0.2s border-color, 0.2s opacity;
+      transition: 0.2s border-color, 0.2s opacity;
+    }
     label {
       color: #F8F8F8;
     }
@@ -183,6 +194,7 @@
                       <div id="jobSalary_error" style="color:red;"></div>
                   </div>
 
+                  <!--
                   <div class="form-group">
                     <label>Hours per week: </label>
                     <div class="form-control-small">
@@ -197,6 +209,39 @@
                         <input type="number" name="jobDuration" class="form-control-small" min = "1" value = "1" required>
                       </div>
                       <div id="jobDuration_error" style="color:red;"></div>
+                  </div>
+                -->
+
+                  <div class="form-group">
+                    <label>Start Date: </label>
+                    <div class="form-control-small">
+                        <input type="date" name="startDate" class="form-control-small" min = "<?php date("Y-m-d") ?>" required>
+                    </div>
+                    <div id="startDate_error" style="color:red;"></div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>End Date: </label>
+                    <div class="form-control-small">
+                        <input type="date" name="endDate" class="form-control-small" min = "<?php date("Y-m-d") ?>" required>
+                    </div>
+                    <div id="endDate_error" style="color:red;"></div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Start Time: </label>
+                    <div class="form-control-small">
+                        <input type="time" name="startTime" class="form-control" min = "<?php echo time(); ?>" required>
+                    </div>
+                    <div id="startTime_error" style="color:red;"></div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>End Time: </label>
+                    <div class="form-control-small">
+                        <input type="time" name="endTime" class="form-control" min = "<?php echo time(); ?>" required>
+                    </div>
+                    <div id="endTime_error" style="color:red;"></div>
                   </div>
 
                   <div class="form-group">

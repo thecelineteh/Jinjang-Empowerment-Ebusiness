@@ -7,8 +7,12 @@
   $address = stripcslashes($_POST['jobAddress']);
   $city = stripcslashes($_POST['jobCity']);
   $salary = stripcslashes($_POST['jobSalary']);
-  $hours = stripcslashes($_POST['jobHours']);
-  $weeks = stripcslashes($_POST['jobDuration']);
+  $startDate = stripcslashes($_POST['startDate']);
+  $endDate = stripcslashes($_POST['endDate']);
+
+  //to convert the time from am/pm to 24hours time format to store in database
+  $startTime= date("G:i", strtotime($_POST['startTime']));
+  $endTime= date("G:i", strtotime($_POST['endTime']));
 
   $title = mysqli_real_escape_string($connection, $title);
   $desc = mysqli_real_escape_string($connection, $desc);
@@ -27,9 +31,7 @@
 
   // create new job position
   if (isset($_POST['createJobBtn'])) {
-    $reqSkillSet = $_POST['reqSkillSet'];
-
-    $query_storeJob = "INSERT INTO jobposition (title, description, salaryPerHour, hoursPerWeek, durationInWeeks, address, city, status, theClient, theEmployee) VALUES ('$title','$desc', '$salary', '$hours', '$weeks', '$address','$city', '$jobStatus', $theClient, $theEmployee_userID)";
+    $query_storeJob = "INSERT INTO jobposition (title, description, salaryPerHour, startDate, endDate, startTime, endTime, address, city, status, theClient, theEmployee) VALUES ('$title','$desc', '$salary', '$startDate', '$endDate', '$startTime', '$endTime', '$address','$city', '$jobStatus', $theClient, $theEmployee_userID)";
     $result_storeJob = mysqli_query($connection, $query_storeJob);
 
     // find jobID of created job
@@ -38,22 +40,30 @@
     while($row_jobPositions = mysqli_fetch_assoc($result_findJob)) {
       $jobID = $row_jobPositions['jobID'];
 
+      if (!isset($_POST['reqSkillSet'])) {
+        $reqSkillSet = array();
+      } else {
+        $reqSkillSet = $_POST['reqSkillSet'];
 
-      // Based on skillName, find skills required in skill table
-      foreach ($reqSkillSet as $skillName) {
-        $req_skills = "SELECT * FROM skill WHERE skillName = '$skillName'";
-        $result_req_skills = mysqli_query($connection, $req_skills);
+        // Based on skillName, find skills required in skill table
+        foreach ($reqSkillSet as $skillName) {
+          $req_skills = "SELECT * FROM skill WHERE skillName = '$skillName'";
+          $result_req_skills = mysqli_query($connection, $req_skills);
 
-        while ($row_req_skills = mysqli_fetch_assoc($result_req_skills)) {
-          $skillID = $row_req_skills['skillID'];
+          while ($row_req_skills = mysqli_fetch_assoc($result_req_skills)) {
+            $skillID = $row_req_skills['skillID'];
+          }
+            $add_reqskillset = "INSERT INTO jobrequiredskill VALUES($jobID, $skillID)";
+            $result_add_reqskillset = mysqli_query($connection, $add_reqskillset);
+
         }
-          $add_reqskillset = "INSERT INTO jobrequiredskill VALUES($jobID, $skillID)";
-          $result_add_reqskillset = mysqli_query($connection, $add_reqskillset);
-
       }
     }
 
-    if ($result_storeJob && $result_add_reqskillset) {
+    if ($result_storeJob && isset($result_add_reqskillset)) {
+      echo "<script>alert('Job position with required skills sets created successfully.');</script>";
+      header("Refresh: 1; url= jobPositions.php");
+    } else if ($result_storeJob) {
       echo "<script>alert('Job position created successfully.');</script>";
       header("Refresh: 1; url= jobPositions.php");
     } else {
@@ -85,7 +95,7 @@
       }
     //}
 
-    $update_jobpos = "UPDATE jobposition SET title = '$title', description = '$desc', salaryPerHour = '$salary', hoursPerWeek = '$hours', durationInWeeks = '$weeks', address = '$address', city = '$city', status = '$jobStatus', theClient = '$theClient', theEmployee = $theEmployee_userID WHERE jobID = $existing_jobID";
+    $update_jobpos = "UPDATE jobposition SET title = '$title', description = '$desc', salaryPerHour = '$salary', startDate = '$startDate', endDate = '$endDate', startTime = '$startTime', endTime = '$endTime',  address = '$address', city = '$city', status = '$jobStatus', theClient = '$theClient', theEmployee = $theEmployee_userID WHERE jobID = $existing_jobID";
     $result_update_jobpos = mysqli_query($connection, $update_jobpos);
 
 

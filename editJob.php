@@ -205,23 +205,43 @@
                                 <input type="number"  name="jobSalary" class="form-control-small" min = "1" value="' .$row_jobPositions['salaryPerHour']. '" step="0.25" required>
                               </div>
                               <div id="jobSalary_error" style="color:red;"></div>
-                          </div>
+                          </div>';
 
+                          // conversion of date and time
+
+                          echo '
                           <div class="form-group">
-                            <label>Hours per week: </label>
+                            <label>Start Date: </label>
                             <div class="form-control-small">
-                                <input type="number" name="jobHours" class="form-control-small" min = "1" value="' .$row_jobPositions['hoursPerWeek']. '" required>
+                                <input type="date" name="startDate" class="form-control-small" value="' .$row_jobPositions['startDate']. '" required>
                             </div>
-                            <div id="jobHours_error" style="color:red;"></div>
+                            <div id="startDate_error" style="color:red;"></div>
                           </div>
 
                           <div class="form-group">
-                              <label>Duration (weeks): </label>
-                              <div class="form-control-small">
-                                <input type="number" name="jobDuration" class="form-control-small" min = "1" value = "' .$row_jobPositions['durationInWeeks']. '" required>
-                              </div>
-                              <div id="jobDuration_error" style="color:red;"></div>
+                            <label>End Date: </label>
+                            <div class="form-control-small">
+                                <input type="date" name="endDate" class="form-control-small" min = "<?php date("Y-m-d") ?>" required>
+                            </div>
+                            <div id="endDate_error" style="color:red;"></div>
                           </div>
+
+                          <div class="form-group">
+                            <label>Start Time: </label>
+                            <div class="form-control-small">
+                                <input type="time" name="startTime" class="form-control" min = "<?php echo time(); ?>" required>
+                            </div>
+                            <div id="startTime_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>End Time: </label>
+                            <div class="form-control-small">
+                                <input type="time" name="endTime" class="form-control" min = "<?php echo time(); ?>" required>
+                            </div>
+                            <div id="endTime_error" style="color:red;"></div>
+                          </div>
+
 
                           <div class="form-group">
                               <label>Status: </label>

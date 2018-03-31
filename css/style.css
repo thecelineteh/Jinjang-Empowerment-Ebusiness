@@ -199,7 +199,7 @@ ul, ol {
 
 /* --  Input  -- */
 
-input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], input[type="url"], input[type="tel"], textarea {
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], input[type="time"], input[type="url"], input[type="tel"], textarea {
     height: 40px;
     width: 100%;
     border: none;

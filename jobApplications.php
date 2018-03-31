@@ -12,7 +12,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Job Positions</title>
+	<title>Job Applications</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -76,6 +76,7 @@
 				transition: 0.3s;
 				padding: 20px;
 		    background-color: #F8F8FF;
+        height: 40em;
         padding: 25px;
 		}
 
@@ -148,12 +149,12 @@
               <div class="row">
                 <div class="col-sm-offset-1 col-sm-10 col-xs-12">
                   <div class ="card">
-                    <h4 class="form-title">Job Positions</h4>
+                    <h4 class="form-title">Job Appications</h4>
                     <div style="margin-top:20px;">
                       <a class="btn btn-primary" href="createJob.php"><i class="fa fa-plus"></i>&nbsp; Create</a>
                     </div>
                     <?php
-                      $client_jobpos = "SELECT * FROM jobposition WHERE theClient = $theClient";
+                      $client_jobapp = "SELECT * FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND theClient = $theClient";
                       $result_client_jobpos = mysqli_query($connection, $client_jobpos);
 
                       if (mysqli_num_rows($result_client_jobpos) > 0) {
@@ -165,11 +166,9 @@
                               <th></th>
                               <th>Title</th>
                               <th>Description</th>
-                              <th>Salary / hour (RM)</th>
-                              <th>Start date</th>
-                              <th>End date</th>
-                              <th>Start time</th>
-                              <th>End time</th>
+                              <th>Salary per hour</th>
+                              <th>Hours per week</th>
+                              <th>Number of weeks</th>
                               <th>Address</th>
                               <th>City</th>
                               <th>Status </th>
@@ -184,18 +183,8 @@
                           $title = $row_client_jobpos['title'];
                           $desc = $row_client_jobpos['description'];
                           $salary = $row_client_jobpos['salaryPerHour'];
-                          $startDate = $row_client_jobpos['startDate'];
-                          // convert startDate format
-                          $startDateDisplay = date("d-m-Y", strtotime($startDate));
-                          $endDate = $row_client_jobpos['endDate'];
-                          // convert endDate format
-                          $endDateDisplay = date("d-m-Y", strtotime($endDate));
-                          $startTime = $row_client_jobpos['startTime'];
-                          // convert startTime format
-                          $startTimeDisplay = date('h:i A', strtotime($startTime));
-                          $endTime = $row_client_jobpos['endTime'];
-                          // convert endTime format
-                          $endTimeDisplay = date('h:i A', strtotime($endTime));
+                          $hours = $row_client_jobpos['hoursPerWeek'];
+                          $weeks = $row_client_jobpos['durationInWeeks'];
                           $address = $row_client_jobpos['address'];
                           $city= $row_client_jobpos['city'];
                           $status= $row_client_jobpos['status'];
@@ -224,12 +213,10 @@
                           </td>';
                           echo '
                           <td align="center"> '.$title.'</td>
-                          <td align="left"> '.$desc. '</td>
+                          <td align="center"> '.$desc. '</td>
                           <td align="center"> '.$salary.'</td>
-                          <td align="center" width="10%"> '.$startDateDisplay.'</td>
-                          <td align="center" width="10%"> '.$endDateDisplay.'</td>
-                          <td align="center" width="8%"> '.$startTimeDisplay.'</td>
-                          <td align="center" width="8%"> '.$endTimeDisplay.'</td>
+                          <td align="center"> '.$hours.'</td>
+                          <td align="center"> '.$weeks.'</td>
                           <td align="center"> '.$address.'</td>
                           <td align="center"> '.$city.'</td>
                           <td align="center"> '.$status.'</td>
@@ -237,14 +224,16 @@
                           </tr>
                           </form>
                           ';
+
                         }
-                        echo '</table>
-                              </div>
-                              <br />';
                       } else {
                         echo '<span style="margin-left:10px">No job positions created yet.</span>';
                       }
                       ?>
+
+                    </table>
+                    </div>
+
                   </div>
                 </div>
   						</div>
