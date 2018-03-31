@@ -21,7 +21,8 @@
 
   $query = "SELECT * FROM user WHERE userName = '$userName'";
   $result = mysqli_query($connection, $query);
-
+  //Add dummy comment
+  
   unset($_SESSION['userName']);
   if (mysqli_num_rows($result) > 0) {
     echo "<script>alert('sign up failed');</script>";
