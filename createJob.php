@@ -59,7 +59,7 @@
         background: #181818;
     }
 
-    input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], input[type="time"], input[type="url"], input[type="tel"], textarea {
+    input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], input[type="time"], input[type="url"], input[type="tel"], textarea, select {
       border-radius: 3px;
     }
     input[type="date"]::-webkit-inner-spin-button {
@@ -91,6 +91,11 @@
       width:40%;
     }
 
+    select {
+      color: black;
+      background-color: lightgrey;
+    }
+
     .white-btn {
       background-color: #F8F8FF;
       opacity: 0.8;
@@ -104,6 +109,7 @@
 	</style>
 </head>
 <body style="background-color: #ecf0f1;">
+  <script type="text/javascript" src="js/dateTimeValidation.js"></script>
 	<!-- Nav -->
 	<nav id="nav" class="navbar">
 		<div class="container">
@@ -149,7 +155,7 @@
                 <div class="overlay2">
                 </div>
               </div>
-              <form name="postJobForm" action="storeJob.php" method="post">
+              <form name="postJobForm" onsubmit="return validateDateTimeCreate()" action="storeJob.php" method="post">
                 <div class="row">
                   <div class="col-sm-offset-3 col-sm-6">
                     <h4 class="form-title">Create Job Position</h4>
@@ -178,9 +184,25 @@
                     </div>
 
                     <div class="form-group">
-                      <label>City: </label>
+                        <label>City: </label>
                         <div class="form-control-small">
-                          <input type="text" name="jobCity" class="form-control" required>
+                          <select name="jobCity">
+                            <option value="At Home" selected>At Home</option>
+                            <option value="Kuala Lumpur">Kuala Lumpur</option>
+                            <option value="Petaling Jaya">Petaling Jaya</option>
+                            <option value="Shah Alam">Shah Alam</option>
+                            <option value="Melaka">Melaka</option>
+                            <option value="Ipoh">Ipoh</option>
+                            <option value="Johor Bahru">Johor Bahru</option>
+                            <option value="Iskandar Puteri">Iskandar Puteri</option>
+                            <option value="Alor Setar">Alor Setar</option>
+                            <option value="George Town">George Town</option>
+                            <option value="Penang Island">Penang Island</option>
+                            <option value="Kuala Terengganu">Kuala Terengganu</option>
+                            <option value="Kuching">Kuching</option>
+                            <option value="Miri">Miri</option>
+                            <option value="Kota Kinabalu">Kota Kinabalu</option>
+                          </select>
                         </div>
                         <div id="jobCity_error" style="color:red;"></div>
                     </div>
@@ -212,10 +234,15 @@
                   </div>
                 -->
 
+                  <?php
+                  // set timezone to Malaysia
+                  date_default_timezone_set("Asia/Kuala_Lumpur");
+                   ?>
+
                   <div class="form-group">
                     <label>Start Date: </label>
                     <div class="form-control-small">
-                        <input type="date" name="startDate" class="form-control-small" min = "<?php date("Y-m-d") ?>" required>
+                        <input type="date" name="startDate" class="form-control-small" min = "<?php echo date("Y-m-d"); ?>" value = "<?php echo date("Y-m-d"); ?>" required>
                     </div>
                     <div id="startDate_error" style="color:red;"></div>
                   </div>
@@ -223,7 +250,7 @@
                   <div class="form-group">
                     <label>End Date: </label>
                     <div class="form-control-small">
-                        <input type="date" name="endDate" class="form-control-small" min = "<?php date("Y-m-d") ?>" required>
+                        <input type="date" name="endDate" class="form-control-small" min = "<?php echo date("Y-m-d"); ?>" value = "<?php echo date("Y-m-d"); ?>" required>
                     </div>
                     <div id="endDate_error" style="color:red;"></div>
                   </div>
@@ -231,7 +258,7 @@
                   <div class="form-group">
                     <label>Start Time: </label>
                     <div class="form-control-small">
-                        <input type="time" name="startTime" class="form-control" min = "<?php echo time(); ?>" required>
+                        <input type="time" name="startTime" class="form-control" min = "<?php echo date('H:i'); ?>" value = "<?php echo date('H:i'); ?>" required>
                     </div>
                     <div id="startTime_error" style="color:red;"></div>
                   </div>
@@ -239,7 +266,7 @@
                   <div class="form-group">
                     <label>End Time: </label>
                     <div class="form-control-small">
-                        <input type="time" name="endTime" class="form-control" min = "<?php echo time(); ?>" required>
+                        <input type="time" name="endTime" class="form-control" min = "<?php echo date('H:i'); ?>" value = "<?php echo date('H:i'); ?>" required>
                     </div>
                     <div id="endTime_error" style="color:red;"></div>
                   </div>
@@ -260,7 +287,7 @@
 
     							<div style="text-align:right; margin-top:50px">
                     <a class="white-btn" href="jobPositions.php">Cancel</a>
-    								<button type="submit" name="createJobBtn" class=" main-btn">Create</button>
+    								<button type="submit" id="createJobBtn" name="createJobBtn" class=" main-btn">Create</button>
     							</div>
 
                   </div>
@@ -305,7 +332,7 @@
 
 					<!-- footer copyright -->
 					<div class="footer-copyright">
-						<p>Copyright © 2017 AGN. All Rights Reserved.</p>
+						<p>Copyright © <?php echo date("Y");?> AGN. All Rights Reserved.</p>
 					</div>
 					<!-- /footer copyright -->
 

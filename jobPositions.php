@@ -286,7 +286,7 @@
 
 					<!-- footer copyright -->
 					<div class="footer-copyright">
-						<p>Copyright © 2017 AGN. All Rights Reserved.</p>
+						<p>Copyright © <?php echo date("Y");?> AGN. All Rights Reserved.</p>
 					</div>
 					<!-- /footer copyright -->
 

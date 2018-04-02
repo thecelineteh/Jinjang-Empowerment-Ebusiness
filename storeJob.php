@@ -115,7 +115,10 @@
       }
     }
 
-    if ($result_update_jobpos && $result_update_skillsreq){
+    if ($result_update_jobpos && isset($result_update_skillsreq)){
+      echo "<script>alert('Job position with required skills sets updated successfully.');</script>";
+      header("Refresh: 1; url= jobPositions.php");
+    } else if ($result_update_jobpos) {
       echo "<script>alert('Job position details updated successfully.');</script>";
       header("Refresh: 1; url= jobPositions.php");
     } else {
