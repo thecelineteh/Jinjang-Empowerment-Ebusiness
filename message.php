@@ -105,7 +105,7 @@
 	<div class="container">
 		<div class="row">
 			<button style="margin-top: 2em;"class="btn btn-success" type="button"
-			data-toggle="modal" data-target="#myModal">New Message</button>
+      onclick="window.open(href='sendMessage.php')" target="_blank">New Message</button>
 			<div class="panel panel-primary"  style='border-radius: 10px; margin-top:1em; border: none;'>
 		    <div class="panel-heading" style = "text-align: center; font-size: 20px;
 		    border-radius: 10px 10px 0 0;">Inbox</div>
@@ -115,9 +115,9 @@
 		          <thead style="">
 		            <tr>
 		              <th class='col-xs-3'>Sender</th>
-		              <th class='col-xs-6'>Subject</th>
+		              <th class='col-xs-5'>Subject</th>
 		              <th class='col-xs-3'>Time</th>
-									<th class='col-xs-1'>Actions</th>
+									<th class='col-xs-2'>Actions</th>
 		            </tr>
 		          </thead>
 							<tbody>
@@ -129,8 +129,11 @@
 			            $result = mysqli_query($connection, $query);
 			            if (mysqli_num_rows($result) > 0) {
 										while ($row = mysqli_fetch_assoc($result)) {
+											echo "<form id='myForm' action='' method='post' target='_blank'>";
 											echo "<tr style='cursor:;'>";
 											$_SESSION['senderID'] = $row['sender'];
+											echo "<input type='hidden' value='" . $row['sender'] . "'
+											name='senderID'/>";
 											if ($row['userType'] == "Job Seeker") {
 												$senderID = $_SESSION['senderID'];
 												$query2 = "SELECT * FROM user, jobseeker WHERE
@@ -141,6 +144,8 @@
 												if (mysqli_num_rows($result2) > 0) {
 													while ($row2 = mysqli_fetch_assoc($result2)) {
 														echo "<td>" . $row2['fullName'] . "</td>";
+														echo "<input type='hidden' value='" . $row2['fullName'] . "'
+														name='senderName'/>";
 													}
 												}
 
@@ -155,18 +160,32 @@
 												if (mysqli_num_rows($result2) > 0) {
 													while ($row2 = mysqli_fetch_assoc($result2)) {
 														echo "<td>" . $row2['companyName'] . "</td>";
+														echo "<input type='hidden' value='" . $row2['companyName'] . "'
+														name='senderName'/>";
 													}
 												}
 											}
 
 											echo "<td>" . $row['subject'] . "</td>";
+											echo "<input type='hidden' value='" . $row['subject'] . "'
+											name='subject'/>";
 											echo "<td>" . $row['date'] . "</td>";
 											echo "
-												<td><a href='' data-toggle='modal' data-target='#myModal' data-toggle='tooltip' data-placement='top' title='Reply'>
-												<i class='fa fa-mail-reply'></i>&nbsp;&nbsp;
+												<td>
+												<button data-toggle='tooltip' data-placement='top' title='View Message' onclick='viewMessage()'
+												style='border: none; padding: 0; background: none;'>
+												<a><i class='fa fa-envelope-open-o'></i></a>
+												</button>
+												&nbsp;&nbsp;
+												<button data-toggle='tooltip' data-placement='top' title='Reply' onclick='replyMessage()'
+												style='border: none; padding: 0; background: none;'>
+												<a><i class='fa fa-mail-reply'></i></a>&nbsp;&nbsp;
+												</button>
 												<a href='index.php' data-toggle='tooltip' data-placement='top' title='Delete'><i class='fa fa-trash-o'></i></td>
 											";
+
 											echo "</tr>";
+											echo "</form>";
 										}
 									}
 
@@ -179,50 +198,6 @@
 		</div>
 	</div>
 
-	<!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	      <div class="modal-header" style="text-align: center;">
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">New Message</h4>
-	      </div>
-	      <div class="modal-body">
-					<br /><br />
-					<form action="sendMessage.php" method="post">
-						<div class="container">
-							<div class="row">
-								<div class="col-sm-offset-1 col-sm-4">
-									<div class="form-group">
-								    <label for="username">Receiver:</label>
-										<input type='text' class='form-control' id='
-											receiverName' name='receiverName' required>
-								  </div>
-								  <div class="form-group">
-								    <label for="pwd">Subject:</label>
-								    <input type="text" class="form-control" id="subject"
-										name="subject" required>
-								  </div>
-									<div class="form-group">
-								    <label for="pwd">Content:</label>
-								    <textarea rows="10" cols="50" style="height: 10em;" name="content"></textarea>
-								  </div>
-
-								</div>
-							</div>
-						</div><br /><br>
-						<div class="modal-footer">
-							<div style='text-align: center;'>
-								<button data-dismiss="modal" class="btn btn-default" style="width:6em;">Cancel</button>
-								<button type="submit" class="btn btn-primary" style="width:6em;">Send</button>
-							</div>
-						</div>
-					</form>
-	      </div>
-	    </div>
-	  </div>
-	</div>
   <!-- End of Modal -->
 	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -263,5 +238,17 @@
     });
   });
   </script>
+	<script>
+		form=document.getElementById("myForm");
+		function viewMessage() {
+		        form.action="showMessage.php";
+		        form.submit();
+		}
+		function replyMessage() {
+		        form.action="sendMessage.php";
+		        form.submit();
+		}
+
+	</script>
 </body>
 </html>
