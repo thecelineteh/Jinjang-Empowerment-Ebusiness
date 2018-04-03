@@ -129,9 +129,12 @@
 			            $result = mysqli_query($connection, $query);
 			            if (mysqli_num_rows($result) > 0) {
 										while ($row = mysqli_fetch_assoc($result)) {
-											echo "<form id='myForm' action='' method='post' target='_blank'>";
+											echo "<form id='F" . $row['messageID'] . "' action=''
+											method='post' target='_blank'>";
 											echo "<tr style='cursor:;'>";
 											$_SESSION['senderID'] = $row['sender'];
+											echo "<input type='hidden' value='" . $row['messageID'] . "'
+											name='messageID'/>";
 											echo "<input type='hidden' value='" . $row['sender'] . "'
 											name='senderID'/>";
 											if ($row['userType'] == "Job Seeker") {
@@ -172,13 +175,13 @@
 											echo "<td>" . $row['date'] . "</td>";
 											echo "
 												<td>
-												<button data-toggle='tooltip' data-placement='top' title='View Message' onclick='viewMessage()'
-												style='border: none; padding: 0; background: none;'>
+												<button data-toggle='tooltip' data-placement='top' title='View Message' onclick='viewMessage(this.id)'
+												style='border: none; padding: 0; background: none;' id='V" . $row['messageID'] . "'>
 												<a><i class='fa fa-envelope-open-o'></i></a>
 												</button>
 												&nbsp;&nbsp;
-												<button data-toggle='tooltip' data-placement='top' title='Reply' onclick='replyMessage()'
-												style='border: none; padding: 0; background: none;'>
+												<button data-toggle='tooltip' data-placement='top' title='Reply' onclick='replyMessage(this.id)'
+												style='border: none; padding: 0; background: none;' id='R" . $row['messageID'] . "'>
 												<a><i class='fa fa-mail-reply'></i></a>&nbsp;&nbsp;
 												</button>
 												<a href='index.php' data-toggle='tooltip' data-placement='top' title='Delete'><i class='fa fa-trash-o'></i></td>
@@ -228,25 +231,29 @@
 	<script type="text/javascript" src="js/owl.carousel.min.js"></script>
 	<script type="text/javascript" src="js/jquery.magnific-popup.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
+
 	<script>
-  $(document).ready(function(){
-    $('table tbody tr').click(function(){
-      //var tableID = "t" + this.id;
-      //document.getElementById(tableID).submit();
-			//window.location.href = "job.php";
-			//alert('hello world');
-    });
-  });
-  </script>
-	<script>
-		form=document.getElementById("myForm");
-		function viewMessage() {
-		        form.action="showMessage.php";
-		        form.submit();
+		form = "";
+		$(document).ready(function(){
+	    $('td button').click(function(){
+	      var messageID = "F" + this.id;
+				form=document.getElementById(messageID);
+	    });
+	  });
+
+		function viewMessage(btnID) {
+			var str = btnID.substring(1,6);
+			var messageID = "F" + str;
+			form=document.getElementById(messageID);
+		  form.action="showMessage.php";
+		  form.submit();
 		}
-		function replyMessage() {
-		        form.action="sendMessage.php";
-		        form.submit();
+		function replyMessage(btnID) {
+			var str = btnID.substring(1,6);
+			var messageID = "F" + str;
+			form=document.getElementById(messageID);
+		  form.action="sendMessage.php";
+		  form.submit();
 		}
 
 	</script>

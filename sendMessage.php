@@ -9,39 +9,77 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="css/message.css">
+  <script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function()
+  {
+  	$("#receiverName").keyup(function()
+  	{
+  		var receiverName = $(this).val();
 
+  		if(receiverName.length > 0)
+  		{
+  			$("#result").html('checking...');
+
+  			/*$.post("username-check.php", $("#reg-form").serialize())
+  				.done(function(data){
+  				$("#result").html(data);
+  			});*/
+
+  			$.ajax({
+
+  				type : 'POST',
+  				url  : 'username-check.php',
+  				data : $(this).serialize(),
+  				success : function(data)
+  						  {
+  					         $("#result").html(data);
+  					      }
+  				});
+  				return false;
+
+  		}
+  		else
+  		{
+  			$("#result").html('');
+  		}
+  	});
+
+  });
+  </script>
   <style>
     body {
       margin-left: 0;
     }
   </style>
-
 </head>
 
 <body>
   <div id="container"></div>
   <script id="template">
-    <div class="flip-card" on-click="toggle('flipCard')">{{ flipCard ? 'Reset' : 'Animate' }}</div>
     <div class="contact-wrapper">
         <div class="envelope {{ flipCard ? 'active' : '' }}">
           <div class="back paper"></div>
           <div class="content">
             <div class="form-wrapper">
               <form action="sendMessage2.php" method="post" id="my_form"
-              onsubmit="return formSubmit(this);">
+              onsubmit="return formSubmit(this);" autocomplete='off'>
                 <div class="top-wrapper">
                   <div class="input">
                     <label>Receiver</label>
                     <?php
                       if (isset($_POST['senderName'])) {
                         echo "
-                          <input type='text' name='receiverName' value='" .
+                          <input type='text' name='receiverName' id='receiverName' value='" .
                           $_POST['senderName']
-                          . "'/>
+                          . "' required id='receiverName'/>
                         ";
+                        echo "<div style='text-align: center;'><span id='result'></span></div>";
                       }
                       else {
-                        echo "<input type='text' name='receiverName'/>";
+                        echo "<input type='text' name='receiverName' id='receiverName' required
+                          id='receiverName'/>";
+                        echo "<div style='text-align: center;'><span id='result'></span></div>";
                       }
                     ?>
                   </div><br />
@@ -50,13 +88,13 @@
                     <?php
                       if (isset($_POST['subject'])) {
                         echo "
-                          <input type='text' name='receiverName' value='RE: " .
+                          <input type='text' name='subject' value='RE: " .
                           $_POST['subject']
-                          . "'/>
+                          . "' required id='subject'/>
                         ";
                       }
                       else {
-                        echo "<input type='text' name='receiverName'/>";
+                        echo "<input type='text' name='subject' id='subject'/>";
                       }
                     ?>
                   </div><br />
@@ -64,10 +102,10 @@
                 <div class="bottom-wrapper">
                   <div class="input">
                     <label>Message</label>
-                    <textarea rows="10" name="content"></textarea>
+                    <textarea rows="10" name="content" id='message' required></textarea>
                   </div>
                   <div class="submit">
-                    <button class="submit-card" on-click="toggle('flipCard')" type="submit">Send Mail</button>
+                    <button class="submit-card" onclick="checkValue()" type="submit">Send Mail</button>
                   </div>
                 </div>
               </form>
@@ -78,19 +116,32 @@
       </div>
 
   </script>
+
   <script src='https://cdn.jsdelivr.net/npm/ractive'></script>
   <script  src="js/index.js"></script>
   <script>
   function formSubmit(form) {
+    alert("Your message has been sent successfully!");
     setTimeout(function() {
         form.submit();
-    }, 1700);  // 3 seconds
-    setTimeout(function() {
-        window.close();;
-    }, 1800);
+        window.close();
+    }, 300);  // 3 seconds
     return false;
   }
   </script>
+  <script>
+    function checkValue() {
+      if (
+        document.getElementById("receiverName").value != "" &&
+        document.getElementById("subject").value != "" &&
+        document.getElementById("message").value != ""
+      ) {
+        toggle('flipCard');
+        alert('hello world');
+      }
+    }
+  </script>
+
 
 </body>
 
