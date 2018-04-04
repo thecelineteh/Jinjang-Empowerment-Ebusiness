@@ -182,7 +182,7 @@ if (isset($_POST['skill'])) {
 				$result = mysqli_query($connection, $query);
 				if (mysqli_num_rows($result) > 0) {
 					while ($row = mysqli_fetch_assoc($result)) {
-            $totalSalary = $row['salaryPerHour'] * $row['hoursPerWeek'] * $row['durationInWeeks'];
+            $totalSalary = $row['salaryPerHour'];
 						$jobID = $row['jobID'];
 						$query2 = "SELECT skill.skillName FROM jobrequiredskill, skill WHERE jobID = '$jobID'
 											AND jobrequiredskill.skillID=skill.skillID";
@@ -198,7 +198,7 @@ if (isset($_POST['skill'])) {
 					  ;
 						echo "
                   <div class='price'>
-                    <h3>$" . $totalSalary . "</h3>
+                    <h3>$" . $totalSalary . "<span class='duration'>/ hour</span></h3>
                   </div> ";
 						$link='"jobDetails.php"';
 						echo "

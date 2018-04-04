@@ -10,5 +10,5 @@
   $query = "INSERT INTO message VALUES (NULL, '$subject', '$content', NULL,
     '$sender', 2)";
   $result = mysqli_query($connection, $query);
-  header("Location: message.php");
+  echo "<script>window.close();</script>"
  ?>

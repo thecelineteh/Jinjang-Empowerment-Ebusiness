@@ -63,7 +63,7 @@
           <div class="content">
             <div class="form-wrapper">
               <form action="sendMessage2.php" method="post" id="my_form"
-              onsubmit="return formSubmit(this);" autocomplete='off'>
+              autocomplete='off'>
                 <div class="top-wrapper">
                   <div class="input">
                     <label>Receiver</label>
@@ -105,7 +105,7 @@
                     <textarea rows="10" name="content" id='message' required></textarea>
                   </div>
                   <div class="submit">
-                    <button class="submit-card" onclick="checkValue()" type="submit">Send Mail</button>
+                    <button class="submit-card" type="submit">Send Mail</button>
                   </div>
                 </div>
               </form>
@@ -122,25 +122,11 @@
   <script>
   function formSubmit(form) {
     alert("Your message has been sent successfully!");
-    setTimeout(function() {
-        form.submit();
-        window.close();
-    }, 300);  // 3 seconds
+    window.close();
     return false;
   }
   </script>
-  <script>
-    function checkValue() {
-      if (
-        document.getElementById("receiverName").value != "" &&
-        document.getElementById("subject").value != "" &&
-        document.getElementById("message").value != ""
-      ) {
-        toggle('flipCard');
-        alert('hello world');
-      }
-    }
-  </script>
+
 
 
 </body>
