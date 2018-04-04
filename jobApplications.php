@@ -194,6 +194,19 @@
                               $applicantName = '-';
                           }
 
+                          // get applicant profile details
+                          $applicant_profile = "SELECT * FROM user WHERE userID = $theApplicant";
+                          $result_applicant_profile = mysqli_query($connection, $applicant_profile);
+                          if (mysqli_num_rows($result_applicant_profile) > 0){
+                            while($row_applicant_profile = mysqli_fetch_assoc($result_applicant_profile) ) {
+                              $applicantUsername = $row_applicant_profile['username'];
+                              $applicantEmail = $row_applicant_profile['email'];
+                              $applicantPhone = $row_applicant_profile['phoneNo'];
+                              $applicantAdd = $row_applicant_profile['address'];
+                            }
+                          }
+
+
                           // convert startDate format
                           $startDateDisplay = date("j M Y", strtotime($startDate));
                           // convert endDate format
@@ -204,97 +217,186 @@
                           $endTimeDisplay = date('g:i A', strtotime($endTime));
 
                           // display application details
-                          echo '
-                          <div class="col-sm-4">
-                  					<div class="pricing">
-                  						<div class="price-head">
-                                <span class="price-title">Applicant: '. $applicantName .'<br>
-                                <div class="price-btn">
-                                  <button class="outline-btn">View Profile</button>
-                                </div>
-                                <br> '. $title .'</span>
-                  							<div class="price">
-                  								<h3>RM'. round($salary,2) .'<span class="duration">/ week</span></h3>
-                  							</div>
-                  						</div>
-                  						<ul class="price-content">
-                                <li>
-                  								<p>Skills Required: </p>';
+                          if ($status != "DECLINED") {
+                            echo '
+                            <div class="col-sm-4">
+                            <div class="container-fluid">
+                    					<div class="pricing">
+                    						<div class="price-head">
+                                  <span class="price-title">Applicant: '. $applicantName .'<br>
+                                  <div class="price-btn">
+                                    <button class="outline-btn"data-toggle="modal" data-target="#myModal'. $applicationID . '">View Profile</button>
+                                  </div>
+                                   '. $title .'</span>
+                    							<div class="price">
+                    								<h3>RM'. round($salary,2) .'<span class="duration">/ hour</span></h3>
+                    							</div>
+                    						</div>
+                    						<ul class="price-content">
+                                  <li>
+                    								<p>Skills Required: </p>';
 
 
-                          $reqSkills = "SELECT skill.skillName FROM jobrequiredskill, skill WHERE jobID = $jobID
-              											AND jobrequiredskill.skillID=skill.skillID";
-              						$result_reqSkills = mysqli_query($connection, $reqSkills);
+                            $reqSkills = "SELECT skill.skillName FROM jobrequiredskill, skill WHERE jobID = $jobID
+                											AND jobrequiredskill.skillID=skill.skillID";
+                						$result_reqSkills = mysqli_query($connection, $reqSkills);
 
-                          if (mysqli_num_rows($result_reqSkills) > 0) {
-                            echo '<div class="row">';
-                            while ($row_reqSkills = mysqli_fetch_assoc($result_reqSkills)) {
-                              echo '<div class="col-lg-offset-4 col-md-offset-3 col-md-12"><p style="text-align:left; margin-left:15px;"><i class="fa fa-check-circle" style="font-size:20px;color:green"></i> &nbsp;&nbsp;' . $row_reqSkills['skillName'] . '</p></div>';
-                            }
-                            echo '</div>';
-                            if (mysqli_num_rows($result_reqSkills) < 5){
-                              echo '<br><br><br>';
-                              if (mysqli_num_rows($result_reqSkills) == 3){
-                                echo '<br>';
-                              } else if (mysqli_num_rows($result_reqSkills) == 2){
-                                echo '<br><br>';
-                              } else if (mysqli_num_rows($result_reqSkills) == 1){
-                                echo '<br><br><br>';
+                            if (mysqli_num_rows($result_reqSkills) > 0) {
+                              echo '<div class="row">';
+                              while ($row_reqSkills = mysqli_fetch_assoc($result_reqSkills)) {
+                                echo '<div class="col-lg-offset-4 col-md-offset-3 col-md-12"><p style="text-align:left; margin-left:15px;"><i class="fa fa-check-circle" style="font-size:20px;color:green"></i> &nbsp;&nbsp;' . $row_reqSkills['skillName'] . '</p></div>';
                               }
-                            }
-                          } else {
-                            echo '<p>No skills required.</p>';
-                          }
-
-                          echo '
-                          </li>
-                          <li>
-                            <br>
-                            <p><i class="fa fa-calendar-check-o"></i>&nbsp;Start date: '. $startDateDisplay .'</p>
-                            <p><i class="fa fa-calendar-check-o"></i>&nbsp;End date: '. $endDateDisplay .'</p>
-                          </li>
-                          <li>
-                            <p><i class="fa fa-clock-o"></i>&nbsp;Start time: '. $startTimeDisplay .'</p>
-                            <p><i class="fa fa-clock-o"></i>&nbsp;End time: '. $endTimeDisplay .'</p>
-                          </li>
-                          <li>
-                            <br>
-                            <p>Status: ';
-                            if ($status == 'ACCEPTED') {
-                              echo '<span style="color: green; font-weight: bold;">';
-                            } else if ($status == 'DECLINED') {
-                              echo '<span style="color: #FF3300; font-weight: bold;">';
+                              echo '</div>';
+                              if (mysqli_num_rows($result_reqSkills) < 5){
+                                echo '<br><br><br>';
+                                if (mysqli_num_rows($result_reqSkills) == 3){
+                                  echo '<br>';
+                                } else if (mysqli_num_rows($result_reqSkills) == 2){
+                                  echo '<br><br>';
+                                } else if (mysqli_num_rows($result_reqSkills) == 1){
+                                  echo '<br><br><br>';
+                                }
+                              }
                             } else {
-                              echo '<span>';
+                              echo '<p>No skills required.</p>';
                             }
-                            echo $status . '</span></p>
-                          </li>
-                        </ul>';
 
-                          if ($status == 'PENDING') {
-                              echo '
-                              <form method="post" action="assessApplication.php">
-                              <table style="margin:30px; width:85%; text-align:center">
-                                <tr>
-                                  <td>
-                                    <input type="hidden" name="applicationID" value="'; echo $applicationID; echo '">
-                                    <button type="submit" id="acceptBtn" name="acceptBtn" value="ACCEPTED" class="outline-btn accept">Accept</button>
-                                  </td>
-                                  <td>
-                                    <button type="submit" id="declineBtn" name="declineBtn" value="DECLINED" class="outline-btn decline">Decline</button>
-                                  </td>
-                                </tr>
-                              </table>
-                              </form>';
+                            echo '
+                            </li>
+                            <li>
+                              <br>
+                              <p><i class="fa fa-calendar-check-o"></i>&nbsp;Start date: '. $startDateDisplay .'</p>
+                              <p><i class="fa fa-calendar-check-o"></i>&nbsp;End date: '. $endDateDisplay .'</p>
+                            </li>
+                            <li>
+                              <p><i class="fa fa-clock-o"></i>&nbsp;Start time: '. $startTimeDisplay .'</p>
+                              <p><i class="fa fa-clock-o"></i>&nbsp;End time: '. $endTimeDisplay .'</p>
+                            </li>
+<!--------- ----->
+                            <li>
+                            <form method="post" target="_blank" action="jobDetails.php">
+                            <button type="submit" id="jobDetails'. $applicationID .'" name="jobID" value="'.$jobID.'" class="outline-btn">Job Details</button>
+                            </form>
+                            </li>
+<!--------- ----->
+                            <li>
+                              <br>
+                              <p>Status: ';
+                              if ($status == 'ACCEPTED') {
+                                echo '<span style="color: green; font-weight: bold;">';
+                              } else if ($status == 'PENDING') {
+                                echo '<span style="color: #FF8C00; font-weight: bold;">';
+                              }
+                              echo $status . '</span></p>
+                            </li>
+                          </ul>';
 
-                          } else {
-                            echo '<br><br><br><br>';
-                          }
+                            if ($status == 'PENDING') {
+                                echo '
+                                <form method="post" action="assessApplication.php">
+                                <table style="margin:30px; width:85%; text-align:center">
+                                  <tr>
+                                    <td>
+                                      <input type="hidden" name="applicationID" value="'; echo $applicationID; echo '">
+                                      <input type="hidden" name="theEmployee" value="'; echo $theApplicant; echo '">
+                                      <input type="hidden" name="jobID" value="'; echo $jobID; echo '">
+                                      <button type="submit" id="acceptBtn" name="acceptBtn" value="ACCEPTED" class="outline-btn accept">Accept</button>
+                                    </td>
+                                    <td>
+                                      <button type="submit" id="declineBtn" name="declineBtn" value="DECLINED" class="outline-btn decline">Decline</button>
+                                    </td>
+                                  </tr>
+                                </table>
+                                </form>';
 
-                          echo '
+                            } else {
+                              echo '<br><br><br><br>';
+                            }
+
+                            if ($applicantEmail == "") {
+                              $applicantEmail = "-";
+                            }
+
+                            if ($applicantPhone == "") {
+                              $applicantPhone = "-";
+                            }
+
+                            if ($applicantAdd == "") {
+                              $applicantAdd = "-";
+                            }
+
+                            // get applicant skillsets
+                            $skillsets = "SELECT skill.skillName FROM skillsets, skill WHERE theJobSeeker = $theApplicant AND skillsets.skillID = skill.skillID";
+                            $result_skillsets = mysqli_query($connection, $skillsets);
+
+                            echo '
+                            </div>
                           </div>
-                        </div>';
+                          </div>
 
+                          <!-- Modal -->
+                        	<div id="myModal' . $applicationID . '" class="modal fade" role="dialog">
+                        	  <div class="modal-dialog">
+                        	    <!-- Modal content-->
+                        	    <div class="modal-content">
+                        	      <div class="modal-header" style="text-align: center;">
+                        	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        	        <h4 class="modal-title">' . $applicantUsername . '\'s Profile</h4>
+                        	      </div>
+                        	      <div class="modal-body">
+                        						<div class="container">
+                        							<div class="row">
+                        								<div class="col-sm-offset-1 col-sm-4">
+                        									<div class="form-group">
+
+                        								    <label for="fullName">Full Name:</label>
+                                            <h4>'. $applicantName .'</h4>
+
+                        								  </div>
+
+                        								  <div class="form-group">
+                        								    <label for="email">Email:</label>
+                                            <h5>' .  $applicantEmail . '</h5>
+                        								  </div>
+
+                                          <div class="form-group">
+                        								    <label for="phoneNo">Contact no:</label>
+                                            <h5>' .  $applicantPhone . '</h5>
+                        								  </div>
+
+                                          <div class="form-group">
+                                            <label for="address">Address:</label>
+                                            <h5>' .  $applicantAdd . '</h5>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label for="skillset">Skill Sets:</label>';
+
+                                          if (mysqli_num_rows($result_skillsets) > 0){
+                                            while($row_skillsets = mysqli_fetch_assoc($result_skillsets) ) {
+                                              echo '
+                                              <p style="text-align:left; margin-left:15px;"><i class="fa fa-check-circle" style="font-size:18px;color:green"></i> &nbsp;&nbsp;' . $row_skillsets['skillName'] . '</p>';
+                                            }
+                                          } else {
+                                            echo '<h5>-</h5>';
+                                          }
+
+                                          echo '</div>
+
+                        								</div>
+                        							</div>
+                        						</div>
+                                    <div class="modal-footer">
+                        							<div style="text-align: center;">
+                        								<button type="submit" class="btn btn-default">Send Message</button>
+                        							</div>
+                        						</div>
+                        	      </div>
+                        	    </div>
+                        	  </div>
+                        	</div>
+                          <!-- End of Modal -->';
+                          }
                         }
                       } else {
                         echo '<span style="margin-left:10px">No applications yet.</span>';
