@@ -61,30 +61,41 @@
         background: #181818;
     }
 
-    .form-title {
+    .form-title-white {
       font-family: "Britannic Bold";
-      color: black;
+      color: white;
       font-size: 25pt;
       margin-top: 10px;
       margin-bottom: 30px;
-      margin-left: 10px;
+      margin-left: 30px;
     }
 
-    .card {
-				/* Add shadows to create the "card" effect */
-				box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-				transition: 0.3s;
-				padding: 20px;
-		    background-color: #F8F8FF;
-        height: 40em;
-        padding: 25px;
-		}
-
-    th {
-      color: #101010;
+    .applications {
+      margin-left: 50px;
     }
-    td {
-      color: #080808;
+
+    .pricing:hover {
+      color: white;
+    }
+
+    .pricing .price h3 {
+      font-size: 36px;
+    }
+
+    .price-title {
+        color: black;
+    }
+
+    .accept {
+        background: transparent;
+        color: green !important;
+        border-color: green;
+    }
+
+    .decline {
+      background: transparent;
+      color: #FF3300 !important;
+      border-color: #FF3300;
     }
 
     .edit {
@@ -123,10 +134,10 @@
 
 			<!--  Main navigation  -->
       <ul class="main-nav nav navbar-nav navbar-right">
-				<li class="active"><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
+				<li><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
+        <li class="active"><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
@@ -139,7 +150,7 @@
 		<div class = "row">
 			<div class = "col-sm-12 col-xs-12" style = "padding:0;">
 				<div id = "background">
-					<div class = "row" style = "margin: 20px;">
+					<div class = "row" style = "margin: 10px;">
 						<div class="middle">
 							<div class="bg-img" style="background-image: url('./img/bg-createJob.jpg');">
                 <div class="overlay2">
@@ -147,102 +158,158 @@
               </div>
               <br>
               <div class="row">
-                <div class="col-sm-offset-1 col-sm-10 col-xs-12">
-                  <div class ="card">
-                    <h4 class="form-title">Job Appications</h4>
-                    <div style="margin-top:20px;">
-                      <a class="btn btn-primary" href="createJob.php"><i class="fa fa-plus"></i>&nbsp; Create</a>
-                    </div>
+                <div class="applications col-xs-12">
+                    <h4 class="form-title-white">Job Applications</h4>
                     <?php
-                      $client_jobapp = "SELECT * FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND theClient = $theClient";
-                      $result_client_jobpos = mysqli_query($connection, $client_jobpos);
+                      $client_jobapp = "SELECT applicationID, ja.jobID AS jobID, theJobSeeker, ja.status AS status, title, description, salaryPerHour, startDate, endDate, startTime, endTime, address, city FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND theClient = $theClient";
+                      $result_client_jobapp = mysqli_query($connection, $client_jobapp);
 
-                      if (mysqli_num_rows($result_client_jobpos) > 0) {
-                        echo '
-
-                        <div class="table-responsive">
-                        <table class="table table-hover table-condensed table-bordered table-striped">
-                            <tr class="info">
-                              <th></th>
-                              <th>Title</th>
-                              <th>Description</th>
-                              <th>Salary per hour</th>
-                              <th>Hours per week</th>
-                              <th>Number of weeks</th>
-                              <th>Address</th>
-                              <th>City</th>
-                              <th>Status </th>
-                              <th>Employee Name</th>
-                            </tr>';
-
+                      if (mysqli_num_rows($result_client_jobapp) > 0) {
                         // fetch data from database
-                        while($row_client_jobpos = mysqli_fetch_array($result_client_jobpos) )
+                        while($row_client_jobapp = mysqli_fetch_array($result_client_jobapp) )
                         {
                           // declaration
-                          $jobID = $row_client_jobpos['jobID'];
-                          $title = $row_client_jobpos['title'];
-                          $desc = $row_client_jobpos['description'];
-                          $salary = $row_client_jobpos['salaryPerHour'];
-                          $hours = $row_client_jobpos['hoursPerWeek'];
-                          $weeks = $row_client_jobpos['durationInWeeks'];
-                          $address = $row_client_jobpos['address'];
-                          $city= $row_client_jobpos['city'];
-                          $status= $row_client_jobpos['status'];
-                          $theEmployee = $row_client_jobpos['theEmployee'];
+                          $applicationID = $row_client_jobapp['applicationID'];
+                          $jobID = $row_client_jobapp['jobID'];
+                          $title = $row_client_jobapp['title'];
+                          $desc = $row_client_jobapp['description'];
+                          $salary = $row_client_jobapp['salaryPerHour'];
+                          $startDate = $row_client_jobapp['startDate'];
+                          $endDate = $row_client_jobapp['endDate'];
+                          $startTime = $row_client_jobapp['startTime'];
+                          $endTime = $row_client_jobapp['endTime'];
+                          $address = $row_client_jobapp['address'];
+                          $city= $row_client_jobapp['city'];
+                          $status= $row_client_jobapp['status'];
+                          $theApplicant = $row_client_jobapp['theJobSeeker'];
 
-                          // display employee's full name
-                          $job_emp = "SELECT * FROM jobseeker WHERE userID = $theEmployee";
-                          $result_job_emp = mysqli_query($connection, $job_emp);
-                          if (mysqli_num_rows($result_job_emp) > 0){
-                            while($row_job_emp = mysqli_fetch_assoc($result_job_emp) ) {
-                              $empName = $row_job_emp['fullName'];
+                          // get applicant's full name
+                          $applicant = "SELECT * FROM jobseeker WHERE userID = $theApplicant";
+                          $result_applicant = mysqli_query($connection, $applicant);
+                          if (mysqli_num_rows($result_applicant) > 0){
+                            while($row_applicant = mysqli_fetch_assoc($result_applicant) ) {
+                              $applicantName = $row_applicant['fullName'];
                             }
                           } else {
-                              $empName = '-';
+                              $applicantName = '-';
                           }
-                          //echo $jobID;
-                          // print out the output
-                          echo '
-                          <form action="editJob.php" method="post">
-                          <tr>
-                          <td align="center">
-                          <input type="hidden" name="job" value="'; echo $jobID; echo '">
-                          <input type="hidden" name="empName" value="'; echo $empName; echo '">
-                          <button type="submit" name="' .$jobID. '" class="edit btn-link"><i class="fa fa-pencil-square-o"></i>&nbsp; Edit</button>
 
-                          </td>';
+                          // convert startDate format
+                          $startDateDisplay = date("j M Y", strtotime($startDate));
+                          // convert endDate format
+                          $endDateDisplay = date("j M Y", strtotime($endDate));
+                          // convert startTime format
+                          $startTimeDisplay = date('g:i A', strtotime($startTime));
+                          // convert endTime format
+                          $endTimeDisplay = date('g:i A', strtotime($endTime));
+
+                          // display application details
                           echo '
-                          <td align="center"> '.$title.'</td>
-                          <td align="center"> '.$desc. '</td>
-                          <td align="center"> '.$salary.'</td>
-                          <td align="center"> '.$hours.'</td>
-                          <td align="center"> '.$weeks.'</td>
-                          <td align="center"> '.$address.'</td>
-                          <td align="center"> '.$city.'</td>
-                          <td align="center"> '.$status.'</td>
-                          <td align="center"> '.$empName.'</td>
-                          </tr>
-                          </form>
-                          ';
+                          <div class="col-sm-4">
+                  					<div class="pricing">
+                  						<div class="price-head">
+                                <span class="price-title">Applicant: '. $applicantName .'<br>
+                                <div class="price-btn">
+                                  <button class="outline-btn">View Profile</button>
+                                </div>
+                                <br> '. $title .'</span>
+                  							<div class="price">
+                  								<h3>RM'. round($salary,2) .'<span class="duration">/ week</span></h3>
+                  							</div>
+                  						</div>
+                  						<ul class="price-content">
+                                <li>
+                  								<p>Skills Required: </p>';
+
+
+                          $reqSkills = "SELECT skill.skillName FROM jobrequiredskill, skill WHERE jobID = $jobID
+              											AND jobrequiredskill.skillID=skill.skillID";
+              						$result_reqSkills = mysqli_query($connection, $reqSkills);
+
+                          if (mysqli_num_rows($result_reqSkills) > 0) {
+                            echo '<div class="row">';
+                            while ($row_reqSkills = mysqli_fetch_assoc($result_reqSkills)) {
+                              echo '<div class="col-lg-offset-4 col-md-offset-3 col-md-12"><p style="text-align:left; margin-left:15px;"><i class="fa fa-check-circle" style="font-size:20px;color:green"></i> &nbsp;&nbsp;' . $row_reqSkills['skillName'] . '</p></div>';
+                            }
+                            echo '</div>';
+                            if (mysqli_num_rows($result_reqSkills) < 5){
+                              echo '<br><br><br>';
+                              if (mysqli_num_rows($result_reqSkills) == 3){
+                                echo '<br>';
+                              } else if (mysqli_num_rows($result_reqSkills) == 2){
+                                echo '<br><br>';
+                              } else if (mysqli_num_rows($result_reqSkills) == 1){
+                                echo '<br><br><br>';
+                              }
+                            }
+                          } else {
+                            echo '<p>No skills required.</p>';
+                          }
+
+                          echo '
+                          </li>
+                          <li>
+                            <br>
+                            <p><i class="fa fa-calendar-check-o"></i>&nbsp;Start date: '. $startDateDisplay .'</p>
+                            <p><i class="fa fa-calendar-check-o"></i>&nbsp;End date: '. $endDateDisplay .'</p>
+                          </li>
+                          <li>
+                            <p><i class="fa fa-clock-o"></i>&nbsp;Start time: '. $startTimeDisplay .'</p>
+                            <p><i class="fa fa-clock-o"></i>&nbsp;End time: '. $endTimeDisplay .'</p>
+                          </li>
+                          <li>
+                            <br>
+                            <p>Status: ';
+                            if ($status == 'ACCEPTED') {
+                              echo '<span style="color: green; font-weight: bold;">';
+                            } else if ($status == 'DECLINED') {
+                              echo '<span style="color: #FF3300; font-weight: bold;">';
+                            } else {
+                              echo '<span>';
+                            }
+                            echo $status . '</span></p>
+                          </li>
+                        </ul>';
+
+                          if ($status == 'PENDING') {
+                              echo '
+                              <form method="post" action="assessApplication.php">
+                              <table style="margin:30px; width:85%; text-align:center">
+                                <tr>
+                                  <td>
+                                    <input type="hidden" name="applicationID" value="'; echo $applicationID; echo '">
+                                    <button type="submit" id="acceptBtn" name="acceptBtn" value="ACCEPTED" class="outline-btn accept">Accept</button>
+                                  </td>
+                                  <td>
+                                    <button type="submit" id="declineBtn" name="declineBtn" value="DECLINED" class="outline-btn decline">Decline</button>
+                                  </td>
+                                </tr>
+                              </table>
+                              </form>';
+
+                          } else {
+                            echo '<br><br><br><br>';
+                          }
+
+                          echo '
+                          </div>
+                        </div>';
 
                         }
                       } else {
-                        echo '<span style="margin-left:10px">No job positions created yet.</span>';
+                        echo '<span style="margin-left:10px">No applications yet.</span>';
                       }
                       ?>
 
-                    </table>
                     </div>
 
                   </div>
                 </div>
   						</div>
   					</div>
+            <br><br>
   				</div>
-          <br><br>
-  			</div>
   		</div>
-  	</div>
   </div>
 
 	<!-- Footer -->

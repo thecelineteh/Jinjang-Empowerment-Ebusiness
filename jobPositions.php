@@ -125,7 +125,7 @@
 				<li class="active"><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
+        <li><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
@@ -172,7 +172,7 @@
                               <th>End time</th>
                               <th>Address</th>
                               <th>City</th>
-                              <th>Status </th>
+                              <th>Status</th>
                               <th>Employee Name</th>
                             </tr>';
 
