@@ -220,7 +220,7 @@ $theClient = $_SESSION['userID'];
 
 					<!-- footer copyright -->
 					<div class="footer-copyright">
-						<p>Copyright © 2017 AGN. All Rights Reserved. Designed by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+						<p>Copyright © <?php echo date("Y");?> AGN. All Rights Reserved. Designed by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
 					</div>
 					<!-- /footer copyright -->
 

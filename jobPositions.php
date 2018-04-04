@@ -76,7 +76,6 @@
 				transition: 0.3s;
 				padding: 20px;
 		    background-color: #F8F8FF;
-        height: 40em;
         padding: 25px;
 		}
 
@@ -126,7 +125,7 @@
 				<li class="active"><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
+        <li><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
@@ -166,12 +165,14 @@
                               <th></th>
                               <th>Title</th>
                               <th>Description</th>
-                              <th>Salary per hour</th>
-                              <th>Hours per week</th>
-                              <th>Number of weeks</th>
+                              <th>Salary / hour (RM)</th>
+                              <th>Start date</th>
+                              <th>End date</th>
+                              <th>Start time</th>
+                              <th>End time</th>
                               <th>Address</th>
                               <th>City</th>
-                              <th>Status </th>
+                              <th>Status</th>
                               <th>Employee Name</th>
                             </tr>';
 
@@ -183,8 +184,18 @@
                           $title = $row_client_jobpos['title'];
                           $desc = $row_client_jobpos['description'];
                           $salary = $row_client_jobpos['salaryPerHour'];
-                          $hours = $row_client_jobpos['hoursPerWeek'];
-                          $weeks = $row_client_jobpos['durationInWeeks'];
+                          $startDate = $row_client_jobpos['startDate'];
+                          // convert startDate format
+                          $startDateDisplay = date("d-m-Y", strtotime($startDate));
+                          $endDate = $row_client_jobpos['endDate'];
+                          // convert endDate format
+                          $endDateDisplay = date("d-m-Y", strtotime($endDate));
+                          $startTime = $row_client_jobpos['startTime'];
+                          // convert startTime format
+                          $startTimeDisplay = date('h:i A', strtotime($startTime));
+                          $endTime = $row_client_jobpos['endTime'];
+                          // convert endTime format
+                          $endTimeDisplay = date('h:i A', strtotime($endTime));
                           $address = $row_client_jobpos['address'];
                           $city= $row_client_jobpos['city'];
                           $status= $row_client_jobpos['status'];
@@ -213,10 +224,12 @@
                           </td>';
                           echo '
                           <td align="center"> '.$title.'</td>
-                          <td align="center"> '.$desc. '</td>
+                          <td align="left"> '.$desc. '</td>
                           <td align="center"> '.$salary.'</td>
-                          <td align="center"> '.$hours.'</td>
-                          <td align="center"> '.$weeks.'</td>
+                          <td align="center" width="10%"> '.$startDateDisplay.'</td>
+                          <td align="center" width="10%"> '.$endDateDisplay.'</td>
+                          <td align="center" width="8%"> '.$startTimeDisplay.'</td>
+                          <td align="center" width="8%"> '.$endTimeDisplay.'</td>
                           <td align="center"> '.$address.'</td>
                           <td align="center"> '.$city.'</td>
                           <td align="center"> '.$status.'</td>
@@ -224,16 +237,14 @@
                           </tr>
                           </form>
                           ';
-
                         }
+                        echo '</table>
+                              </div>
+                              <br />';
                       } else {
                         echo '<span style="margin-left:10px">No job positions created yet.</span>';
                       }
                       ?>
-
-                    </table>
-                    </div>
-
                   </div>
                 </div>
   						</div>
@@ -275,7 +286,7 @@
 
 					<!-- footer copyright -->
 					<div class="footer-copyright">
-						<p>Copyright © 2017 AGN. All Rights Reserved.</p>
+						<p>Copyright © <?php echo date("Y");?> AGN. All Rights Reserved.</p>
 					</div>
 					<!-- /footer copyright -->
 
