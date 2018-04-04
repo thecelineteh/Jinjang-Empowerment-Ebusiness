@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 04, 2018 at 03:46 PM
+-- Generation Time: Apr 04, 2018 at 04:00 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -149,10 +149,17 @@ CREATE TABLE `message` (
   `messageID` int(15) NOT NULL,
   `subject` varchar(255) NOT NULL,
   `content` varchar(255) NOT NULL,
-  `date` date NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `sender` int(15) NOT NULL,
   `receiver` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `message`
+--
+
+INSERT INTO `message` (`messageID`, `subject`, `content`, `date`, `sender`, `receiver`) VALUES
+(1, 'New Work', 'test message', '2018-04-04 13:59:28', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -281,7 +288,7 @@ ALTER TABLE `jobposition`
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `messageID` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `messageID` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `skill`
