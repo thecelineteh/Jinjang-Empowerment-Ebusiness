@@ -90,7 +90,7 @@ if (isset($_POST['skill'])) {
 				<li class="active"><a href="#home" onclick='resetJob()'><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
+        <li><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
@@ -198,7 +198,7 @@ if (isset($_POST['skill'])) {
 					  ;
 						echo "
                   <div class='price'>
-                    <h3>$" . $totalSalary . "<span class='duration'>/ hour</span></h3>
+                    <h3 style='font-size:36px'>RM" .  round($totalSalary,2) . "<span class='duration'>/ hour</span></h3>
                   </div> ";
 						$link='"jobDetails.php"';
 						echo "

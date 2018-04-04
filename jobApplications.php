@@ -297,10 +297,11 @@
 
                         }
                       } else {
-                        echo '<span style="margin-left:10px">No applications yet.</span>';
+                        echo '<span style="margin-left:30px">No applications yet.</span>
+                        <br><br><br><br><br><br><br><br><br><br><br><br><br>';
                       }
                       ?>
-
+                      <br><br><br>
                     </div>
 
                   </div>

@@ -242,10 +242,12 @@
                               </div>
                               <br />';
                       } else {
-                        echo '<span style="margin-left:10px">No job positions created yet.</span>';
+                        echo '<br><span style="margin-left:5px">No job positions created yet.</span>
+                        <br><br><br><br><br><br><br><br><br>';
                       }
                       ?>
                   </div>
+                  <br><br>
                 </div>
   						</div>
   					</div>
