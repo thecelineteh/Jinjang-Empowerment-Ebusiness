@@ -71,7 +71,13 @@
 			<div class="navbar-header">
 				<!-- Logo -->
 				<div class="navbar-brand">
-					<a href="index.php">
+          <?php
+  					if ($_SESSION['userType'] == 'Job Seeker') {
+  						echo '<a href="jobs.php">';
+  					} else if ($_SESSION['userType'] == 'Client') {
+  						echo '<a href="jobPositions.php">';
+  					}
+  				 ?>
 						<img class="logo" src="img/logo.png" alt="logo">
 						<img class="logo-alt" src="img/logo-alt.png" alt="logo">
 					</a>
@@ -87,10 +93,16 @@
 
 			<!--  Main navigation  -->
 			<ul class="main-nav nav navbar-nav navbar-right">
-				<li><a href="jobs.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
+				<li><?php
+					if ($_SESSION['userType'] == 'Job Seeker') {
+						echo '<a href="jobs.php">';
+					} else if ($_SESSION['userType'] == 'Client') {
+						echo '<a href="jobPositions.php">';
+					}
+				 ?><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
-				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
+				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
+        <li><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
@@ -161,13 +173,40 @@
 						<div>
 							<ul style="margin-left:1em;">
 								<?php
-								$jobID = $_POST['jobID'];
+                $jobID = $_POST['jobID'];
+                $query2 = "SELECT skill.skillName FROM jobrequiredskill, skill WHERE jobID = '$jobID'
+    											AND jobrequiredskill.skillID=skill.skillID";
+    						$result2 = mysqli_query($connection, $query2);
+
+    						if (mysqli_num_rows($result2) > 0) {
+    							echo "Skills Required: ";
+    							$counter = 0;
+    							while ($row = mysqli_fetch_assoc($result2)) {
+    								$counter += 1;
+    								echo "
+    								<li>&nbsp;<i class='fa fa-check-circle' style='font-size:18px;color:green'></i>&nbsp;&nbsp;&nbsp;" . $row['skillName'] . "</li>
+    								";
+    							}
+    							$rowPrint = 4 - $counter;
+    							for ($i = 0; $i <= $rowPrint; $i++) {
+    								echo "<br />";
+    							}
+    						}
+    						else {
+    							echo "No skills required";
+    							for ($i = 0; $i <= 5; $i++) {
+    								echo "<br />";
+    							}
+    						}
+
+                echo "<br>";
+
 								$query = "SELECT * FROM jobposition WHERE jobID='$jobID'";
 								$result = mysqli_query($connection, $query);
 								if (mysqli_num_rows($result) > 0) {
 									while ($row = mysqli_fetch_assoc($result)) {
-										$totalSalary = $row['salaryPerHour'] * $row['hoursPerWeek'] * $row['durationInWeeks'];
-										echo "<li>Salary:&nbsp;&nbsp;RM";
+										$totalSalary = $row['salaryPerHour'];
+										echo "<li>Salary per hour:&nbsp;&nbsp;RM";
 										echo $totalSalary;
 										echo "</li>";
 
@@ -263,7 +302,14 @@
 
 					<!-- footer logo -->
 					<div class="footer-logo">
-						<a href="index.php"><img src="img/logo-alt.png" alt="logo"></a>
+            <?php
+    					if ($_SESSION['userType'] == 'Job Seeker') {
+    						echo '<a href="jobs.php">';
+    					} else if ($_SESSION['userType'] == 'Client') {
+    						echo '<a href="jobPositions.php">';
+    					}
+    				 ?>
+             <img src="img/logo-alt.png" alt="logo"></a>
 					</div>
 					<!-- /footer logo -->
 

@@ -112,7 +112,13 @@
 			<div class="navbar-header">
 				<!-- Logo -->
 				<div class="navbar-brand">
-					<a href="index.php">
+					<?php
+						if ($_SESSION['userType'] == 'Job Seeker') {
+							echo '<a href="jobs.php">';
+						} else if ($_SESSION['userType'] == 'Client') {
+							echo '<a href="jobPositions.php">';
+						}
+					 ?>
 						<img class="logo" src="img/logo.png" alt="logo">
 						<img class="logo-alt" src="img/logo-alt.png" alt="logo">
 					</a>
@@ -312,7 +318,14 @@
 
 					<!-- footer logo -->
 					<div class="footer-logo">
-						<a href="index.php"><img src="img/logo-alt.png" alt="logo"></a>
+						<?php
+							if ($_SESSION['userType'] == 'Job Seeker') {
+								echo '<a href="jobs.php">';
+							} else if ($_SESSION['userType'] == 'Client') {
+								echo '<a href="jobPositions.php">';
+							}
+						 ?>
+						 <img src="img/logo-alt.png" alt="logo"></a>
 					</div>
 					<!-- /footer logo -->
 
