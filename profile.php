@@ -153,7 +153,7 @@
 		</div>
 	</nav>
 	<!-- /Nav -->
-	<form action="updateProfile.php" method="post">
+
 	<div class = "container-fluid">
 		<div class = "row">
 			<div class = "col-sm-12 col-xs-12" style = "padding:0;">
@@ -167,6 +167,7 @@
 							<div class="row">
                 <div class="col-sm-offset-3 col-sm-6 col-xs-12">
 									<div class ="card">
+										<form action="updateProfile.php" method="post">
 										<h2 style="margin:0; color:	#696969;">Edit Profile</h2><br />
 
 										  <div class = "form-group">
@@ -294,6 +295,7 @@
 															<input type="submit" class="btn btn-default" value="Update"></input>
 														</div>
 										  </div>
+										</form>
 									</div>
 								</div>
 							</div>
