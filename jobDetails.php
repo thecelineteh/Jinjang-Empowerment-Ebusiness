@@ -205,6 +205,32 @@
 								$result = mysqli_query($connection, $query);
 								if (mysqli_num_rows($result) > 0) {
 									while ($row = mysqli_fetch_assoc($result)) {
+                    $startDate = $row['startDate'];
+                    $endDate = $row['endDate'];
+                    $startTime = $row['startTime'];
+                    $endTime = $row['endTime'];
+
+                    // convert startDate format
+                    $startDateDisplay = date("j M Y", strtotime($startDate));
+                    // convert endDate format
+                    $endDateDisplay = date("j M Y", strtotime($endDate));
+                    // convert startTime format
+                    $startTimeDisplay = date('g:i A', strtotime($startTime));
+                    // convert endTime format
+                    $endTimeDisplay = date('g:i A', strtotime($endTime));
+
+                    echo '<li>
+                      <i class="fa fa-calendar-check-o"></i>&nbsp;Start date: '. $startDateDisplay .'
+                      <br>
+                      <i class="fa fa-calendar-check-o"></i>&nbsp;End date: '. $endDateDisplay .'
+                    </li>
+                    <li>
+                      <i class="fa fa-clock-o"></i>&nbsp;Start time: '. $startTimeDisplay .'
+                      <br>
+                      <i class="fa fa-clock-o"></i>&nbsp;End time: '. $endTimeDisplay .'
+                    </li>
+                    <br>';
+
 										$totalSalary = $row['salaryPerHour'];
 										echo "<li>Salary per hour:&nbsp;&nbsp;RM";
 										echo $totalSalary;

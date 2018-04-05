@@ -98,6 +98,11 @@
       border-color: #FF3300;
     }
 
+    .app-detail {
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+
     .edit {
       color: #C71585;
     }
@@ -219,7 +224,7 @@
                             }
                           }
 
-
+                          /*
                           // convert startDate format
                           $startDateDisplay = date("j M Y", strtotime($startDate));
                           // convert endDate format
@@ -228,6 +233,7 @@
                           $startTimeDisplay = date('g:i A', strtotime($startTime));
                           // convert endTime format
                           $endTimeDisplay = date('g:i A', strtotime($endTime));
+                          */
 
                           // display application details
                           if ($status != "DECLINED") {
@@ -236,11 +242,13 @@
                             <div class="container-fluid">
                     					<div class="pricing">
                     						<div class="price-head">
-                                  <span class="price-title">Applicant: '. $applicantName .'<br>
+                                  <span class="price-title">Applicant: <span class="app-detail">'. $applicantName .'</span><br>
                                   <div class="price-btn">
                                     <button class="outline-btn"data-toggle="modal" data-target="#myModal'. $applicationID . '">View Profile</button>
                                   </div>
-                                   '. $title .'</span>
+                                   Job Position: <span class="app-detail">'. $title .'</span></span>';
+/*
+                                   echo '
                     							<div class="price">
                     								<h3>RM'. round($salary,2) .'<span class="duration">/ hour</span></h3>
                     							</div>
@@ -286,6 +294,8 @@
                               <p><i class="fa fa-clock-o"></i>&nbsp;End time: '. $endTimeDisplay .'</p>
                             </li>
 <!--------- ----->
+*/
+                            echo '<ul>
                             <li>
                             <form method="post" target="_blank" action="jobDetails.php">
                             <button type="submit" id="jobDetails'. $applicationID .'" name="jobID" value="'.$jobID.'" class="outline-btn">Job Details</button>
@@ -323,7 +333,7 @@
                                 </form>';
 
                             } else {
-                              echo '<br><br><br><br>';
+                              echo '<br><br><br>';
                             }
 
                             if ($applicantEmail == "") {
@@ -408,15 +418,23 @@
                         	    </div>
                         	  </div>
                         	</div>
-                          <!-- End of Modal -->';
+                          <!-- End of Modal -->
+
+<!----->
+                    </div>
+<!----->
+                          ';
                           }
+
                         }
+
                       } else {
                         echo '<span style="margin-left:30px">No applications yet.</span>
                         <br><br><br><br><br><br><br><br><br><br><br><br><br>';
                       }
                       ?>
                       <br><br><br>
+
                     </div>
 
                   </div>
