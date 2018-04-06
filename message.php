@@ -89,7 +89,7 @@
 			<!--  Main navigation  -->
 			<!-- for both Job Seeker and Client -->
 			<ul class="main-nav nav navbar-nav navbar-right">
-				<li><a href="#home" onclick='resetJob()'><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
+				<li><a href="jobs.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li class="active"><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         <li><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
