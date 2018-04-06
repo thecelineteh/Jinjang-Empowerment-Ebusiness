@@ -4,10 +4,9 @@
 
   $theClient = $_SESSION['userID'];
   $jobID = $_POST['job'];
-  echo $jobID;
-  if (isset($_POST["$jobID"])) {
-    echo "number 9";
-  }
+  $_SESSION['jobID'] = $jobID;
+  $empName = $_POST['empName'];
+
 
  ?>
 <!DOCTYPE>
@@ -67,9 +66,26 @@
         background: #181818;
     }
 
-    input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], input[type="url"], input[type="tel"], textarea {
+    input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], input[type="time"], input[type="url"], input[type="tel"], textarea, select {
       border-radius: 3px;
     }
+
+    input[type="date"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        display: none;
+    }
+    input[type="time"] {
+      background: #F4F4F4;
+      border-bottom: 2px solid #EEE;
+      color: #354052;
+      opacity: 0.5;
+      -webkit-transition: 0.2s border-color, 0.2s opacity;
+      transition: 0.2s border-color, 0.2s opacity;
+    }
+
+    .checkbox {
+			margin-left: 20px;
+		}
 
     label {
       color: #F8F8F8;
@@ -88,6 +104,11 @@
       width:40%;
     }
 
+    select {
+      color: black;
+      background-color: lightgrey;
+    }
+
     .white-btn {
       background-color: #F8F8FF;
       opacity: 0.8;
@@ -101,6 +122,7 @@
 	</style>
 </head>
 <body style="background-color: #ecf0f1;">
+  <script type="text/javascript" src="js/dateTimeValidation.js"></script>
 	<!-- Nav -->
 	<nav id="nav" class="navbar">
 		<div class="container">
@@ -108,7 +130,7 @@
 			<div class="navbar-header">
 				<!-- Logo -->
 				<div class="navbar-brand">
-					<a href="index.php">
+					<a href="jobPositions.php">
 						<img class="logo" src="img/logo.png" alt="logo">
 						<img class="logo-alt" src="img/logo-alt.png" alt="logo">
 					</a>
@@ -125,9 +147,9 @@
 			<!--  Main navigation  -->
       <ul class="main-nav nav navbar-nav navbar-right">
 				<li><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
-				<li><a href="#profile"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
-				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
+				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
+				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
+        <li><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
@@ -146,7 +168,7 @@
                 <div class="overlay2">
                 </div>
               </div>
-              <form name="postJobForm" action="storeJob.php" method="post">
+              <form name="editJobForm" onsubmit="return validateDateTime()" action="storeJob.php" method="post">
                 <div class="row">
                   <div class="col-sm-offset-3 col-sm-6">
                     <h4 class="form-title">Edit Job Position</h4>
@@ -154,110 +176,240 @@
                       <label>Job Title: </label>
                       <div class="form-control-big">
                         <?php
-                          $query_jobpos = "SELECT * FROM jobposition WHERE theClient = $theClient AND jobID = '$title'";
-                          $result_findJob = mysqli_query($connection, $query_findJob);
+                          $query_jobpos = "SELECT * FROM jobposition WHERE theClient = $theClient AND jobID = $jobID";
+                          $result_findJob = mysqli_query($connection, $query_jobpos);
                           while($row_jobPositions = mysqli_fetch_assoc($result_findJob)) {
-                            $jobID = $row_jobPositions['jobID'];
+                            // set timezone to Malaysia
+                            date_default_timezone_set("Asia/Kuala_Lumpur");
+                            echo '<input type="text" name="jobTitle" class="form-control" value = "' . $row_jobPositions['title'] .
+                            '" required>
+                              </div>
+                              <div id="jobTitle_error" style="color:red;"></div>
+                            </div>';
+
+                            echo '
+                            <div class="form-group">
+                              <label>Job Description: </label>
+                              <div class="form-control-big">
+                                <textarea name="jobDescription" rows="6" cols="50" required>' .$row_jobPositions['description']. '</textarea>
+                              </div>
+                              <div id="jobDescription_error" style="color:red;"></div>
+                            </div>
+
+                            <div class="form-group">
+                              <label>Address: </label>
+                              <div class="form-control-big">
+                                <textarea name="jobAddress" rows="4" cols="50" required>' .$row_jobPositions['address']. '</textarea>
+                              </div>
+                              <div id="jobAddress_error" style="color:red;"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>City: </label>
+                                <div class="form-control-small">
+                                  <select name="jobCity">
+                                  <option value="At Home"';
+                                  if ($row_jobPositions['city'] == 'At Home'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>At Home</option>
+                                  <option value="Kuala Lumpur"';
+                                  if ($row_jobPositions['city'] == 'Kuala Lumpur'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>Kuala Lumpur</option>
+                                  <option value="Petaling Jaya"';
+                                  if ($row_jobPositions['city'] == 'Petaling Jaya'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>Petaling Jaya</option>
+                                  <option value="Shah Alam"';
+                                  if ($row_jobPositions['city'] == 'Shah Alam'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>Shah Alam</option>
+                                  <option value="Melaka"';
+                                  if ($row_jobPositions['city'] == 'Melaka'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>Melaka</option>
+                                  <option value="Ipoh"';
+                                  if ($row_jobPositions['city'] == 'Ipoh'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>Ipoh</option>
+                                  <option value="Johor Bahru"';
+                                  if ($row_jobPositions['city'] == 'Johor Bahru'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>Johor Bahru</option>
+                                  <option value="Iskandar Puteri"';
+                                  if ($row_jobPositions['city'] == 'Iskandar Puteri'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>Iskandar Puteri</option>
+                                  <option value="Alor Setar"';
+                                  if ($row_jobPositions['city'] == 'Alor Setar'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>Alor Setar</option>
+                                  <option value="George Town"';
+                                  if ($row_jobPositions['city'] == 'George Town'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>George Town</option>
+                                  <option value="Penang Island"';
+                                  if ($row_jobPositions['city'] == 'Penang Island'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>Penang Island</option>
+                                  <option value="Kuala Terengganu"';
+                                  if ($row_jobPositions['city'] == 'Kuala Terengganu'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>Kuala Terengganu</option>
+                                  <option value="Kuching"';
+                                  if ($row_jobPositions['city'] == 'Kuching'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>Kuching</option>
+                                  <option value="Miri"';
+                                  if ($row_jobPositions['city'] == 'Miri'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>Miri</option>
+                                  <option value="Kota Kinabalu"';
+                                  if ($row_jobPositions['city'] == 'Kota Kinabalu'){
+                                    echo ' selected ';
+                                  }
+                                  echo '>Kota Kinabalu</option>
+                                  </select>
+                                </div>
+                                <div id="jobCity_error" style="color:red;"></div>
+                            </div>
+
+                          <div class="form-group">
+                              <label>Salary per hour ($): </label>
+                              <div class="form-control-small">
+                                <input type="number"  name="jobSalary" class="form-control-small" min = "1" value="' .$row_jobPositions['salaryPerHour']. '" step="0.25" required>
+                              </div>
+                              <div id="jobSalary_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Start Date: </label>
+                            <div class="form-control-small">
+                                <input type="date" name="startDate" class="form-control-small" min = "' . date("Y-m-d") .  '" value="' .$row_jobPositions['startDate']. '" required>
+                            </div>
+                            <div id="startDate_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>End Date: </label>
+                            <div class="form-control-small">
+                                <input type="date" name="endDate" class="form-control-small" min = "' . date("Y-m-d") . '" value="' .$row_jobPositions['endDate']. '" required>
+                            </div>
+                            <div id="endDate_error" style="color:red;"></div>
+                          </div>';
+
+                          // conversion of time
+                          $startTimeDisplay = date('H:i', strtotime($row_jobPositions['startTime']));
+                          $endTimeDisplay = date('H:i', strtotime($row_jobPositions['endTime']));
+                          echo '
+                          <div class="form-group">
+                            <label>Start Time: </label>
+                            <div class="form-control-small">
+                                <input type="time" name="startTime" class="form-control" value = "'. $startTimeDisplay .'" required>
+                            </div>
+                            <div id="startTime_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>End Time: </label>
+                            <div class="form-control-small">
+                                <input type="time" name="endTime" class="form-control" value = "'. $endTimeDisplay .'" required>
+                            </div>
+                            <div id="endTime_error" style="color:red;"></div>
+                          </div>
+
+
+                          <div class="form-group">
+                              <label>Status: </label>
+                              <div class="form-control-small">
+                                <select name="jobStatus">';
+                                if ($row_jobPositions['status'] == 'AVAILABLE'){
+                                  echo '<option value="AVAILABLE" selected>AVAILABLE</option>
+                                  <option value="NOT AVAILABLE">NOT AVAILABLE</option>
+                                  ';
+                                } else if ($row_jobPositions['status'] == 'NOT AVAILABLE') {
+                                  echo '<option value="AVAILABLE">AVAILABLE</option>
+                                  <option value="NOT AVAILABLE" selected>NOT AVAILABLE</option>';
+                                } else {
+                                  echo '<option value="AVAILABLE">AVAILABLE</option>
+                                  <option value="NOT AVAILABLE">NOT AVAILABLE</option>
+                                  ';
+                                }
+
+                                echo '
+                                </select>
+                              </div>
+                              <div id="jobStatus_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="form-control-small">
+                              <label>Employee Name: </label>
+                              <input type="text" name="empName" class="form-control" value="' . $empName. '">
+                            </div>
+                            <div id="jobEmployee_error" style="color:red;"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Skills Required: </label>
+                              <div class="checkbox">';
+
+                              $query_jobreqskills = "SELECT * FROM jobrequiredskill jrs, skill s WHERE jrs.skillID = s.skillID AND jobID = $jobID";
+                              $result_jobreqskills = mysqli_query($connection, $query_jobreqskills);
+
+                              $jobReqSkills = array();
+                              if (mysqli_num_rows($result_jobreqskills) > 0) {
+                                while ($row_jobreqskills = mysqli_fetch_assoc($result_jobreqskills)) {
+                                  $reqskillName = $row_jobreqskills['skillName'];
+                                  array_push($jobReqSkills, $reqskillName);
+                                }
+                              }
+
+                              $check = false;
+                              $query = "SELECT * FROM skill";
+                              $result = mysqli_query($connection, $query);
+                              if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                  $skillName = $row['skillName'];
+                                  for ($i = 0; $i < count($jobReqSkills); $i++ ) {
+                                    $check = false;
+                                    if ($skillName == $jobReqSkills[$i]) {
+                                      $check = true;
+                                      break;
+                                    }
+                                  }
+                                  if ($check) {
+                                    echo "<input type='checkbox' class='checkbox' name='jobReqSkills[]' value='" . $skillName . "' checked>" . $skillName . "<br>";
+                                    array_push($jobReqSkills, $skillName);
+                                  }
+                                  else {
+                                    echo "<input type='checkbox' class='checkbox' name='jobReqSkills[]' value='" . $skillName . "'>" . $skillName . "<br>";
+
+                                  }
+                                }
+                              }
                           }
-
                          ?>
-                        <input type="text" name="jobTitle" class="form-control" required>
-                      </div>
-                      <div id="jobTitle_error" style="color:red;"></div>
-                    </div>
-
-                    <div class="form-group">
-                      <label>Job Description: </label>
-                      <div class="form-control-big">
-                        <textarea name='jobDescription' rows='6' cols='50' required></textarea>
-                      </div>
-                      <div id="jobDescription_error" style="color:red;"></div>
-                    </div>
-
-                    <div class="form-group">
-                      <label>Address: </label>
-                      <div class="form-control-big">
-                        <textarea name='jobAddress' rows='4' cols='50' required></textarea>
-                      </div>
-                      <div id="jobAddress_error" style="color:red;"></div>
-                    </div>
-
-                    <div class="form-group">
-                      <label>City: </label>
-                        <div class="form-control-small">
-                          <input type="text" name="jobCity" class="form-control" required>
-                        </div>
-                        <div id="jobCity_error" style="color:red;"></div>
-                    </div>
 
 
-                  <div class="form-group">
-                      <label>Salary per hour ($): </label>
-                      <div class="form-control-small">
-                        <input type="number"  name="jobSalary" class="form-control-small" min = "1" value="1.00" step="0.25" required>
-                      </div>
-                      <div id="jobSalary_error" style="color:red;"></div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Hours per week: </label>
-                    <div class="form-control-small">
-                        <input type="number" name="jobHours" class="form-control-small" min = "1" value="1" required>
-                    </div>
-                    <div id="jobHours_error" style="color:red;"></div>
-                  </div>
-
-                  <div class="form-group">
-                      <label>Duration (weeks): </label>
-                      <div class="form-control-small">
-                        <input type="number" name="jobDuration" class="form-control-small" min = "1" value = "1" required>
-                      </div>
-                      <div id="jobDuration_error" style="color:red;"></div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Skills Required: </label>
-                      <div class="checkbox">
-                        <?php
-                          $query_skills = "SELECT * FROM skill s";
-                          $result_skills = mysqli_query($connection, $query_skills);
-
-                          while($row_skills = mysqli_fetch_assoc($result_skills)) {
-    												echo "<label><input type='checkbox' name='reqSkillSet[]'' class='checkbox' value='" . $row_skills['skillName'] . "'>" . $row_skills['skillName'] . "</label><br>";
-    											}
-                         ?>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Status: </label>
-                      <div class="checkbox">
-                        <?php
-                          $query_skills = "SELECT * FROM skill s";
-                          $result_skills = mysqli_query($connection, $query_skills);
-
-                          while($row_skills = mysqli_fetch_assoc($result_skills)) {
-                            echo "<label><input type='checkbox' name='reqSkillSet[]'' class='checkbox' value='" . $row_skills['skillName'] . "'>" . $row_skills['skillName'] . "</label><br>";
-                          }
-                         ?>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Employee username: </label>
-                        <?php
-                          $query_emp = "SELECT * FROM jobposition jp, user u WHERE jobID = $jobID AND jp.theEmployee = u.userID";
-                          $result_emp = mysqli_query($connection, $query_emp);
-
-                          while($row_emp = mysqli_fetch_assoc($result_emp)) {
-                            echo "<label><input type='text' name='theEmployee'' class='form-control' value='" . $row_emp['userID'] . "'>" . $row_emp['username'] . "</label><br>";
-                          }
-                         ?>
-                  </div>
 
                   <div style="text-align:right; margin-top:50px">
                     <a class="white-btn" href="jobPositions.php">Cancel</a>
-    								<button type="submit" class=" main-btn">Create</button>
+    								<button type="submit" id="updateJobBtn" name="updateJobBtn" class=" main-btn">Update</button>
     							</div>
 
                   </div>
@@ -266,10 +418,10 @@
 						</div>
 					</div>
 				</div>
-        <br><br><br>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 
 	<!-- Footer -->
@@ -285,7 +437,7 @@
 
 					<!-- footer logo -->
 					<div class="footer-logo">
-						<a href="index.php"><img src="img/logo-alt.png" alt="logo"></a>
+						<a href="jobPositions.php"><img src="img/logo-alt.png" alt="logo"></a>
 					</div>
 					<!-- /footer logo -->
 
@@ -302,7 +454,7 @@
 
 					<!-- footer copyright -->
 					<div class="footer-copyright">
-						<p>Copyright © 2017 AGN. All Rights Reserved.</p>
+						<p>Copyright © <?php echo date("Y");?> AGN. All Rights Reserved.</p>
 					</div>
 					<!-- /footer copyright -->
 

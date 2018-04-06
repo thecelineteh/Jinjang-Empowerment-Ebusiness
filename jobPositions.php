@@ -76,7 +76,6 @@
 				transition: 0.3s;
 				padding: 20px;
 		    background-color: #F8F8FF;
-        height: 40em;
         padding: 25px;
 		}
 
@@ -92,6 +91,7 @@
     }
     .edit:hover {
       color: blue;
+      text-decoration: none;
     }
     .edit:focus {
       color: #8B4513;
@@ -106,7 +106,7 @@
 			<div class="navbar-header">
 				<!-- Logo -->
 				<div class="navbar-brand">
-					<a href="index.php">
+					<a href="jobPositions.php">
 						<img class="logo" src="img/logo.png" alt="logo">
 						<img class="logo-alt" src="img/logo-alt.png" alt="logo">
 					</a>
@@ -124,8 +124,8 @@
       <ul class="main-nav nav navbar-nav navbar-right">
 				<li class="active"><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
-				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
+				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
+        <li><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
@@ -158,19 +158,21 @@
 
                       if (mysqli_num_rows($result_client_jobpos) > 0) {
                         echo '
-                        <form action="editJob.php" method="post">
+
                         <div class="table-responsive">
                         <table class="table table-hover table-condensed table-bordered table-striped">
                             <tr class="info">
                               <th></th>
                               <th>Title</th>
                               <th>Description</th>
-                              <th>Salary per hour</th>
-                              <th>Hours per week</th>
-                              <th>Number of weeks</th>
+                              <th>Salary / hour (RM)</th>
+                              <th>Start date</th>
+                              <th>End date</th>
+                              <th>Start time</th>
+                              <th>End time</th>
                               <th>Address</th>
                               <th>City</th>
-                              <th>Status </th>
+                              <th>Status</th>
                               <th>Employee Name</th>
                             </tr>';
 
@@ -182,8 +184,18 @@
                           $title = $row_client_jobpos['title'];
                           $desc = $row_client_jobpos['description'];
                           $salary = $row_client_jobpos['salaryPerHour'];
-                          $hours = $row_client_jobpos['hoursPerWeek'];
-                          $weeks = $row_client_jobpos['durationInWeeks'];
+                          $startDate = $row_client_jobpos['startDate'];
+                          // convert startDate format
+                          $startDateDisplay = date("d-m-Y", strtotime($startDate));
+                          $endDate = $row_client_jobpos['endDate'];
+                          // convert endDate format
+                          $endDateDisplay = date("d-m-Y", strtotime($endDate));
+                          $startTime = $row_client_jobpos['startTime'];
+                          // convert startTime format
+                          $startTimeDisplay = date('h:i A', strtotime($startTime));
+                          $endTime = $row_client_jobpos['endTime'];
+                          // convert endTime format
+                          $endTimeDisplay = date('h:i A', strtotime($endTime));
                           $address = $row_client_jobpos['address'];
                           $city= $row_client_jobpos['city'];
                           $status= $row_client_jobpos['status'];
@@ -194,47 +206,48 @@
                           $result_job_emp = mysqli_query($connection, $job_emp);
                           if (mysqli_num_rows($result_job_emp) > 0){
                             while($row_job_emp = mysqli_fetch_assoc($result_job_emp) ) {
-                              $_SESSION['empName'] = $row_job_emp['fullName'];
+                              $empName = $row_job_emp['fullName'];
                             }
                           } else {
-                              $_SESSION['empName'] = '-';
+                              $empName = '-';
                           }
-
+                          //echo $jobID;
                           // print out the output
                           echo '
+                          <form action="editJob.php" method="post">
                           <tr>
                           <td align="center">
-
                           <input type="hidden" name="job" value="'; echo $jobID; echo '">
-                          <input type="submit" name="' .$jobID. '">
-
-                          <a class="edit" href="editJob.php"><i class="fa fa-pencil-square-o"></i>&nbsp; Edit</a>
-
-
+                          <input type="hidden" name="empName" value="'; echo $empName; echo '">
+                          <button type="submit" name="' .$jobID. '" class="edit btn-link"><i class="fa fa-pencil-square-o"></i>&nbsp; Edit</button>
 
                           </td>';
                           echo '
                           <td align="center"> '.$title.'</td>
-                          <td align="center"> '.$desc. '</td>
+                          <td align="left"> '.$desc. '</td>
                           <td align="center"> '.$salary.'</td>
-                          <td align="center"> '.$hours.'</td>
-                          <td align="center"> '.$weeks.'</td>
+                          <td align="center" width="10%"> '.$startDateDisplay.'</td>
+                          <td align="center" width="10%"> '.$endDateDisplay.'</td>
+                          <td align="center" width="8%"> '.$startTimeDisplay.'</td>
+                          <td align="center" width="8%"> '.$endTimeDisplay.'</td>
                           <td align="center"> '.$address.'</td>
                           <td align="center"> '.$city.'</td>
                           <td align="center"> '.$status.'</td>
-                          <td align="center"> '.$_SESSION['empName'].'</td>
+                          <td align="center"> '.$empName.'</td>
                           </tr>
+                          </form>
                           ';
                         }
+                        echo '</table>
+                              </div>
+                              <br />';
                       } else {
-                        echo '<span style="margin-left:10px">No job positions created yet.</span>';
+                        echo '<br><span style="margin-left:5px">No job positions created yet.</span>
+                        <br><br><br><br><br><br><br><br><br>';
                       }
                       ?>
-
-                    </table>
-                    </div>
-                    </form>
                   </div>
+                  <br><br>
                 </div>
   						</div>
   					</div>
@@ -258,7 +271,7 @@
 
 					<!-- footer logo -->
 					<div class="footer-logo">
-						<a href="index.php"><img src="img/logo-alt.png" alt="logo"></a>
+						<a href="jobPositions.php"><img src="img/logo-alt.png" alt="logo"></a>
 					</div>
 					<!-- /footer logo -->
 
@@ -275,7 +288,7 @@
 
 					<!-- footer copyright -->
 					<div class="footer-copyright">
-						<p>Copyright © 2017 AGN. All Rights Reserved.</p>
+						<p>Copyright © <?php echo date("Y");?> AGN. All Rights Reserved.</p>
 					</div>
 					<!-- /footer copyright -->
 

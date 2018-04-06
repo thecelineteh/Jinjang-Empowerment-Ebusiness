@@ -41,6 +41,17 @@ if (isset($_POST['skill'])) {
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 	<style>
+	.footer-follow li a i{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 3px;
+    background-color: #6195FF;
+    color:#FFF;
+  }
+	
 	.center {
     height: 70%;
     position: relative;
@@ -71,7 +82,7 @@ if (isset($_POST['skill'])) {
 			<div class="navbar-header">
 				<!-- Logo -->
 				<div class="navbar-brand">
-					<a href="jobs.html">
+					<a href="jobs.php">
 						<img class="logo" src="img/logo.png" alt="logo">
 						<img class="logo-alt" src="img/logo-alt.png" alt="logo">
 					</a>
@@ -90,7 +101,7 @@ if (isset($_POST['skill'])) {
 				<li class="active"><a href="#home" onclick='resetJob()'><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li><a href="#application"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
+        <li><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
@@ -182,7 +193,7 @@ if (isset($_POST['skill'])) {
 				$result = mysqli_query($connection, $query);
 				if (mysqli_num_rows($result) > 0) {
 					while ($row = mysqli_fetch_assoc($result)) {
-            $totalSalary = $row['salaryPerHour'] * $row['hoursPerWeek'] * $row['durationInWeeks'];
+            $totalSalary = $row['salaryPerHour'];
 						$jobID = $row['jobID'];
 						$query2 = "SELECT skill.skillName FROM jobrequiredskill, skill WHERE jobID = '$jobID'
 											AND jobrequiredskill.skillID=skill.skillID";
@@ -198,7 +209,7 @@ if (isset($_POST['skill'])) {
 					  ;
 						echo "
                   <div class='price'>
-                    <h3>$" . $totalSalary . "</h3>
+                    <h3 style='font-size:36px'>RM" .  round($totalSalary,2) . "<span class='duration'>/ hour</span></h3>
                   </div> ";
 						$link='"jobDetails.php"';
 						echo "
@@ -262,7 +273,7 @@ if (isset($_POST['skill'])) {
 
 					<!-- footer logo -->
 					<div class="footer-logo">
-						<a href="index.php"><img src="img/logo-alt.png" alt="logo"></a>
+						<a href="jobs.php"><img src="img/logo-alt.png" alt="logo"></a>
 					</div>
 					<!-- /footer logo -->
 
@@ -279,7 +290,7 @@ if (isset($_POST['skill'])) {
 
 					<!-- footer copyright -->
 					<div class="footer-copyright">
-						<p>Copyright © 2017 AGN. All Rights Reserved. Designed by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+						<p>Copyright © <?php echo date("Y");?> AGN. All Rights Reserved. Designed by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
 					</div>
 					<!-- /footer copyright -->
 

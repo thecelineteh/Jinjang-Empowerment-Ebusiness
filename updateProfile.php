@@ -22,7 +22,6 @@
   if ($_SESSION['userType'] == 'Job Seeker') {
     // job seeker attributes
     $fullName = stripcslashes($_POST['Sfullname']);
-    $skillset = $_POST['sSkillSet'];
 
     $fullName = mysqli_real_escape_string($connection, $fullName);
 
@@ -31,19 +30,18 @@
     $result_s = mysqli_query($connection, $update_s);
 
     // update skillset
-    /*$s_skillset = "SELECT * FROM skillset WHERE username = '$username'";
-    $result_s_skillset = mysqli_query($connection, $result_s_skillset);*/
+    $updatedSkillsArray = $_POST['updateSkillArray'];
     $clear_skillset = "DELETE FROM skillsets WHERE theJobSeeker = $userID";
     $result_clear_skillset = mysqli_query($connection, $clear_skillset);
 
     // Based on skillName, find user selected skills in skill table
-    foreach ($skillset as $skillName) {
+    foreach ($updatedSkillsArray as $skillName) {
       $selected_skills = "SELECT * FROM skill WHERE skillName = '$skillName'";
       $result_selected_skills = mysqli_query($connection, $selected_skills);
 
       while ($row_selected_skills = mysqli_fetch_assoc($result_selected_skills)) {
         $skillID = $row_selected_skills['skillID'];
-        $add_skillset = "INSERT INTO skillsets VALUES('$skillID', $userID)";
+        $add_skillset = "INSERT INTO skillsets VALUES($skillID, $userID)";
         $result_add_skillset = mysqli_query($connection, $add_skillset);
       }
     }
