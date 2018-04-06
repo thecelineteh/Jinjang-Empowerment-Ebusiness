@@ -51,7 +51,7 @@ if (isset($_POST['skill'])) {
     background-color: #6195FF;
     color:#FFF;
   }
-	
+
 	.center {
     height: 70%;
     position: relative;
@@ -132,7 +132,7 @@ if (isset($_POST['skill'])) {
 
 			<div class="row">
 				<form id="theform" action="jobs.php" method="post">
-					<div class="col-sm-offset-10 col-xs-12" style="padding-top: 2em">
+					<div class="col-sm-offset-10 col-xs-12 col-sm-2" style="padding-top: 2em">
 						Filter By:
 						<select id="mySelect" name="skill" size="1" onchange="this.form.submit()">
 							<option value="default">
