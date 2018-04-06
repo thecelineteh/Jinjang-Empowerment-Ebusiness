@@ -509,9 +509,12 @@
                           							</div>
                           						</div>
                                       <div class="modal-footer">
+                                      <form method="post" target="_blank" action="sendMessage.php">
                           							<div style="text-align: center;">
+                                          <input type="hidden" name="senderName" value="'. $applicantName .'">
                           								<button type="submit" class="btn btn-default">Message</button>
                           							</div>
+                                        </form>
                           						</div>
                           	      </div>
                           	    </div>
