@@ -9,7 +9,8 @@
   $jobID = $_POST['jobID'];
   $userID = $_SESSION['userID'];
 
-  $query = "SELECT * FROM jobapplication WHERE jobID = '$jobID'";
+  $query = "SELECT * FROM jobapplication WHERE jobID = '$jobID' AND
+  theJobSeeker = '$userID'";
   $result = mysqli_query($connection, $query);
   $row = mysqli_fetch_assoc($result);
 

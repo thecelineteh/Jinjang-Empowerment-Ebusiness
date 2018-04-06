@@ -102,7 +102,7 @@
                 <div class="bottom-wrapper">
                   <div class="input">
                     <label>Message</label>
-                    <textarea rows="10" name="content" id='message' required></textarea>
+                    <textarea rows="10" name="content" id='Message' required></textarea>
                   </div>
                   <div class="submit">
                     <button class="submit-card" type="submit">Send Mail</button>

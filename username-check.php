@@ -11,6 +11,7 @@
   {
       $name     = strip_tags($_POST['receiverName']);
 
+
 	  $stmt=$dbcon->prepare("SELECT username FROM user WHERE username=:name");
 	  $stmt->execute(array(':name'=>$name));
 	  $count=$stmt->rowCount();

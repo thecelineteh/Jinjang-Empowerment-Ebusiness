@@ -198,16 +198,6 @@
     								<li>&nbsp;<i class='fa fa-check-circle' style='font-size:18px;color:green'></i>&nbsp;&nbsp;&nbsp;" . $row['skillName'] . "</li>
     								";
     							}
-    							$rowPrint = 4 - $counter;
-    							for ($i = 0; $i <= $rowPrint; $i++) {
-    								echo "<br />";
-    							}
-    						}
-    						else {
-    							echo "No skills required";
-    							for ($i = 0; $i <= 5; $i++) {
-    								echo "<br />";
-    							}
     						}
 
                 echo "<br>";
@@ -289,6 +279,8 @@
 									$result = mysqli_query($connection, $query);
 									if (mysqli_num_rows($result) > 0) {
 										while ($row = mysqli_fetch_assoc($result)) {
+											$_SESSION['companyName'] = $row['companyName'];
+
 											echo "<li style='text-align: center;'><h5>";
 											echo $row['companyName'];
 											echo "</h5></li>";
@@ -313,8 +305,13 @@
 									?>
 								</ul><br />
 								<div style="text-align:center;">
-									<form>
-										<input class="main-btn" type="button" value="Message">
+									<form action="sendMessage.php" method="post">
+										<?php
+											echo "
+											<input type='hidden' value='" . $_SESSION['companyName']
+											. "' name='senderName'>";
+										?>
+										<input class="main-btn" type="submit" value="message">
 									</form>
 								</div>
 							</div>
