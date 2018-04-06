@@ -106,7 +106,7 @@
 			<div class="navbar-header">
 				<!-- Logo -->
 				<div class="navbar-brand">
-					<a href="index.php">
+					<a href="jobPositions.php">
 						<img class="logo" src="img/logo.png" alt="logo">
 						<img class="logo-alt" src="img/logo-alt.png" alt="logo">
 					</a>
@@ -124,7 +124,7 @@
       <ul class="main-nav nav navbar-nav navbar-right">
 				<li class="active"><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
-				<li><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
+				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         <li><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
@@ -242,10 +242,12 @@
                               </div>
                               <br />';
                       } else {
-                        echo '<span style="margin-left:10px">No job positions created yet.</span>';
+                        echo '<br><span style="margin-left:5px">No job positions created yet.</span>
+                        <br><br><br><br><br><br><br><br><br>';
                       }
                       ?>
                   </div>
+                  <br><br>
                 </div>
   						</div>
   					</div>
@@ -269,7 +271,7 @@
 
 					<!-- footer logo -->
 					<div class="footer-logo">
-						<a href="index.php"><img src="img/logo-alt.png" alt="logo"></a>
+						<a href="jobPositions.php"><img src="img/logo-alt.png" alt="logo"></a>
 					</div>
 					<!-- /footer logo -->
 

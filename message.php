@@ -72,7 +72,13 @@
 			<div class="navbar-header">
 				<!-- Logo -->
 				<div class="navbar-brand">
-					<a href="index.php">
+          <?php
+  					if ($_SESSION['userType'] == 'Job Seeker') {
+  						echo '<a href="jobs.php">';
+  					} else if ($_SESSION['userType'] == 'Client') {
+  						echo '<a href="jobPositions.php">';
+  					}
+  				 ?>
 						<img class="logo" src="img/logo.png" alt="logo">
 						<img class="logo-alt" src="img/logo-alt.png" alt="logo">
 					</a>
@@ -89,7 +95,19 @@
 			<!--  Main navigation  -->
 			<!-- for both Job Seeker and Client -->
 			<ul class="main-nav nav navbar-nav navbar-right">
+<<<<<<< HEAD
 				<li><a href="jobs.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
+=======
+				<li>
+          <?php
+					if ($_SESSION['userType'] == 'Job Seeker') {
+						echo '<a href="jobs.php">';
+					} else if ($_SESSION['userType'] == 'Client') {
+						echo '<a href="jobPositions.php">';
+					}
+				 ?>
+         <i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
+>>>>>>> 17bbfc57a4146892463c822bbe2893c2c9781b16
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li class="active"><a href="#message"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
         <li><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
