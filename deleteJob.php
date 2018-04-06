@@ -9,7 +9,7 @@
     $delete_job = "DELETE FROM jobposition WHERE jobID = $jobID AND theEmployee = 0";
     $result_delete_job = mysqli_query($connection, $delete_job);
 
-    if (mysqli_num_rows($result_delete_job) > 0) {
+    if (mysqli_affected_rows($connection) > 0) {
       echo "<script>alert('Job position deleted successfully.');</script>";
       header("Refresh: 1; url= jobPositions.php");
     } else {

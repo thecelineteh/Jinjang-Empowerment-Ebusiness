@@ -258,7 +258,7 @@
                   <div class="form-group">
                     <label>Start Time: </label>
                     <div class="form-control-small">
-                        <input type="time" name="startTime" class="form-control" min = "<?php echo date('H:i'); ?>" value = "<?php echo date('H:i'); ?>" required>
+                        <input type="time" name="startTime" class="form-control" value = "<?php echo date('H:i'); ?>" required>
                     </div>
                     <div id="startTime_error" style="color:red;"></div>
                   </div>
@@ -266,7 +266,7 @@
                   <div class="form-group">
                     <label>End Time: </label>
                     <div class="form-control-small">
-                        <input type="time" name="endTime" class="form-control" min = "<?php echo date('H:i'); ?>" value = "<?php echo date('H:i'); ?>" required>
+                        <input type="time" name="endTime" class="form-control" value = "<?php echo date('H:i'); ?>" required>
                     </div>
                     <div id="endTime_error" style="color:red;"></div>
                   </div>
