@@ -41,6 +41,17 @@ if (isset($_POST['skill'])) {
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 	<style>
+	.footer-follow li a i{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 3px;
+    background-color: #6195FF;
+    color:#FFF;
+  }
+	
 	.center {
     height: 70%;
     position: relative;

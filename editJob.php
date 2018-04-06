@@ -179,6 +179,8 @@
                           $query_jobpos = "SELECT * FROM jobposition WHERE theClient = $theClient AND jobID = $jobID";
                           $result_findJob = mysqli_query($connection, $query_jobpos);
                           while($row_jobPositions = mysqli_fetch_assoc($result_findJob)) {
+                            // set timezone to Malaysia
+                            date_default_timezone_set("Asia/Kuala_Lumpur");
                             echo '<input type="text" name="jobTitle" class="form-control" value = "' . $row_jobPositions['title'] .
                             '" required>
                               </div>
