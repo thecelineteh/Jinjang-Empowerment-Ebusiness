@@ -512,6 +512,7 @@
                                       <form method="post" target="_blank" action="sendMessage.php">
                           							<div style="text-align: center;">
                                           <input type="hidden" name="senderName" value="'. $applicantName .'">
+                                          <input type="hidden" name="subject" value="'. $title .'">
                           								<button type="submit" class="btn btn-default">Message</button>
                           							</div>
                                         </form>
