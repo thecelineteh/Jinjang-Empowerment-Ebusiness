@@ -311,7 +311,7 @@
 											<input type='hidden' value='" . $_SESSION['companyName']
 											. "' name='senderName'>";
 										?>
-										<input class="main-btn" type="submit" value="message">
+										<input class="main-btn" type="submit" value="Message">
 									</form>
 								</div>
 							</div>

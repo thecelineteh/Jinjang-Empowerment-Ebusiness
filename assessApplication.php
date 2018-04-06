@@ -37,7 +37,7 @@
   $query_application = "UPDATE jobapplication SET status = '$updated_status' WHERE applicationID = $applicationID";
   $result_application = mysqli_query($connection, $query_application);
 
-  if ($result_application && $result_employee) {
+  if ($result_application && isset($result_employee)) {
     echo "<script>alert('Job application " . $updated_status . ", employee name and job position status updated.');</script>";
     if (isset($result_autoset)) {
       echo "<script>alert('The status of other applications for the same job have been automatically set to declined.');</script>";

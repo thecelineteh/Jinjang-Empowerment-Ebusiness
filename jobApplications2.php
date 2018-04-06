@@ -265,7 +265,7 @@
                       }
 
           					} else if ($_SESSION['userType'] == 'Client') {
-                        $client_jobapp = "SELECT applicationID, ja.jobID AS jobID, theJobSeeker, ja.status AS status, title, description, salaryPerHour, startDate, endDate, startTime, endTime, address, city FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND theClient = $theClient AND ja.status != 'DECLINED' ORDER BY applicationID";
+                        $client_jobapp = "SELECT applicationID, ja.jobID AS jobID, theJobSeeker, ja.status AS status, title, description, salaryPerHour, startDate, endDate, startTime, endTime, address, city FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND theClient = $theClient ORDER BY applicationID";
                         $result_client_jobapp = mysqli_query($connection, $client_jobapp);
 
                         if (mysqli_num_rows($result_client_jobapp) > 0) {
@@ -276,7 +276,16 @@
                             $applicationID = $row_client_jobapp['applicationID'];
                             $jobID = $row_client_jobapp['jobID'];
                             $title = $row_client_jobapp['title'];
-
+                            /*
+                            $desc = $row_client_jobapp['description'];
+                            $salary = $row_client_jobapp['salaryPerHour'];
+                            $startDate = $row_client_jobapp['startDate'];
+                            $endDate = $row_client_jobapp['endDate'];
+                            $startTime = $row_client_jobapp['startTime'];
+                            $endTime = $row_client_jobapp['endTime'];
+                            $address = $row_client_jobapp['address'];
+                            $city= $row_client_jobapp['city'];
+                            */
                             $status= $row_client_jobapp['status'];
                             $theApplicant = $row_client_jobapp['theJobSeeker'];
 
@@ -303,7 +312,19 @@
                               }
                             }
 
+                            /*
+                            // convert startDate format
+                            $startDateDisplay = date("j M Y", strtotime($startDate));
+                            // convert endDate format
+                            $endDateDisplay = date("j M Y", strtotime($endDate));
+                            // convert startTime format
+                            $startTimeDisplay = date('g:i A', strtotime($startTime));
+                            // convert endTime format
+                            $endTimeDisplay = date('g:i A', strtotime($endTime));
+                            */
+
                             // display application details
+                            if ($status != "DECLINED") {
                               echo '
                               <div class="col-sm-4">
                               <div class="container-fluid">
@@ -325,7 +346,54 @@
                                     <br>
                                      Job Position: <span class="app-detail">'. $title .'</span>
                                      </li>';
+  /*
+                                     echo '
+                      							<div class="price">
+                      								<h3>RM'. round($salary,2) .'<span class="duration">/ hour</span></h3>
+                      							</div>
+                      						</div>
+                      						<ul class="price-content">
+                                    <li>
+                      								<p>Skills Required: </p>';
 
+
+                              $reqSkills = "SELECT skill.skillName FROM jobrequiredskill, skill WHERE jobID = $jobID
+                  											AND jobrequiredskill.skillID=skill.skillID";
+                  						$result_reqSkills = mysqli_query($connection, $reqSkills);
+
+                              if (mysqli_num_rows($result_reqSkills) > 0) {
+                                echo '<div class="row">';
+                                while ($row_reqSkills = mysqli_fetch_assoc($result_reqSkills)) {
+                                  echo '<div class="col-lg-offset-4 col-md-offset-3 col-md-12"><p style="text-align:left; margin-left:15px;"><i class="fa fa-check-circle" style="font-size:20px;color:green"></i> &nbsp;&nbsp;' . $row_reqSkills['skillName'] . '</p></div>';
+                                }
+                                echo '</div>';
+                                if (mysqli_num_rows($result_reqSkills) < 5){
+                                  echo '<br><br><br>';
+                                  if (mysqli_num_rows($result_reqSkills) == 3){
+                                    echo '<br>';
+                                  } else if (mysqli_num_rows($result_reqSkills) == 2){
+                                    echo '<br><br>';
+                                  } else if (mysqli_num_rows($result_reqSkills) == 1){
+                                    echo '<br><br><br>';
+                                  }
+                                }
+                              } else {
+                                echo '<p>No skills required.</p>';
+                              }
+
+                              echo '
+                              </li>
+                              <li>
+                                <br>
+                                <p><i class="fa fa-calendar-check-o"></i>&nbsp;Start date: '. $startDateDisplay .'</p>
+                                <p><i class="fa fa-calendar-check-o"></i>&nbsp;End date: '. $endDateDisplay .'</p>
+                              </li>
+                              <li>
+                                <p><i class="fa fa-clock-o"></i>&nbsp;Start time: '. $startTimeDisplay .'</p>
+                                <p><i class="fa fa-clock-o"></i>&nbsp;End time: '. $endTimeDisplay .'</p>
+                              </li>
+  <!--------- ----->
+  */
                               echo '
                               <li>
                               <form method="post" target="_blank" action="jobDetails.php">
@@ -459,7 +527,7 @@
                       </div>
   <!----->
                             ';
-
+                            }
 
                           }
 

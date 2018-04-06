@@ -299,7 +299,7 @@
                           <div class="form-group">
                             <label>Start Date: </label>
                             <div class="form-control-small">
-                                <input type="date" name="startDate" class="form-control-small" min = "' . date("Y-m-d") .  '" value="' .$row_jobPositions['startDate']. '" required>
+                                <input type="date" name="startDate" class="form-control-small" value="' .$row_jobPositions['startDate']. '" required>
                             </div>
                             <div id="startDate_error" style="color:red;"></div>
                           </div>
@@ -307,7 +307,7 @@
                           <div class="form-group">
                             <label>End Date: </label>
                             <div class="form-control-small">
-                                <input type="date" name="endDate" class="form-control-small" min = "' . date("Y-m-d") . '" value="' .$row_jobPositions['endDate']. '" required>
+                                <input type="date" name="endDate" class="form-control-small" value="' .$row_jobPositions['endDate']. '" required>
                             </div>
                             <div id="endDate_error" style="color:red;"></div>
                           </div>';

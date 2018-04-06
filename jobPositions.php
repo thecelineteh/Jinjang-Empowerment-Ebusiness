@@ -97,6 +97,17 @@
       color: #8B4513;
     }
 
+    .delete {
+      color: black;
+      font-size:20px;
+    }
+    .delete:hover {
+      color: blue;
+    }
+    .delete:focus {
+      color: #8B4513;
+    }
+
 	</style>
 </head>
 <body style="background-color: #ecf0f1;">
@@ -146,8 +157,8 @@
               </div>
               <br>
               <div class="row">
-                <div class="col-sm-offset-1 col-sm-10 col-xs-12">
-                  <div class ="card">
+                <div class="col-xs-12">
+                  <div class ="card" style="margin:35px">
                     <h4 class="form-title">Job Positions</h4>
                     <div style="margin-top:20px;">
                       <a class="btn btn-primary" href="createJob.php"><i class="fa fa-plus"></i>&nbsp; Create</a>
@@ -160,7 +171,7 @@
                         echo '
 
                         <div class="table-responsive">
-                        <table class="table table-hover table-condensed table-bordered table-striped">
+                        <table class="table table-hover table-condensed table-striped">
                             <tr class="info">
                               <th></th>
                               <th>Title</th>
@@ -174,6 +185,7 @@
                               <th>City</th>
                               <th>Status</th>
                               <th>Employee Name</th>
+                              <th></th>
                             </tr>';
 
                         // fetch data from database
@@ -234,8 +246,16 @@
                           <td align="center"> '.$city.'</td>
                           <td align="center"> '.$status.'</td>
                           <td align="center"> '.$empName.'</td>
-                          </tr>
                           </form>
+                          <td>
+                            <form action="deleteJob.php" method="post">
+                              <input type="hidden" name="delJob" value="'; echo $jobID; echo '">
+                              <button type="submit" name="deleteBtn" class="delete btn-link">
+                                <i class="fa fa-trash"></i>
+                              </button>
+                            </form>
+                          </td>
+                          </tr>
                           ';
                         }
                         echo '</table>
