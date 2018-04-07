@@ -72,7 +72,7 @@
                         echo "
                           <input type='text' name='receiverName' id='receiverName' value='" .
                           $_POST['senderName']
-                          . "' required id='receiverName'/>
+                          . "' required id='receiverName' readonly/>
                         ";
                         echo "<div style='text-align: center;'><span id='result'></span></div>";
                       }
@@ -119,15 +119,6 @@
 
   <script src='https://cdn.jsdelivr.net/npm/ractive'></script>
   <script  src="js/index.js"></script>
-  <script>
-  function formSubmit(form) {
-    alert("Your message has been sent successfully!");
-    window.close();
-    return false;
-  }
-  </script>
-
-
 
 </body>
 
