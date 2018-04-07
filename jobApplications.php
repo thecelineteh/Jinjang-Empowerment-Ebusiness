@@ -132,17 +132,6 @@
       text-transform: capitalize;
     }
 
-    .edit {
-      color: #C71585;
-    }
-    .edit:hover {
-      color: blue;
-      text-decoration: none;
-    }
-    .edit:focus {
-      color: #8B4513;
-    }
-
 	</style>
 </head>
 <body style="background-color: #ecf0f1;">
@@ -181,10 +170,19 @@
 						echo '<a href="jobPositions.php">';
 					}
 				 ?>
-         <i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
+         <i class="fa fa-suitcase"></i>&nbsp;Jobs</a>
+       </li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
-				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li class="active"><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
+				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>  
+          <?php
+					if ($_SESSION['userType'] == 'Job Seeker') {
+						echo '<li class="active"><a href="jobApplications.php">';
+					} else if ($_SESSION['userType'] == 'Client') {
+						echo '<li><a href="jobApplicationsSummary.php">';
+					}
+				 ?>
+         <i class="fa fa-suitcase"></i>&nbsp;Applications</a>
+       </li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
@@ -269,199 +267,6 @@
                         $result_client_jobapp = mysqli_query($connection, $client_jobapp);
 
                         if (mysqli_num_rows($result_client_jobapp) > 0) {
-                          // fetch data from database
-                          while($row_client_jobapp = mysqli_fetch_array($result_client_jobapp) )
-                          {
-                            // declaration
-                            $applicationID = $row_client_jobapp['applicationID'];
-                            $jobID = $row_client_jobapp['jobID'];
-                            $title = $row_client_jobapp['title'];
-
-                            $status= $row_client_jobapp['status'];
-                            $theApplicant = $row_client_jobapp['theJobSeeker'];
-
-                            // get applicant's full name
-                            $applicant = "SELECT * FROM jobseeker WHERE userID = $theApplicant";
-                            $result_applicant = mysqli_query($connection, $applicant);
-                            if (mysqli_num_rows($result_applicant) > 0){
-                              while($row_applicant = mysqli_fetch_assoc($result_applicant) ) {
-                                $applicantName = $row_applicant['fullName'];
-                              }
-                            } else {
-                                $applicantName = '-';
-                            }
-
-                            // get applicant profile details
-                            $applicant_profile = "SELECT * FROM user WHERE userID = $theApplicant";
-                            $result_applicant_profile = mysqli_query($connection, $applicant_profile);
-                            if (mysqli_num_rows($result_applicant_profile) > 0){
-                              while($row_applicant_profile = mysqli_fetch_assoc($result_applicant_profile) ) {
-                                $applicantUsername = $row_applicant_profile['username'];
-                                $applicantEmail = $row_applicant_profile['email'];
-                                $applicantPhone = $row_applicant_profile['phoneNo'];
-                                $applicantAdd = $row_applicant_profile['address'];
-                              }
-                            }
-
-                            // display application details
-                              echo '
-                              <div class="col-sm-4">
-                              <div class="container-fluid">
-                      					<div class="pricing">
-                      						<div class="price-head">
-                                    <span class="price-title">Application #A00<span class="app-detail">'. $applicationID .'</span>
-                                    </span>
-
-                                    Applicant:
-                                    <span class="app-detail">'. $applicantName .'</span>
-
-                                    <br>
-
-                                    <ul>
-                                    <li>
-                                      <button class="outline-btn"data-toggle="modal" data-target="#myModal'. $applicationID . '">View Profile</button>
-                                    </li>
-                                    <li>
-                                    <br>
-                                     Job Position: <span class="app-detail">'. $title .'</span>
-                                     </li>';
-
-                              echo '
-                              <li>
-                              <form method="post" target="_blank" action="jobDetails.php">
-                              <button type="submit" id="jobDetails'. $applicationID .'" name="jobID" value="'.$jobID.'" class="outline-btn">Job Details</button>
-                              </form>
-                              </li>
-  <!--------- ----->
-                              <li>
-                                <br>
-                                <p>Status: ';
-                                if ($status == 'ACCEPTED') {
-                                  echo '<span style="color: green; font-weight: bold;">';
-                                } else if ($status == 'PENDING') {
-                                  echo '<span style="color: #FF8C00; font-weight: bold;">';
-                                }
-                                echo $status . '</span></p>
-                              </li>
-                            </ul>';
-
-                              if ($status == 'PENDING') {
-                                  echo '
-                                  <form method="post" action="assessApplication.php">
-                                  <table style="margin:30px; width:85%; text-align:center">
-                                    <tr>
-                                      <td>
-                                        <input type="hidden" name="applicationID" value="'; echo $applicationID; echo '">
-                                        <input type="hidden" name="theEmployee" value="'; echo $theApplicant; echo '">
-                                        <input type="hidden" name="jobID" value="'; echo $jobID; echo '">
-                                        <button type="submit" id="acceptBtn" name="acceptBtn" value="ACCEPTED" class="outline-btn accept">Accept</button>
-                                      </td>
-                                      <td>
-                                        <button type="submit" id="declineBtn" name="declineBtn" value="DECLINED" class="outline-btn decline">Decline</button>
-                                      </td>
-                                    </tr>
-                                  </table>
-                                  </form>';
-
-                              } else {
-                                echo '<br><br><br>';
-                              }
-
-                              if ($applicantEmail == "") {
-                                $applicantEmail = "-";
-                              }
-
-                              if ($applicantPhone == "") {
-                                $applicantPhone = "-";
-                              }
-
-                              if ($applicantAdd == "") {
-                                $applicantAdd = "-";
-                              }
-
-                              // get applicant skillsets
-                              $skillsets = "SELECT skill.skillName FROM skillsets, skill WHERE theJobSeeker = $theApplicant AND skillsets.skillID = skill.skillID";
-                              $result_skillsets = mysqli_query($connection, $skillsets);
-
-                              echo '
-                              </div>
-                            </div>
-                            </div>
-
-                            <!-- Modal -->
-                          	<div id="myModal' . $applicationID . '" class="modal fade" role="dialog">
-                          	  <div class="modal-dialog">
-                          	    <!-- Modal content-->
-                          	    <div class="modal-content">
-                          	      <div class="modal-header" style="text-align: center;">
-                          	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                          	        <h4 class="modal-title">' . $applicantUsername . '\'s Profile</h4>
-                          	      </div>
-                          	      <div class="modal-body">
-                          						<div class="container">
-                          							<div class="row">
-                          								<div class="col-sm-offset-1 col-sm-4">
-                          									<div class="form-group">
-
-                          								    <label for="fullName">Full Name:</label>
-                                              <h4>'. $applicantName .'</h4>
-
-                          								  </div>
-
-                          								  <div class="form-group">
-                          								    <label for="email">Email:</label>
-                                              <h5>' .  $applicantEmail . '</h5>
-                          								  </div>
-
-                                            <div class="form-group">
-                          								    <label for="phoneNo">Contact no:</label>
-                                              <h5>' .  $applicantPhone . '</h5>
-                          								  </div>
-
-                                            <div class="form-group">
-                                              <label for="address">Address:</label>
-                                              <h5>' .  $applicantAdd . '</h5>
-                                            </div>
-
-                                            <div class="form-group">
-                                              <label for="skillset">Skill Sets:</label>';
-
-                                            if (mysqli_num_rows($result_skillsets) > 0){
-                                              while($row_skillsets = mysqli_fetch_assoc($result_skillsets) ) {
-                                                echo '
-                                                <p style="text-align:left; margin-left:15px;"><i class="fa fa-check-circle" style="font-size:18px;color:green"></i> &nbsp;&nbsp;' . $row_skillsets['skillName'] . '</p>';
-                                              }
-                                            } else {
-                                              echo '<h5>-</h5>';
-                                            }
-
-                                            echo '</div>
-
-                          								</div>
-                          							</div>
-                          						</div>
-                                      <div class="modal-footer">
-                                      <form method="post" target="_blank" action="sendMessage.php">
-                          							<div style="text-align: center;">
-                                          <input type="hidden" name="senderName" value="'. $applicantName .'">
-                                          <input type="hidden" name="subject" value="'. $title .'">
-                          								<button type="submit" class="btn btn-default">Message</button>
-                          							</div>
-                                        </form>
-                          						</div>
-                          	      </div>
-                          	    </div>
-                          	  </div>
-                          	</div>
-                            <!-- End of Modal -->
-
-  <!----->
-                      </div>
-  <!----->
-                            ';
-
-
-                          }
 
                         } else {
                           echo '<span style="margin-left:30px">No applications yet.</span>
@@ -472,7 +277,6 @@
                       <br><br><br>
 
                     </div>
-
                   </div>
                 </div>
   						</div>
