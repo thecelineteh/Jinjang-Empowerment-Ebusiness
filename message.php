@@ -152,7 +152,7 @@
 			            if (mysqli_num_rows($result) > 0) {
 										while ($row = mysqli_fetch_assoc($result)) {
 											echo "<form id='F" . $row['messageID'] . "' action=''
-											method='post' target='_blank'>";
+											method='post' target=''>";
 											echo "<tr style='cursor:;'>";
 											$_SESSION['senderID'] = $row['sender'];
 											echo "<input type='hidden' value='" . $row['messageID'] . "'
@@ -206,7 +206,11 @@
 												style='border: none; padding: 0; background: none;' id='R" . $row['messageID'] . "'>
 												<a><i class='fa fa-mail-reply'></i></a>&nbsp;&nbsp;
 												</button>
-												<a href='index.php' data-toggle='tooltip' data-placement='top' title='Delete'><i class='fa fa-trash-o'></i></td>
+												<button data-toggle='tooltip' data-placement='top' title='Delete' onclick='deleteMessage(this.id)'
+												style='border: none; padding: 0; background: none;' id='D" . $row['messageID'] . "'>
+												<a><i class='fa fa-trash-o'></i>
+												</button>
+												</td>
 											";
 
 											echo "</tr>";
@@ -268,6 +272,7 @@
 			var messageID = "F" + str;
 			form=document.getElementById(messageID);
 		  form.action="showMessage.php";
+			form.target="_blank";
 		  form.submit();
 		}
 		function replyMessage(btnID) {
@@ -275,6 +280,15 @@
 			var messageID = "F" + str;
 			form=document.getElementById(messageID);
 		  form.action="sendMessage.php";
+			form.target="_blank";
+		  form.submit();
+		}
+    function deleteMessage(btnID) {
+			var str = btnID.substring(1,6);
+			var messageID = "F" + str;
+			form=document.getElementById(messageID);
+		  form.action="deleteMessage.php";
+			form.target="";
 		  form.submit();
 		}
 

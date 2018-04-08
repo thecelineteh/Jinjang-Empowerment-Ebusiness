@@ -12,11 +12,15 @@
       $name     = strip_tags($_POST['receiverName']);
 
 
-	  $stmt=$dbcon->prepare("SELECT username FROM user WHERE username=:name");
+	  $stmt=$dbcon->prepare("SELECT fullName FROM jobseeker WHERE fullName=:name");
 	  $stmt->execute(array(':name'=>$name));
 	  $count=$stmt->rowCount();
 
-	  if($count>0)
+		$stmt2=$dbcon->prepare("SELECT companyName FROM client WHERE companyName=:name");
+	  $stmt2->execute(array(':name'=>$name));
+	  $count2=$stmt2->rowCount();
+
+	  if($count>0 || $count2>0)
 	  {
 	  }
 	  else
