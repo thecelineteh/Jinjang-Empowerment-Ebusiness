@@ -113,7 +113,14 @@
 				 ?><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
+        <li><?php
+					if ($_SESSION['userType'] == 'Job Seeker') {
+						echo '<a href="jobApplications.php">';
+					} else if ($_SESSION['userType'] == 'Client') {
+						echo '<a href="jobApplicationsSummary.php">';
+					}
+				 ?>
+         <i class="fa fa-suitcase"></i>&nbsp;Application</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
@@ -311,7 +318,7 @@
 											<input type='hidden' value='" . $_SESSION['companyName']
 											. "' name='senderName'>";
 										?>
-										<input class="main-btn" type="submit" value="message">
+										<input class="main-btn" type="submit" value="Message">
 									</form>
 								</div>
 							</div>

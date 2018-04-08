@@ -136,7 +136,7 @@
 				<li><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
+        <li><a href="jobApplicationsSummary.php"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
@@ -258,7 +258,7 @@
                   <div class="form-group">
                     <label>Start Time: </label>
                     <div class="form-control-small">
-                        <input type="time" name="startTime" class="form-control" min = "<?php echo date('H:i'); ?>" value = "<?php echo date('H:i'); ?>" required>
+                        <input type="time" name="startTime" class="form-control" value = "<?php echo date('H:i'); ?>" required>
                     </div>
                     <div id="startTime_error" style="color:red;"></div>
                   </div>
@@ -266,7 +266,7 @@
                   <div class="form-group">
                     <label>End Time: </label>
                     <div class="form-control-small">
-                        <input type="time" name="endTime" class="form-control" min = "<?php echo date('H:i'); ?>" value = "<?php echo date('H:i'); ?>" required>
+                        <input type="time" name="endTime" class="form-control" value = "<?php echo date('H:i'); ?>" required>
                     </div>
                     <div id="endTime_error" style="color:red;"></div>
                   </div>

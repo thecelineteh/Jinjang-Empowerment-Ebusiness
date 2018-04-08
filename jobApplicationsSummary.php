@@ -12,7 +12,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Job Positions</title>
+	<title>Job Applications Summary</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
@@ -79,34 +79,29 @@
         padding: 25px;
 		}
 
+    table, th, td {
+      border: 0 !important;
+    }
+
     th {
       color: #101010;
     }
     td {
       color: #080808;
+      border-width: 0;
     }
 
-    .edit {
-      color: #C71585;
+    .assess {
+      color: #8B008B;
+      font-weight: bold;
     }
-    .edit:hover {
+    .assess:hover {
       color: blue;
       text-decoration: none;
     }
-    .edit:focus {
+    .assess:focus {
       color: #8B4513;
       text-decoration: none;
-    }
-
-    .delete {
-      color: #8B0000;
-      font-size:20px;
-    }
-    .delete:hover {
-      color: blue;
-    }
-    .delete:focus {
-      color: #8B4513;
     }
 
 	</style>
@@ -134,10 +129,10 @@
 
 			<!--  Main navigation  -->
       <ul class="main-nav nav navbar-nav navbar-right">
-				<li class="active"><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
+				<li><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li><a href="jobApplicationsSummary.php"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
+        <li class="active"><a href="jobApplicationsSummary.php"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
@@ -160,120 +155,96 @@
               <div class="row">
                 <div class="col-xs-12">
                   <div class ="card" style="margin:35px">
-                    <h4 class="form-title">Job Positions</h4>
-                    <div style="margin-top:20px;">
-                      <a class="btn btn-primary" href="createJob.php"><i class="fa fa-plus"></i>&nbsp; Create</a>
-                    </div>
+                    <h4 class="form-title" style="text-align:center">Job Applications Summary</h4>
+                    <p style="text-align:center; color:black">Select a job title to review the applications for that job.</p>
                     <?php
-                      $client_jobpos = "SELECT * FROM jobposition WHERE theClient = $theClient";
-                      $result_client_jobpos = mysqli_query($connection, $client_jobpos);
+                      // display all pending applications according to jobID
+                      $pending_app = "SELECT ja.jobID, title, COUNT(ja.jobID) AS numOfPending, ja.status FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND theClient = $theClient AND ja.status = 'PENDING' GROUP BY ja.jobID ORDER BY COUNT(ja.jobID) DESC, title";
+                      $result_pending_app = mysqli_query($connection, $pending_app);
 
-                      if (mysqli_num_rows($result_client_jobpos) > 0) {
+                      $accepted_app = "SELECT ja.jobID, title, ja.status FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND theClient = $theClient AND ja.status = 'ACCEPTED' ORDER BY title";
+                      $result_accepted_app = mysqli_query($connection, $accepted_app);
+
+
+                      /*$jobapp_jobpos = "SELECT ja.jobID AS jobID, title, COUNT(ja.jobID) AS numOfApplications FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID GROUP BY ja.jobID"; */
+
+                      if (mysqli_num_rows($result_pending_app) > 0 || (mysqli_num_rows($result_accepted_app) > 0)) {
                         echo '
-
                         <div class="table-responsive">
-                        <table class="table table-hover table-condensed table-striped">
+                        <table class="table table-hover table-condensed" style="width:80%;" align="center">
                             <tr class="info">
-                              <th></th>
-                              <th>Title</th>
-                              <th>Description</th>
-                              <th>Salary / hour (RM)</th>
-                              <th>Start date</th>
-                              <th>End date</th>
-                              <th>Start time</th>
-                              <th>End time</th>
-                              <th>Address</th>
-                              <th>City</th>
-                              <th>Status</th>
-                              <th>Employee Name</th>
-                              <th></th>
+                              <th class="text-center" width="35%">&nbsp;Job Title</th>
+                              <th class="text-center" width="25%">Number of Applications</th>
+                              <th class="text-center" width="25%">Status</th>
                             </tr>';
-
-                        // fetch data from database
-                        while($row_client_jobpos = mysqli_fetch_array($result_client_jobpos) )
-                        {
-                          // declaration
-                          $jobID = $row_client_jobpos['jobID'];
-                          $title = $row_client_jobpos['title'];
-                          $desc = $row_client_jobpos['description'];
-                          $salary = $row_client_jobpos['salaryPerHour'];
-                          $startDate = $row_client_jobpos['startDate'];
-                          // convert startDate format
-                          $startDateDisplay = date("d-m-Y", strtotime($startDate));
-                          $endDate = $row_client_jobpos['endDate'];
-                          // convert endDate format
-                          $endDateDisplay = date("d-m-Y", strtotime($endDate));
-                          $startTime = $row_client_jobpos['startTime'];
-                          // convert startTime format
-                          $startTimeDisplay = date('h:i A', strtotime($startTime));
-                          $endTime = $row_client_jobpos['endTime'];
-                          // convert endTime format
-                          $endTimeDisplay = date('h:i A', strtotime($endTime));
-                          $address = $row_client_jobpos['address'];
-                          $city= $row_client_jobpos['city'];
-                          $status= $row_client_jobpos['status'];
-                          $theEmployee = $row_client_jobpos['theEmployee'];
-
-                          // display employee's full name
-                          $job_emp = "SELECT * FROM jobseeker WHERE userID = $theEmployee";
-                          $result_job_emp = mysqli_query($connection, $job_emp);
-                          if (mysqli_num_rows($result_job_emp) > 0){
-                            while($row_job_emp = mysqli_fetch_assoc($result_job_emp) ) {
-                              $empName = $row_job_emp['fullName'];
-                            }
-                          } else {
-                              $empName = '-';
-                          }
-                          //echo $jobID;
-                          // print out the output
-                          echo '
-                          <form action="editJob.php" method="post">
-                          <tr>
-                          <td align="center">
-                          <input type="hidden" name="job" value="'; echo $jobID; echo '">
-                          <input type="hidden" name="empName" value="'; echo $empName; echo '">
-                          <button type="submit" name="' .$jobID. '" class="edit btn-link"><i class="fa fa-pencil-square-o"></i>&nbsp; Edit</button>
-
-                          </td>';
-                          echo '
-                          <td align="center"> '.$title.'</td>
-                          <td align="left"> '.$desc. '</td>
-                          <td align="center"> '.$salary.'</td>
-                          <td align="center" width="10%"> '.$startDateDisplay.'</td>
-                          <td align="center" width="10%"> '.$endDateDisplay.'</td>
-                          <td align="center" width="8%"> '.$startTimeDisplay.'</td>
-                          <td align="center" width="8%"> '.$endTimeDisplay.'</td>
-                          <td align="center"> '.$address.'</td>
-                          <td align="center"> '.$city.'</td>
-                          <td align="center"> '.$status.'</td>
-                          <td align="center"> '.$empName.'</td>
-                          </form>
-                          <td>
-                            <form action="deleteJob.php" method="post">
-                              <input type="hidden" name="delJob" value="'; echo $jobID; echo '">
-                              <button type="submit" name="deleteBtn" class="delete btn-link">
-                                <i class="fa fa-trash"></i>
-                              </button>
-                            </form>
-                          </td>
-                          </tr>
-                          ';
+                        } else {
+                          echo '<span style="margin-left:30px">No applications to be shown.</span>
+                          <br><br><br><br><br><br><br><br><br><br><br><br><br>';
                         }
-                        echo '</table>
-                              </div>
-                              <br />';
-                      } else {
-                        echo '<br><span style="margin-left:5px">No job positions created yet.</span>
-                        <br><br><br><br><br><br><br><br><br>';
+
+                        if (mysqli_num_rows($result_pending_app) > 0) {
+                        // fetch PENDING applications from database
+                        while($row_pending_app = mysqli_fetch_array($result_pending_app) )
+                        {
+                          $jobID = $row_pending_app['jobID'];
+                          $title = $row_pending_app['title'];
+                          $numOfPending = $row_pending_app['numOfPending'];
+                          $status = $row_pending_app['status'];
+
+                          echo '
+                          <form action="jobApplications.php" method="post">
+                          <tr>
+                            <td align="center">
+                              <input type="hidden" name="job" value="'; echo $jobID; echo '">
+                              <button type="submit" name="jobTitle" class="assess btn-link" value="'. $title .'">'
+                              .$title.'
+                              </button>
+                            </td>
+                            <td align="center"> '.$numOfPending.'</td>
+                            <td align="center"> <span style="color: #FF8C00; font-weight: bold;">'.$status. '</span></td>
+                          </tr>
+                          </form>
+                          ';
+
+                          }
+                        }
+
+                        if (mysqli_num_rows($result_accepted_app) > 0) {
+                          // fetch ACCEPTED applications from database
+                          while($row_accepted_app = mysqli_fetch_array($result_accepted_app) )
+                          {
+                            $jobID = $row_accepted_app['jobID'];
+                            $title = $row_accepted_app['title'];
+                            $numOfApp = "1";
+                            $status = $row_accepted_app['status'];
+
+                            echo '
+                            <form action="jobApplications.php" method="post">
+                            <tr>
+                              <td align="center">
+                                <input type="hidden" name="job" value="'; echo $jobID; echo '">
+                                <button type="submit" name="jobTitleAccepted" class="assess btn-link" value="'. $title .'">'
+                                .$title.'
+                                </button>
+                              </td>
+                              <td align="center"> '.$numOfApp.'</td>
+                              <td align="center"><span style="color: green; font-weight: bold;"> '.$status. '</span></td>
+                            </tr>
+                            </form>
+                            ';
+                        }
                       }
+
+                      if (mysqli_num_rows($result_pending_app) > 0 || (mysqli_num_rows($result_accepted_app) > 0)) {
+                        echo '</table></div>';
+                      }
+
                       ?>
                   </div>
-                  <br><br>
                 </div>
   						</div>
   					</div>
   				</div>
-          <br><br>
   			</div>
   		</div>
   	</div>

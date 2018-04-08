@@ -149,7 +149,7 @@
 				<li><a href="jobPositions.php"><i class="fa fa-suitcase"></i>&nbsp;Jobs</a></li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
 				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
-        <li><a href="jobApplications.php"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
+        <li><a href="jobApplicationsSummary.php"><i class="fa fa-suitcase"></i>&nbsp;Applications</a></li>
 				<li><a href="index.php"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
 			</ul>
 			<!-- /Main navigation -->
@@ -299,7 +299,7 @@
                           <div class="form-group">
                             <label>Start Date: </label>
                             <div class="form-control-small">
-                                <input type="date" name="startDate" class="form-control-small" min = "' . date("Y-m-d") .  '" value="' .$row_jobPositions['startDate']. '" required>
+                                <input type="date" name="startDate" class="form-control-small" value="' .$row_jobPositions['startDate']. '" required>
                             </div>
                             <div id="startDate_error" style="color:red;"></div>
                           </div>
@@ -307,7 +307,7 @@
                           <div class="form-group">
                             <label>End Date: </label>
                             <div class="form-control-small">
-                                <input type="date" name="endDate" class="form-control-small" min = "' . date("Y-m-d") . '" value="' .$row_jobPositions['endDate']. '" required>
+                                <input type="date" name="endDate" class="form-control-small" value="' .$row_jobPositions['endDate']. '" required>
                             </div>
                             <div id="endDate_error" style="color:red;"></div>
                           </div>';
