@@ -75,6 +75,13 @@
       margin-left: 30px;
     }
 
+    .jobDetails {
+      margin-left: 30px;
+      background: #f1f3f4;
+      color: black !important;
+      border-color: transparent;
+    }
+
     .applications {
       margin: 10px;
     }
@@ -115,6 +122,10 @@
         color: #6195FF;
     }
 
+    .message {
+      color: #1a75ff;
+    }
+
     .accept {
         background: transparent;
         color: green !important;
@@ -129,7 +140,6 @@
 
     .app-detail {
       font-weight: bold;
-      text-transform: capitalize;
     }
 
 	</style>
@@ -173,7 +183,7 @@
          <i class="fa fa-suitcase"></i>&nbsp;Jobs</a>
        </li>
 				<li><a href="profile.php"><i class="fa fa-user"></i>&nbsp;Profile</a></li>
-				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>  
+				<li><a href="message.php"><i class="fa fa-envelope"></i>&nbsp;Message</a></li>
           <?php
 					if ($_SESSION['userType'] == 'Job Seeker') {
 						echo '<li class="active"><a href="jobApplications.php">';
@@ -204,10 +214,10 @@
               <br>
               <div class="row">
                 <div class="applications col-xs-12">
-                    <h4 class="form-title-white">Job Applications</h4>
                     <?php
                     if ($_SESSION['userType'] == 'Job Seeker') {
-                      $applicant_jobapp = "SELECT applicationID, title, ja.jobID AS jobID, ja.status AS status FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND theJobSeeker = $theJobSeeker ORDER BY applicationID";
+                      echo '<h4 class="form-title-white">My Job Applications</h4>';
+                      $applicant_jobapp = "SELECT applicationID, title, ja.jobID, ja.status FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND theJobSeeker = $theJobSeeker ORDER BY applicationID";
                       $result_applicant_jobapp = mysqli_query($connection, $applicant_jobapp);
 
                       if (mysqli_num_rows($result_applicant_jobapp) > 0) {
@@ -263,11 +273,217 @@
                       }
 
           					} else if ($_SESSION['userType'] == 'Client') {
-                        $client_jobapp = "SELECT applicationID, ja.jobID AS jobID, theJobSeeker, ja.status AS status, title, description, salaryPerHour, startDate, endDate, startTime, endTime, address, city FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND theClient = $theClient AND ja.status != 'DECLINED' ORDER BY applicationID";
+                        if (isset($_POST['job'])) {
+                          $_SESSION['jobID'] = $_POST['job'];
+                        }
+
+                        if (isset($_POST['jobTitle'])) {
+                           echo '<h4 class="form-title-white">Job Applications for ' . $_POST['jobTitle'] .'</h4>';
+                        } else if (isset($_POST['jobTitleAccepted'])){
+                          echo '<h4 class="form-title-white">Job Applications for ' . $_POST['jobTitleAccepted'] .'</h4>';
+                        } else {
+                          echo '<h4 class="form-title-white">Job Applications for '. $_SESSION['title'] .'</h4>';
+                        }
+
+                        echo '
+                        <div>
+                        <form method="post" target="_blank" action="jobDetails.php">
+                        <button type="submit" id="jobDetails" name="jobID" value="'.$_SESSION['jobID'].'" class="jobDetails outline-btn">Job Details</button>
+                        </form>
+                        </div>';
+
+                        $jobID = $_SESSION['jobID'];
+
+                        $client_jobapp = "SELECT applicationID, title, ja.jobID, theJobSeeker, ja.status FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND ja.jobID = $jobID AND theClient = $theClient AND ja.status != 'DECLINED' ORDER BY applicationID";
                         $result_client_jobapp = mysqli_query($connection, $client_jobapp);
 
                         if (mysqli_num_rows($result_client_jobapp) > 0) {
+                          // fetch data from database
+                          while($row_client_jobapp = mysqli_fetch_array($result_client_jobapp) )
+                          {
+                            // declaration
+                            $applicationID = $row_client_jobapp['applicationID'];
+                            $jobID = $row_client_jobapp['jobID'];
+                            $title = $row_client_jobapp['title'];
 
+                            $_SESSION['title'] = $title;
+
+                            $status= $row_client_jobapp['status'];
+                            $theApplicant = $row_client_jobapp['theJobSeeker'];
+
+                            // get applicant's full name
+                            $applicant = "SELECT * FROM jobseeker WHERE userID = $theApplicant";
+                            $result_applicant = mysqli_query($connection, $applicant);
+                            if (mysqli_num_rows($result_applicant) > 0){
+                              while($row_applicant = mysqli_fetch_assoc($result_applicant) ) {
+                                $applicantName = $row_applicant['fullName'];
+                              }
+                            } else {
+                                $applicantName = '-';
+                            }
+
+                            // get applicant profile details
+                            $applicant_profile = "SELECT * FROM user WHERE userID = $theApplicant";
+                            $result_applicant_profile = mysqli_query($connection, $applicant_profile);
+                            if (mysqli_num_rows($result_applicant_profile) > 0){
+                              while($row_applicant_profile = mysqli_fetch_assoc($result_applicant_profile) ) {
+                                $applicantUsername = $row_applicant_profile['username'];
+                                $applicantEmail = $row_applicant_profile['email'];
+                                $applicantPhone = $row_applicant_profile['phoneNo'];
+                                $applicantAdd = $row_applicant_profile['address'];
+                              }
+                            }
+
+                            if ($applicantEmail == "") {
+                              $applicantEmail = "-";
+                            }
+
+                            if ($applicantPhone == "") {
+                              $applicantPhone = "-";
+                            }
+
+                            if ($applicantAdd == "") {
+                              $applicantAdd = "-";
+                            }
+
+                            // get applicant skillsets
+                            $skillsets = "SELECT skill.skillName FROM skillsets, skill WHERE theJobSeeker = $theApplicant AND skillsets.skillID = skill.skillID";
+                            $result_skillsets = mysqli_query($connection, $skillsets);
+
+                            // display application details
+                              echo '
+                              <div class="col-sm-4">
+                              <div class="container-fluid">
+                                <div class="pricing">
+                                  <div class="price-head">
+                                    <span class="price-title">Application #A00<span class="app-detail">'. $applicationID .'</span>
+                                    </span>
+                                        Status:
+                                      ';
+
+                                    if ($status == 'ACCEPTED') {
+                                      echo '<span style="color: green; font-weight: bold;">';
+                                    } else if ($status == 'PENDING') {
+                                      echo '<span style="color: #FF8C00; font-weight: bold;">';
+                                    }
+                                    echo $status . '</span>
+
+                                    <br><br>
+
+
+                                    <table align="center" style="border-collapse:separate; border-spacing:10px; padding-left:15px">
+                                      <tr>
+                                        <td>
+                                          Applicant:
+                                        </td>
+
+                                        <form method="post" target="_blank" action="sendMessage.php">
+                                        <td>
+                                          <input type="hidden" name="senderName" value="'. $applicantName .'">
+                                          <input type="hidden" name="subject" value="'. $title .'">
+
+                                          <span class="app-detail">'. $applicantName .'</span>
+                                          <button type="submit" class="message btn-link"><i class="fa fa-envelope"></i></button>
+                                        </td>
+                                        </form>
+
+                                      </tr>
+
+                                      <tr>
+                                        <td>
+                                          Email:
+                                        </td>
+                                        <td>
+                                          <span class="app-detail">' .  $applicantEmail . '</span>
+                                        </td>
+                                      </tr>
+
+                                      <tr>
+                                        <td>
+                                          Contact no:
+                                        </td>
+                                        <td>
+                                          <span class="app-detail">' .  $applicantPhone . '</span>
+                                        </td>
+                                      </tr>
+
+                                      <tr>
+                                        <td>
+                                          Address:
+                                        </td>
+                                        <td>
+                                          <span class="app-detail">' .  $applicantAdd . '</span>
+                                        </td>
+                                      </tr>
+                                      ';
+
+                                    if (mysqli_num_rows($result_skillsets) > 0){
+                                      echo '
+                                      <tr>
+                                      <td valign="top" rowspan="'. mysqli_num_rows($result_skillsets)  .'">
+                                        Skill Sets:
+                                      </td>
+                                      </tr>
+                                      <td rowspan="'. mysqli_num_rows($result_skillsets)  .'">
+                                      ';
+                                      while($row_skillsets = mysqli_fetch_assoc($result_skillsets) ) {
+                                        echo '
+                                          <p style="text-align:left;"><i class="fa fa-check-circle" style="font-size:18px;  color:green"></i> &nbsp;&nbsp;' . $row_skillsets['skillName'] . '</p>
+                                          ';
+                                      }
+                                      echo '
+                                      </td>
+                                      </tr>
+                                      </table>
+                                      ';
+
+                                    } else {
+                                      echo '
+                                      <tr>
+                                        <td>
+                                          Skill Sets:
+                                        </td>
+                                        <td>
+                                        <span class="app-detail">-</span>
+                                        </td>
+                                      </tr>
+                                      </table>
+                                      <br><br><br>';
+                                    }
+
+
+
+                              if ($status == 'PENDING') {
+                                  echo '
+                                  <form method="post" action="assessApplication.php">
+                                  <table style="margin:30px; width:85%; text-align:center">
+                                    <tr>
+                                      <td>
+                                        <input type="hidden" name="applicationID" value="'; echo $applicationID; echo '">
+                                        <input type="hidden" name="theEmployee" value="'; echo $theApplicant; echo '">
+                                        <input type="hidden" name="jobID" value="'; echo $jobID; echo '">
+                                        <button type="submit" id="acceptBtn" name="acceptBtn" value="ACCEPTED" class="outline-btn accept">Accept</button>
+                                      </td>
+                                      <td>
+                                        <button type="submit" id="declineBtn" name="declineBtn" value="DECLINED" class="outline-btn decline">Decline</button>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                  </form>';
+
+                              } else {
+                                echo '<br><br><br>';
+                              }
+
+
+
+                              echo '
+                              </div>
+                              </div>
+                            </div>
+                            </div>';
+
+                          }
                         } else {
                           echo '<span style="margin-left:30px">No applications yet.</span>
                           <br><br><br><br><br><br><br><br><br><br><br><br><br>';

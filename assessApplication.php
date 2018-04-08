@@ -11,6 +11,8 @@
   $jobID = $_POST['jobID'];
   $theEmployee = $_POST['theEmployee'];
 
+  $_SESSION['jobID'] = $jobID;
+
   if (isset($_POST['acceptBtn'])) {
     // accept an application for a particular jobID
     $updated_status = $_POST['acceptBtn'];

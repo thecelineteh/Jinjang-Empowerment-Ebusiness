@@ -159,10 +159,10 @@
                     <p style="text-align:center; color:black">Select a job title to review the applications for that job.</p>
                     <?php
                       // display all pending applications according to jobID
-                      $pending_app = "SELECT ja.jobID, title, COUNT(ja.jobID) AS numOfPending, ja.status FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND ja.status = 'PENDING' GROUP BY ja.jobID ORDER BY COUNT(ja.jobID) DESC";
+                      $pending_app = "SELECT ja.jobID, title, COUNT(ja.jobID) AS numOfPending, ja.status FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND theClient = $theClient AND ja.status = 'PENDING' GROUP BY ja.jobID ORDER BY COUNT(ja.jobID) DESC, title";
                       $result_pending_app = mysqli_query($connection, $pending_app);
 
-                      $accepted_app = "SELECT ja.jobID, title, ja.status FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND ja.status = 'ACCEPTED'";
+                      $accepted_app = "SELECT ja.jobID, title, ja.status FROM jobapplication ja, jobposition jp WHERE ja.jobID = jp.jobID AND theClient = $theClient AND ja.status = 'ACCEPTED' ORDER BY title";
                       $result_accepted_app = mysqli_query($connection, $accepted_app);
 
 
@@ -177,6 +177,9 @@
                               <th class="text-center" width="25%">Number of Applications</th>
                               <th class="text-center" width="25%">Status</th>
                             </tr>';
+                        } else {
+                          echo '<span style="margin-left:30px">No applications to be shown.</span>
+                          <br><br><br><br><br><br><br><br><br><br><br><br><br>';
                         }
 
                         if (mysqli_num_rows($result_pending_app) > 0) {
@@ -193,7 +196,7 @@
                           <tr>
                             <td align="center">
                               <input type="hidden" name="job" value="'; echo $jobID; echo '">
-                              <button type="submit" name="' .$jobID. '" class="assess btn-link">'
+                              <button type="submit" name="jobTitle" class="assess btn-link" value="'. $title .'">'
                               .$title.'
                               </button>
                             </td>
@@ -212,7 +215,7 @@
                           {
                             $jobID = $row_accepted_app['jobID'];
                             $title = $row_accepted_app['title'];
-                            $numOfApp = mysqli_num_rows($result_accepted_app);
+                            $numOfApp = "1";
                             $status = $row_accepted_app['status'];
 
                             echo '
@@ -220,7 +223,7 @@
                             <tr>
                               <td align="center">
                                 <input type="hidden" name="job" value="'; echo $jobID; echo '">
-                                <button type="submit" name="' .$jobID. '" class="assess btn-link">'
+                                <button type="submit" name="jobTitleAccepted" class="assess btn-link" value="'. $title .'">'
                                 .$title.'
                                 </button>
                               </td>
