@@ -29,25 +29,30 @@
     $update_s = "UPDATE jobseeker SET fullName = '$fullName' WHERE userID = $userID";
     $result_s = mysqli_query($connection, $update_s);
 
-    // update skillset
-    $updatedSkillsArray = $_POST['updateSkillArray'];
-    $clear_skillset = "DELETE FROM skillsets WHERE theJobSeeker = $userID";
-    $result_clear_skillset = mysqli_query($connection, $clear_skillset);
+    if (isset($_POST['updateSkillArray'])) {
+      // update skillset
+      $updatedSkillsArray = $_POST['updateSkillArray'];
+      $clear_skillset = "DELETE FROM skillsets WHERE theJobSeeker = $userID";
+      $result_clear_skillset = mysqli_query($connection, $clear_skillset);
 
-    // Based on skillName, find user selected skills in skill table
-    foreach ($updatedSkillsArray as $skillName) {
-      $selected_skills = "SELECT * FROM skill WHERE skillName = '$skillName'";
-      $result_selected_skills = mysqli_query($connection, $selected_skills);
+      // Based on skillName, find user selected skills in skill table
+      foreach ($updatedSkillsArray as $skillName) {
+        $selected_skills = "SELECT * FROM skill WHERE skillName = '$skillName'";
+        $result_selected_skills = mysqli_query($connection, $selected_skills);
 
-      while ($row_selected_skills = mysqli_fetch_assoc($result_selected_skills)) {
-        $skillID = $row_selected_skills['skillID'];
-        $add_skillset = "INSERT INTO skillsets VALUES($skillID, $userID)";
-        $result_add_skillset = mysqli_query($connection, $add_skillset);
+        while ($row_selected_skills = mysqli_fetch_assoc($result_selected_skills)) {
+          $skillID = $row_selected_skills['skillID'];
+          $add_skillset = "INSERT INTO skillsets VALUES($skillID, $userID)";
+          $result_add_skillset = mysqli_query($connection, $add_skillset);
+        }
       }
     }
 
-    if ($result_user && $result_s && $result_add_skillset) {
-      echo "<script>alert('Update job seeker profile successful.');</script>";
+    if ($result_user && $result_s && isset($result_add_skillset)) {
+      echo "<script>alert('Successfully updated job seeker profile and skill sets.');</script>";
+      header("Refresh: 1; url= profile.php");
+    } else if ($result_user && $result_s) {
+      echo "<script>alert('Successfully updated job seeker profile.');</script>";
       header("Refresh: 1; url= profile.php");
     } else {
       echo "<script>alert('Unable to update job seeker profile.');</script>";

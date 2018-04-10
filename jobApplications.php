@@ -270,6 +270,12 @@
                           </div>';
 
                         }
+                      } else {
+                        echo '
+                        <span style="margin-left:30px">No job applications yet.</span>
+                        <br>
+                        <span style="margin-left:30px"> Go to Jobs to search and apply for a job now!</span>
+                        <br><br><br><br><br><br><br><br><br><br><br>';
                       }
 
           					} else if ($_SESSION['userType'] == 'Client') {
@@ -448,7 +454,7 @@
                                         </td>
                                       </tr>
                                       </table>
-                                      <br><br><br>';
+                                      <br><br><br><br>';
                                     }
 
 

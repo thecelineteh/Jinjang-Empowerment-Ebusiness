@@ -251,7 +251,7 @@
                           <td>
                             <form action="deleteJob.php" method="post">
                               <input type="hidden" name="delJob" value="'; echo $jobID; echo '">
-                              <button type="submit" name="deleteBtn" class="delete btn-link">
+                              <button type="submit" name="deleteBtn" class="delete btn-link" title="Delete">
                                 <i class="fa fa-trash"></i>
                               </button>
                             </form>
